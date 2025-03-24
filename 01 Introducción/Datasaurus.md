@@ -4,6 +4,22 @@
 
 El Cuarteto de Anscombe es un conjunto de cuatro conjuntos de datos que nos ayudará a entender mejor cómo analizar datos. Fue creado por Francis Anscombe en 1973.
 
+### Datos Originales
+
+| X1 | Y1 | X2 | Y2 | X3 | Y3 | X4 | Y4 |
+|----|----|----|----|----|----|----|----|
+| 10.0 | 8.04 | 10.0 | 9.14 | 10.0 | 7.46 | 8.0 | 6.58 |
+| 8.0 | 6.95 | 8.0 | 8.14 | 8.0 | 6.77 | 8.0 | 5.76 |
+| 13.0 | 7.58 | 13.0 | 8.74 | 13.0 | 12.74 | 8.0 | 7.71 |
+| 9.0 | 8.81 | 9.0 | 8.77 | 9.0 | 7.11 | 8.0 | 8.84 |
+| 11.0 | 8.33 | 11.0 | 9.26 | 11.0 | 7.81 | 8.0 | 8.47 |
+| 14.0 | 9.96 | 14.0 | 8.10 | 14.0 | 8.84 | 8.0 | 7.04 |
+| 6.0 | 7.24 | 6.0 | 6.13 | 6.0 | 6.08 | 8.0 | 5.25 |
+| 4.0 | 4.26 | 4.0 | 3.10 | 4.0 | 5.39 | 19.0 | 12.50 |
+| 12.0 | 10.84 | 12.0 | 9.13 | 12.0 | 8.15 | 8.0 | 5.56 |
+| 7.0 | 4.82 | 7.0 | 7.26 | 7.0 | 6.42 | 8.0 | 7.91 |
+| 5.0 | 5.68 | 5.0 | 4.74 | 5.0 | 5.73 | 8.0 | 6.89 |
+
 ### Cálculo de Estadísticas
 
 ```r
@@ -53,6 +69,16 @@ Observaciones sobre las estadísticas:
 
 El Datasaurus es una colección de conjuntos de datos creada por Justin Matejka y George Fitzmaurice en 2017. Nos ayudará a profundizar en nuestro análisis de datos.
 
+### Datos Originales (Primeros 5 registros de cada conjunto)
+
+| Dataset | X | Y | Dataset | X | Y | Dataset | X | Y | Dataset | X | Y |
+|---------|---|----|---------|---|----|---------|---|----|---------|---|----|
+| away | 55.3846 | 97.1795 | bullseye | 55.3846 | 97.1795 | circle | 55.3846 | 97.1795 | dino | 55.3846 | 97.1795 |
+| away | 51.5385 | 96.0256 | bullseye | 51.5385 | 96.0256 | circle | 51.5385 | 96.0256 | dino | 51.5385 | 96.0256 |
+| away | 46.1538 | 94.4872 | bullseye | 46.1538 | 94.4872 | circle | 46.1538 | 94.4872 | dino | 46.1538 | 94.4872 |
+| away | 42.8205 | 91.4103 | bullseye | 42.8205 | 91.4103 | circle | 42.8205 | 91.4103 | dino | 42.8205 | 91.4103 |
+| away | 40.7692 | 88.0769 | bullseye | 40.7692 | 88.0769 | circle | 40.7692 | 88.0769 | dino | 40.7692 | 88.0769 |
+
 ### Cálculo de Estadísticas
 
 ```r
@@ -66,6 +92,10 @@ estadisticas_datasaurus <- datasaurus_dozen %>%
         sd_y = sd(y),
         correlacion = cor(x, y)
     )
+
+# Convertir a data.frame y redondear los valores
+estadisticas_datasaurus <- as.data.frame(estadisticas_datasaurus)
+estadisticas_datasaurus[, -1] <- round(estadisticas_datasaurus[, -1], 4)
 ```
 
 ### Estadísticas Descriptivas

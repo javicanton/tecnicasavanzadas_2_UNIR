@@ -5,16 +5,24 @@
 if (!require("datasauRus")) install.packages("datasauRus")
 if (!require("ggplot2")) install.packages("ggplot2")
 if (!require("dplyr")) install.packages("dplyr")
-if (!require("knitr")) install.packages("knitr")
 
 library(datasauRus)
 library(ggplot2)
 library(dplyr)
-library(knitr)
 
 # Explorar el Cuarteto de Anscombe
 # Cargar los datos
 data("anscombe")
+
+# Mostrar los datos originales del Cuarteto de Anscombe
+cat("\nDatos originales del Cuarteto de Anscombe:\n")
+datos_anscombe <- data.frame(
+    x1 = anscombe$x1, y1 = anscombe$y1,
+    x2 = anscombe$x2, y2 = anscombe$y2,
+    x3 = anscombe$x3, y3 = anscombe$y3,
+    x4 = anscombe$x4, y4 = anscombe$y4
+)
+print(datos_anscombe, row.names = FALSE)
 
 # Calcular estadísticas descriptivas para cada conjunto
 # Función auxiliar para calcular estadísticas
@@ -36,18 +44,9 @@ estadisticas <- data.frame(
     conjunto4 = calcular_estadisticas(anscombe$x4, anscombe$y4)
 )
 
-# Crear una tabla más legible con kable
-tabla_anscombe <- estadisticas %>%
-    mutate(across(where(is.numeric), ~ round(., 4))) %>%
-    kable(
-        format = "pipe",
-        col.names = c("Conjunto 1", "Conjunto 2", "Conjunto 3", "Conjunto 4"),
-        caption = "Estadísticas descriptivas del Cuarteto de Anscombe"
-    )
-
-# Mostrar la tabla
+# Mostrar estadísticas
 cat("\nEstadísticas descriptivas del Cuarteto de Anscombe:\n")
-print(tabla_anscombe)
+print(estadisticas)
 
 cat("\nObservaciones sobre las estadísticas:\n")
 cat("1. Todos los conjuntos tienen una media de X de 9.0000\n")
@@ -84,6 +83,14 @@ ggsave("anscombe_plot.png", p1, width = 10, height = 8)
 # Cargar los datos del Datasaurus
 data("datasaurus_dozen")
 
+# Mostrar los datos originales del Datasaurus (primeros 5 registros de cada conjunto)
+cat("\nPrimeros 5 registros de cada conjunto del Datasaurus:\n")
+datos_datasaurus <- datasaurus_dozen %>%
+    group_by(dataset) %>%
+    slice_head(n = 5) %>%
+    pivot_wider(names_from = dataset, values_from = c(x, y))
+print(datos_datasaurus, row.names = FALSE)
+
 # Calcular estadísticas para cada conjunto del Datasaurus
 estadisticas_datasaurus <- datasaurus_dozen %>%
     group_by(dataset) %>%
@@ -95,18 +102,13 @@ estadisticas_datasaurus <- datasaurus_dozen %>%
         correlacion = cor(x, y)
     )
 
-# Crear una tabla más legible con kable
-tabla_datasaurus <- estadisticas_datasaurus %>%
-    mutate(across(where(is.numeric), ~ round(., 4))) %>%
-    kable(
-        format = "pipe",
-        col.names = c("Conjunto", "Media X", "Media Y", "Desv. Est. X", "Desv. Est. Y", "Correlación"),
-        caption = "Estadísticas descriptivas del Datasaurus"
-    )
+# Convertir a data.frame y redondear los valores
+estadisticas_datasaurus <- as.data.frame(estadisticas_datasaurus)
+estadisticas_datasaurus[, -1] <- round(estadisticas_datasaurus[, -1], 4)
 
-# Mostrar la tabla
+# Mostrar estadísticas
 cat("\nEstadísticas descriptivas del Datasaurus:\n")
-print(tabla_datasaurus)
+print(estadisticas_datasaurus, row.names = FALSE)
 
 cat("\nObservaciones sobre las estadísticas:\n")
 cat("1. Todos los conjuntos tienen una media de X cercana a 54.26\n")
@@ -146,36 +148,3 @@ plot_ly(dino_data, x = ~x, y = ~y, type = "scatter", mode = "markers") %>%
         xaxis = list(title = "X"),
         yaxis = list(title = "Y")
     )
-
-# Guardar las tablas de estadísticas en un archivo markdown
-sink("estadisticas.md")
-cat("## Estadísticas del Cuarteto de Anscombe\n\n")
-cat("| Estadística | Conjunto 1 | Conjunto 2 | Conjunto 3 | Conjunto 4 |\n")
-cat("|-------------|------------|------------|------------|------------|\n")
-for (i in 1:nrow(estadisticas)) {
-    cat("|", rownames(estadisticas)[i])
-    for (j in 1:ncol(estadisticas)) {
-        cat(" |", round(estadisticas[i, j], 4))
-    }
-    cat(" |\n")
-}
-
-cat("\n## Estadísticas del Datasaurus\n\n")
-cat("| Dataset | Media X | Media Y | SD X | SD Y | Correlación |\n")
-cat("|---------|---------|---------|-------|-------|-------------|\n")
-for (i in 1:nrow(estadisticas_datasaurus)) {
-    cat("|", estadisticas_datasaurus$dataset[i])
-    cat(" |", round(estadisticas_datasaurus$media_x[i], 4))
-    cat(" |", round(estadisticas_datasaurus$media_y[i], 4))
-    cat(" |", round(estadisticas_datasaurus$sd_x[i], 4))
-    cat(" |", round(estadisticas_datasaurus$sd_y[i], 4))
-    cat(" |", round(estadisticas_datasaurus$correlacion[i], 4))
-    cat(" |\n")
-}
-sink()
-
-# Mensaje final
-cat("\nSe han generado los siguientes archivos:\n")
-cat("- anscombe_plot.png: Visualización del Cuarteto de Anscombe\n")
-cat("- datasaurus_plot.png: Visualización de todos los conjuntos del Datasaurus\n")
-cat("- estadisticas.md: Tablas con las estadísticas descriptivas\n")
