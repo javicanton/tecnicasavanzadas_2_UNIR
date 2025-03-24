@@ -1,5 +1,5 @@
-# Script para demostrar el Datasaurus y el Cuarteto de Anscombe
-# Este ejemplo muestra por qué es importante visualizar los datos
+# Script para explorar el Cuarteto de Anscombe y el Datasaurus
+# Este ejemplo nos ayudará a entender mejor cómo analizar datos
 
 # Instalar y cargar los paquetes necesarios
 if (!require("datasauRus")) install.packages("datasauRus")
@@ -12,7 +12,7 @@ library(ggplot2)
 library(dplyr)
 library(knitr)
 
-# Mostrar el Cuarteto de Anscombe
+# Explorar el Cuarteto de Anscombe
 # Cargar los datos
 data("anscombe")
 
@@ -49,13 +49,12 @@ tabla_anscombe <- estadisticas %>%
 cat("\nEstadísticas descriptivas del Cuarteto de Anscombe:\n")
 print(tabla_anscombe)
 
-cat("\nObservaciones importantes:\n")
+cat("\nObservaciones sobre las estadísticas:\n")
 cat("1. Todos los conjuntos tienen una media de X de 9.0000\n")
 cat("2. Todos los conjuntos tienen una media de Y cercana a 7.5009\n")
 cat("3. Las desviaciones estándar de X son aproximadamente 3.3166\n")
 cat("4. Las desviaciones estándar de Y son aproximadamente 2.0316\n")
 cat("5. Las correlaciones son todas cercanas a 0.8164\n")
-cat("\nA pesar de tener estadísticas casi idénticas, cada conjunto forma un patrón visual único.\n")
 
 # Crear un gráfico mejorado del Cuarteto de Anscombe
 anscombe_long <- data.frame(
@@ -70,7 +69,7 @@ p1 <- ggplot(anscombe_long, aes(x = x, y = y)) +
     theme_minimal() +
     labs(
         title = "El Cuarteto de Anscombe",
-        subtitle = "Cuatro conjuntos de datos con estadísticas similares pero visualmente diferentes"
+        subtitle = "Cuatro conjuntos de datos con estadísticas similares"
     ) +
     theme(
         plot.title = element_text(size = 16, face = "bold"),
@@ -81,7 +80,7 @@ p1 <- ggplot(anscombe_long, aes(x = x, y = y)) +
 setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 ggsave("anscombe_plot.png", p1, width = 10, height = 8)
 
-# Ahora mostramos el Datasaurus
+# Explorar el Datasaurus
 # Cargar los datos del Datasaurus
 data("datasaurus_dozen")
 
@@ -109,13 +108,12 @@ tabla_datasaurus <- estadisticas_datasaurus %>%
 cat("\nEstadísticas descriptivas del Datasaurus:\n")
 print(tabla_datasaurus)
 
-cat("\nObservaciones importantes:\n")
+cat("\nObservaciones sobre las estadísticas:\n")
 cat("1. Todos los conjuntos tienen una media de X cercana a 54.26\n")
 cat("2. Todos los conjuntos tienen una media de Y cercana a 47.83\n")
 cat("3. Las desviaciones estándar de X son aproximadamente 16.76\n")
 cat("4. Las desviaciones estándar de Y son aproximadamente 26.93\n")
 cat("5. Las correlaciones son todas cercanas a -0.06\n")
-cat("\nA pesar de tener estadísticas casi idénticas, cada conjunto forma un patrón visual único.\n")
 
 # Crear un gráfico mejorado del Datasaurus
 p2 <- ggplot(datasaurus_dozen, aes(x = x, y = y)) +
@@ -124,7 +122,7 @@ p2 <- ggplot(datasaurus_dozen, aes(x = x, y = y)) +
     theme_minimal() +
     labs(
         title = "El Datasaurus",
-        subtitle = "Conjuntos de datos con estadísticas similares pero patrones visuales únicos"
+        subtitle = "Conjuntos de datos con estadísticas similares"
     ) +
     theme(
         plot.title = element_text(size = 16, face = "bold"),
@@ -177,11 +175,6 @@ for (i in 1:nrow(estadisticas_datasaurus)) {
 sink()
 
 # Mensaje final
-cat("\nEste ejemplo demuestra que:\n")
-cat("1. Las estadísticas descriptivas por sí solas pueden ser engañosas\n")
-cat("2. La visualización de datos es crucial para entender realmente los datos\n")
-cat("3. No debemos confiar ciegamente en los números sin ver qué hay detrás\n")
-
 cat("\nSe han generado los siguientes archivos:\n")
 cat("- anscombe_plot.png: Visualización del Cuarteto de Anscombe\n")
 cat("- datasaurus_plot.png: Visualización de todos los conjuntos del Datasaurus\n")

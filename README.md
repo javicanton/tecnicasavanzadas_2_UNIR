@@ -9,7 +9,7 @@ Repositorio de materiales, ejercicios, etc. para la asignatura de Técnicas Avan
 - [Instalación swirl español](./01%20Introducción/Instalacion%20swirl%20español.R) - Script para la instalación de Swirl en español.
 - [Introducción](./01%20Introducción/Introduccion.R) - Script introductorio, para mostrar cómo funciona y qué posibilidades ofrece R.
 - [Análisis ejemplo](./01%20Introducción/Analisis%20ejemplo.R) - Script con un análisis de ejemplo de análisis de un dataset, con métricas y visualizaciones de datos.
-- [Datasaurus](./01%20Introducción/Datasaurus.R) - Script que demuestra el concepto del Datasaurus y el Cuarteto de Anscombe, mostrando por qué es importante visualizar los datos.
+- [Datasaurus](./01%20Introducción/Datasaurus.R) - Script para explorar el Cuarteto de Anscombe y el Datasaurus, ejemplos interesantes de análisis de datos.
 - [Documentación Datasaurus](./01%20Introducción/Datasaurus.md) - Documentación detallada del ejemplo del Datasaurus y el Cuarteto de Anscombe.
 
 ### 02 Modelización
