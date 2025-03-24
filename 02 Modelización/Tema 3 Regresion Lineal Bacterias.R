@@ -12,9 +12,9 @@
 # k: Tasa de crecimiento intrínseca (0.0001)
 # M: Capacidad máxima del cultivo (100000 bacterias)
 # La capacidad máxima representa el número máximo de bacterias que el medio puede sostener
-p0 = 1000  # Población inicial de bacterias
-k = 0.0001  # Tasa de crecimiento
-M = 100000  # Capacidad máxima del cultivo
+p0 <- 1000 # Población inicial de bacterias
+k <- 0.0001 # Tasa de crecimiento
+M <- 100000 # Capacidad máxima del cultivo
 
 # Función que implementa la ecuación logística:
 # P(t) = M * p0 / (M * e^(-k*M*t) - p0 * e^(-k*M*t) + p0)
@@ -26,28 +26,31 @@ poblacion <- function(tiempo) {
 
 # Simulación del crecimiento durante 24 horas
 # Calculamos la población para cada hora y mostramos los resultados
-for(i in 1:24) {
+for (i in 1:24) {
     print(poblacion(i))
 }
 
 # Datos para el análisis y visualización
 # x: Vector de tiempo en horas (1 a 24)
 # y: Datos simulados de población que siguen una curva logística
-x <- 1:24  # Horas
-y <- c(1000, 1500, 2200, 3200, 4500, 6500, 9000, 12500, 17000, 23000, 
-       31000, 41000, 54000, 70000, 85000, 95000, 98000, 99500, 99800, 
-       99900, 99950, 99980, 99990, 99995)
+x <- 1:24 # Horas
+y <- c(
+    1000, 1500, 2200, 3200, 4500, 6500, 9000, 12500, 17000, 23000,
+    31000, 41000, 54000, 70000, 85000, 95000, 98000, 99500, 99800,
+    99900, 99950, 99980, 99990, 99995
+)
 
 # Creación del gráfico de dispersión
 # Este gráfico nos permite visualizar la curva de crecimiento
 # cex: tamaño de los puntos
 # pch: tipo de símbolo para los puntos
-plot(x, y, 
-     main = "Evolución de la población de bacterias",
-     xlab = "Tiempo [horas]",
-     ylab = "Número de bacterias",
-     cex = 1,
-     pch = 8)
+plot(x, y,
+    main = "Evolución de la población de bacterias",
+    xlab = "Tiempo [horas]",
+    ylab = "Número de bacterias",
+    cex = 1,
+    pch = 8
+)
 
 # Ajuste de un modelo lineal a los datos
 # Aunque los datos siguen una curva logística, ajustamos una línea recta
@@ -61,4 +64,4 @@ summary(linearModel)
 # - Coeficientes: pendiente e intercepto de la línea
 # - R-squared: qué tan bien la línea explica los datos
 # - p-valores: significancia estadística de los coeficientes
-# - Residuales: diferencias entre valores observados y predichos 
+# - Residuales: diferencias entre valores observados y predichos
