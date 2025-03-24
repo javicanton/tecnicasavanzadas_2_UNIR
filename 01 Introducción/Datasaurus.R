@@ -16,15 +16,15 @@ library(tidyr)
 # Cargar los datos
 data("anscombe")
 
-# Mostrar los datos originales del Cuarteto de Anscombe
-cat("\nDatos originales del Cuarteto de Anscombe:\n")
+# Datos originales del Cuarteto de Anscombe
 datos_anscombe <- data.frame(
     x1 = anscombe$x1, y1 = anscombe$y1,
     x2 = anscombe$x2, y2 = anscombe$y2,
     x3 = anscombe$x3, y3 = anscombe$y3,
     x4 = anscombe$x4, y4 = anscombe$y4
 )
-print(datos_anscombe, row.names = FALSE)
+# Mostrar tabla
+datos_anscombe
 
 # Calcular estadísticas descriptivas para cada conjunto
 # Función auxiliar para calcular estadísticas
@@ -46,16 +46,15 @@ estadisticas <- data.frame(
     conjunto4 = calcular_estadisticas(anscombe$x4, anscombe$y4)
 )
 
-# Mostrar estadísticas
-cat("\nEstadísticas descriptivas del Cuarteto de Anscombe:\n")
-print(estadisticas)
+# Estadísticas descriptivas del Cuarteto de Anscombe
+estadisticas
 
-cat("\nObservaciones sobre las estadísticas:\n")
-cat("1. Todos los conjuntos tienen una media de X de 9.0000\n")
-cat("2. Todos los conjuntos tienen una media de Y cercana a 7.5009\n")
-cat("3. Las desviaciones estándar de X son aproximadamente 3.3166\n")
-cat("4. Las desviaciones estándar de Y son aproximadamente 2.0316\n")
-cat("5. Las correlaciones son todas cercanas a 0.8164\n")
+# Observaciones sobre las estadísticas:
+# 1. Todos los conjuntos tienen una media de X de 9.0000
+# 2. Todos los conjuntos tienen una media de Y cercana a 7.5009
+# 3. Las desviaciones estándar de X son aproximadamente 3.3166
+# 4. Las desviaciones estándar de Y son aproximadamente 2.0316
+# 5. Las correlaciones son todas cercanas a 0.8164
 
 # Crear un gráfico mejorado del Cuarteto de Anscombe
 anscombe_long <- data.frame(
@@ -77,6 +76,9 @@ p1 <- ggplot(anscombe_long, aes(x = x, y = y)) +
         plot.subtitle = element_text(size = 12, color = "gray")
     )
 
+# Mostrar el gráfico
+p1
+
 # Guardar el gráfico
 setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 ggsave("anscombe_plot.png", p1, width = 10, height = 8)
@@ -85,14 +87,14 @@ ggsave("anscombe_plot.png", p1, width = 10, height = 8)
 # Cargar los datos del Datasaurus
 data("datasaurus_dozen")
 
-# Mostrar los datos originales del Datasaurus (primeros 5 registros de cada conjunto)
-cat("\nPrimeros 5 registros de cada conjunto del Datasaurus:\n")
-# Mostrar los datos 
+# Primeros 5 registros de cada conjunto del Datasaurus
 datos_datasaurus <- datasaurus_dozen %>%
     group_by(dataset) %>%
     slice_head(n = 5) %>%
     select(dataset, x, y)
-print(datos_datasaurus, row.names = FALSE)
+
+#Mostrar tabla
+datos_datasaurus
 
 # Calcular estadísticas para cada conjunto del Datasaurus
 estadisticas_datasaurus <- datasaurus_dozen %>%
@@ -109,16 +111,15 @@ estadisticas_datasaurus <- datasaurus_dozen %>%
 estadisticas_datasaurus <- as.data.frame(estadisticas_datasaurus)
 estadisticas_datasaurus[, -1] <- round(estadisticas_datasaurus[, -1], 4)
 
-# Mostrar estadísticas
-cat("\nEstadísticas descriptivas del Datasaurus:\n")
-print(estadisticas_datasaurus, row.names = FALSE)
+# Mostrar estadísticas descriptivas del Datasaurus
+estadisticas_datasaurus
 
-cat("\nObservaciones sobre las estadísticas:\n")
-cat("1. Todos los conjuntos tienen una media de X cercana a 54.26\n")
-cat("2. Todos los conjuntos tienen una media de Y cercana a 47.83\n")
-cat("3. Las desviaciones estándar de X son aproximadamente 16.76\n")
-cat("4. Las desviaciones estándar de Y son aproximadamente 26.93\n")
-cat("5. Las correlaciones son todas cercanas a -0.06\n")
+# Observaciones sobre las estadísticas:
+# 1. Todos los conjuntos tienen una media de X cercana a 54.26
+# 2. Todos los conjuntos tienen una media de Y cercana a 47.83
+# 3. Las desviaciones estándar de X son aproximadamente 16.76
+# 4. Las desviaciones estándar de Y son aproximadamente 26.93
+# 5. Las correlaciones son todas cercanas a -0.06
 
 # Crear un gráfico mejorado del Datasaurus
 p2 <- ggplot(datasaurus_dozen, aes(x = x, y = y)) +
@@ -135,6 +136,9 @@ p2 <- ggplot(datasaurus_dozen, aes(x = x, y = y)) +
         strip.text = element_text(size = 8),
         axis.text = element_text(size = 6)
     )
+
+# Mostrar el gráfico
+p2
 
 # Guardar el gráfico
 ggsave("datasaurus_plot.png", p2, width = 16, height = 12)
