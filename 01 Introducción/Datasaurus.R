@@ -5,10 +5,12 @@
 if (!require("datasauRus")) install.packages("datasauRus")
 if (!require("ggplot2")) install.packages("ggplot2")
 if (!require("dplyr")) install.packages("dplyr")
+if (!require("knitr")) install.packages("knitr")
 
 library(datasauRus)
 library(ggplot2)
 library(dplyr)
+library(knitr)
 
 # Mostrar el Cuarteto de Anscombe
 # Cargar los datos
@@ -34,8 +36,26 @@ estadisticas <- data.frame(
     conjunto4 = calcular_estadisticas(anscombe$x4, anscombe$y4)
 )
 
-print("Estadísticas del Cuarteto de Anscombe:")
-print(estadisticas)
+# Crear una tabla más legible con kable
+tabla_anscombe <- estadisticas %>%
+    mutate(across(where(is.numeric), ~ round(., 4))) %>%
+    kable(
+        format = "pipe",
+        col.names = c("Conjunto 1", "Conjunto 2", "Conjunto 3", "Conjunto 4"),
+        caption = "Estadísticas descriptivas del Cuarteto de Anscombe"
+    )
+
+# Mostrar la tabla
+cat("\nEstadísticas descriptivas del Cuarteto de Anscombe:\n")
+print(tabla_anscombe)
+
+cat("\nObservaciones importantes:\n")
+cat("1. Todos los conjuntos tienen una media de X de 9.0000\n")
+cat("2. Todos los conjuntos tienen una media de Y cercana a 7.5009\n")
+cat("3. Las desviaciones estándar de X son aproximadamente 3.3166\n")
+cat("4. Las desviaciones estándar de Y son aproximadamente 2.0316\n")
+cat("5. Las correlaciones son todas cercanas a 0.8164\n")
+cat("\nA pesar de tener estadísticas casi idénticas, cada conjunto forma un patrón visual único.\n")
 
 # Crear un gráfico mejorado del Cuarteto de Anscombe
 anscombe_long <- data.frame(
@@ -76,8 +96,26 @@ estadisticas_datasaurus <- datasaurus_dozen %>%
         correlacion = cor(x, y)
     )
 
-print("Estadísticas del Datasaurus:")
-print(estadisticas_datasaurus)
+# Crear una tabla más legible con kable
+tabla_datasaurus <- estadisticas_datasaurus %>%
+    mutate(across(where(is.numeric), ~ round(., 4))) %>%
+    kable(
+        format = "pipe",
+        col.names = c("Conjunto", "Media X", "Media Y", "Desv. Est. X", "Desv. Est. Y", "Correlación"),
+        caption = "Estadísticas descriptivas del Datasaurus"
+    )
+
+# Mostrar la tabla
+cat("\nEstadísticas descriptivas del Datasaurus:\n")
+print(tabla_datasaurus)
+
+cat("\nObservaciones importantes:\n")
+cat("1. Todos los conjuntos tienen una media de X cercana a 54.26\n")
+cat("2. Todos los conjuntos tienen una media de Y cercana a 47.83\n")
+cat("3. Las desviaciones estándar de X son aproximadamente 16.76\n")
+cat("4. Las desviaciones estándar de Y son aproximadamente 26.93\n")
+cat("5. Las correlaciones son todas cercanas a -0.06\n")
+cat("\nA pesar de tener estadísticas casi idénticas, cada conjunto forma un patrón visual único.\n")
 
 # Crear un gráfico mejorado del Datasaurus
 p2 <- ggplot(datasaurus_dozen, aes(x = x, y = y)) +
@@ -111,6 +149,33 @@ plot_ly(dino_data, x = ~x, y = ~y, type = "scatter", mode = "markers") %>%
         yaxis = list(title = "Y")
     )
 
+# Guardar las tablas de estadísticas en un archivo markdown
+sink("estadisticas.md")
+cat("## Estadísticas del Cuarteto de Anscombe\n\n")
+cat("| Estadística | Conjunto 1 | Conjunto 2 | Conjunto 3 | Conjunto 4 |\n")
+cat("|-------------|------------|------------|------------|------------|\n")
+for (i in 1:nrow(estadisticas)) {
+    cat("|", rownames(estadisticas)[i])
+    for (j in 1:ncol(estadisticas)) {
+        cat(" |", round(estadisticas[i, j], 4))
+    }
+    cat(" |\n")
+}
+
+cat("\n## Estadísticas del Datasaurus\n\n")
+cat("| Dataset | Media X | Media Y | SD X | SD Y | Correlación |\n")
+cat("|---------|---------|---------|-------|-------|-------------|\n")
+for (i in 1:nrow(estadisticas_datasaurus)) {
+    cat("|", estadisticas_datasaurus$dataset[i])
+    cat(" |", round(estadisticas_datasaurus$media_x[i], 4))
+    cat(" |", round(estadisticas_datasaurus$media_y[i], 4))
+    cat(" |", round(estadisticas_datasaurus$sd_x[i], 4))
+    cat(" |", round(estadisticas_datasaurus$sd_y[i], 4))
+    cat(" |", round(estadisticas_datasaurus$correlacion[i], 4))
+    cat(" |\n")
+}
+sink()
+
 # Mensaje final
 cat("\nEste ejemplo demuestra que:\n")
 cat("1. Las estadísticas descriptivas por sí solas pueden ser engañosas\n")
@@ -120,3 +185,4 @@ cat("3. No debemos confiar ciegamente en los números sin ver qué hay detrás\n
 cat("\nSe han generado los siguientes archivos:\n")
 cat("- anscombe_plot.png: Visualización del Cuarteto de Anscombe\n")
 cat("- datasaurus_plot.png: Visualización de todos los conjuntos del Datasaurus\n")
+cat("- estadisticas.md: Tablas con las estadísticas descriptivas\n")
