@@ -5,14 +5,10 @@
 if (!require("datasauRus")) install.packages("datasauRus")
 if (!require("ggplot2")) install.packages("ggplot2")
 if (!require("dplyr")) install.packages("dplyr")
-if (!require("gganimate")) install.packages("gganimate")
-if (!require("gifski")) install.packages("gifski")
 
 library(datasauRus)
 library(ggplot2)
 library(dplyr)
-library(gganimate)
-library(gifski)
 
 # Mostrar el Cuarteto de Anscombe
 # Cargar los datos
@@ -62,6 +58,7 @@ p1 <- ggplot(anscombe_long, aes(x = x, y = y)) +
     )
 
 # Guardar el gráfico
+setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 ggsave("anscombe_plot.png", p1, width = 10, height = 8)
 
 # Ahora mostramos el Datasaurus
@@ -84,45 +81,22 @@ print(estadisticas_datasaurus)
 
 # Crear un gráfico mejorado del Datasaurus
 p2 <- ggplot(datasaurus_dozen, aes(x = x, y = y)) +
-    geom_point(color = "steelblue", alpha = 0.6) +
-    facet_wrap(~dataset, ncol = 3) +
+    geom_point(color = "steelblue", alpha = 0.6, size = 0.8) +
+    facet_wrap(~dataset, ncol = 4) +
     theme_minimal() +
     labs(
         title = "El Datasaurus",
-        subtitle = "Conjuntos de datos con estadísticas similares pero patrones visuales únicos" # nolint: line_length_linter.
-    ) +
-    theme(
-        plot.title = element_text(size = 16, face = "bold"),
-        plot.subtitle = element_text(size = 12, color = "gray")
-    )
-
-# Guardar el gráfico
-ggsave("datasaurus_plot.png", p2, width = 12, height = 8)
-
-# Crear una animación del Datasaurus
-# Añadir un frame temporal para la animación
-datasaurus_dozen$frame <- as.numeric(factor(datasaurus_dozen$dataset))
-
-# Crear el gráfico animado
-p3 <- ggplot(datasaurus_dozen, aes(x = x, y = y)) +
-    geom_point(color = "steelblue", alpha = 0.6) +
-    theme_minimal() +
-    labs(
-        title = "El Datasaurus: {closest_state}",
         subtitle = "Conjuntos de datos con estadísticas similares pero patrones visuales únicos"
     ) +
     theme(
         plot.title = element_text(size = 16, face = "bold"),
-        plot.subtitle = element_text(size = 12, color = "gray")
-    ) +
-    transition_states(dataset, transition_length = 2, state_length = 3) +
-    ease_aes("cubic-in-out")
+        plot.subtitle = element_text(size = 12, color = "gray"),
+        strip.text = element_text(size = 8),
+        axis.text = element_text(size = 6)
+    )
 
-# Guardar la animación
-anim_save("datasaurus_animation.gif", p3,
-    width = 800, height = 600,
-    fps = 2, duration = 26
-)
+# Guardar el gráfico
+ggsave("datasaurus_plot.png", p2, width = 16, height = 12)
 
 # Crear un gráfico interactivo con plotly (opcional)
 if (!require("plotly")) install.packages("plotly")
@@ -146,4 +120,3 @@ cat("3. No debemos confiar ciegamente en los números sin ver qué hay detrás\n
 cat("\nSe han generado los siguientes archivos:\n")
 cat("- anscombe_plot.png: Visualización del Cuarteto de Anscombe\n")
 cat("- datasaurus_plot.png: Visualización de todos los conjuntos del Datasaurus\n")
-cat("- datasaurus_animation.gif: Animación de los conjuntos del Datasaurus\n")
