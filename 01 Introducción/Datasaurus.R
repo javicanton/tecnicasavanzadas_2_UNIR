@@ -5,10 +5,12 @@
 if (!require("datasauRus")) install.packages("datasauRus")
 if (!require("ggplot2")) install.packages("ggplot2")
 if (!require("dplyr")) install.packages("dplyr")
+if (!require("tidyr")) install.packages("tidyr")
 
 library(datasauRus)
 library(ggplot2)
 library(dplyr)
+library(tidyr)
 
 # Explorar el Cuarteto de Anscombe
 # Cargar los datos
@@ -85,10 +87,11 @@ data("datasaurus_dozen")
 
 # Mostrar los datos originales del Datasaurus (primeros 5 registros de cada conjunto)
 cat("\nPrimeros 5 registros de cada conjunto del Datasaurus:\n")
+# Mostrar los datos 
 datos_datasaurus <- datasaurus_dozen %>%
     group_by(dataset) %>%
     slice_head(n = 5) %>%
-    pivot_wider(names_from = dataset, values_from = c(x, y))
+    select(dataset, x, y)
 print(datos_datasaurus, row.names = FALSE)
 
 # Calcular estadísticas para cada conjunto del Datasaurus
