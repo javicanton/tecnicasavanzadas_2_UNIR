@@ -79,7 +79,7 @@ El Datasaurus es una colección de conjuntos de datos creada por Justin Matejka 
 | away | 42.8205 | 91.4103 | bullseye | 42.8205 | 91.4103 | circle | 42.8205 | 91.4103 | dino | 42.8205 | 91.4103 |
 | away | 40.7692 | 88.0769 | bullseye | 40.7692 | 88.0769 | circle | 40.7692 | 88.0769 | dino | 40.7692 | 88.0769 |
 
-### Cálculo de Estadísticas
+### Cálculo de Estadísticas del Datasaurus
 
 ```r
 # Calcular estadísticas para cada conjunto del Datasaurus
@@ -98,7 +98,7 @@ estadisticas_datasaurus <- as.data.frame(estadisticas_datasaurus)
 estadisticas_datasaurus[, -1] <- round(estadisticas_datasaurus[, -1], 4)
 ```
 
-### Estadísticas Descriptivas
+### Estadísticas Descriptivas del Datasaurus
 
 | Dataset | Media X | Media Y | SD X | SD Y | Correlación |
 |---------|---------|---------|-------|-------|-------------|
@@ -124,7 +124,7 @@ Observaciones sobre las estadísticas:
 4. Las desviaciones estándar de Y son aproximadamente 26.93
 5. Las correlaciones son todas cercanas a -0.06
 
-### Visualización
+### Visualización del Datasaurus
 
 ![El Datasaurus](datasaurus_plot.png)
 
