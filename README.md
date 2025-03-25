@@ -5,21 +5,52 @@ Repositorio de materiales, ejercicios, etc. para la asignatura de Técnicas Avan
 ## Índice de contenidos
 
 ### 01 Introducción
-
-- [Instalación swirl español](./01%20Introducción/Instalacion%20swirl%20español.R) - Script para la instalación de Swirl en español.
-- [Introducción](./01%20Introducción/Introduccion.R) - Script introductorio, para mostrar cómo funciona y qué posibilidades ofrece R.
-- [Análisis ejemplo](./01%20Introducción/Analisis%20ejemplo.R) - Script con un análisis de ejemplo de análisis de un dataset, con métricas y visualizaciones de datos.
-- [Datasaurus](./01%20Introducción/Datasaurus.R) - Script para explorar el Cuarteto de Anscombe y el Datasaurus, ejemplos interesantes de análisis de datos.
-- [Documentación Datasaurus](./01%20Introducción/Datasaurus.md) - Documentación detallada del ejemplo del Datasaurus y el Cuarteto de Anscombe.
+- [Introducción a R](01%20Introducción/Introduccion.md)
+  - [Script R](01%20Introducción/Introduccion.R)
+- [Instalación de Swirl en Español](01%20Introducción/Instalacion%20swirl%20español.md)
+  - [Script R](01%20Introducción/Instalacion%20swirl%20español.R)
+- [Análisis de Datos con R](01%20Introducción/Analisis%20ejemplo.md)
+  - [Script R](01%20Introducción/Analisis%20ejemplo.R)
+- [El Datasaurus](01%20Introducción/Datasaurus.md)
+  - [Script R](01%20Introducción/Datasaurus.R)
 
 ### 02 Modelización
-
-- [Tema 3 Regresión Lineal Androides](./02%20Modelización/Tema%203%20Regresion%20Lineal%20Androides.md) - Material sobre regresión lineal con ejemplo de androides.
-- [Tema 3 Regresión Lineal Bacterias](./02%20Modelización/Tema%203%20Regresion%20Lineal%20Bacterias.md) - Material sobre regresión lineal con ejemplo de bacterias.
-- [Tema 3 Regresión Lineal Bacterias (R)](./02%20Modelización/Tema%203%20Regresion%20Lineal%20Bacterias.R) - Script R para el análisis de regresión lineal con bacterias.
-- [Tema 3 Regresión Lineal Androides (R)](./02%20Modelización/Tema%203%20Regresion%20Lineal%20Androides.R) - Script R para el análisis de regresión lineal con androides.
+- [Regresión Lineal Androides](02%20Modelización/Tema%203%20Regresion%20Lineal%20Androides.md)
+  - [Script R](02%20Modelización/Tema%203%20Regresion%20Lineal%20Androides.R)
+- [Regresión Lineal Bacterias](02%20Modelización/Tema%203%20Regresion%20Lineal%20Bacterias.md)
+  - [Script R](02%20Modelización/Tema%203%20Regresion%20Lineal%20Bacterias.R)
 
 ### Otros recursos
+- [Enlaces Interesantes](enlaces_interesantes.md)
 
-- [Enlaces Interesantes](./enlaces_interesantes.md) - Colección de recursos y enlaces útiles relacionados con el análisis de datos.
-- [README.md](./README.md) - Este archivo.
+## Requisitos
+- R instalado en el sistema
+- Conexión a internet para instalar paquetes
+- Git (opcional, para control de versiones)
+
+## Instalación
+1. Clona este repositorio
+2. Abre RStudio
+3. Navega al directorio del repositorio
+4. Ejecuta los scripts en orden
+
+## Uso
+Cada carpeta contiene:
+- Un archivo Markdown con la documentación y explicaciones
+- Un archivo R con el código ejecutable
+
+Se recomienda:
+1. Leer primero la documentación en Markdown
+2. Revisar el código en el archivo R
+3. Ejecutar el código y experimentar con él
+
+## Contribuir
+Las contribuciones son bienvenidas. Por favor:
+1. Haz fork del repositorio
+2. Crea una rama para tu feature
+3. Haz commit de tus cambios
+4. Push a la rama
+5. Crea un Pull Request
+
+## Licencia
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
