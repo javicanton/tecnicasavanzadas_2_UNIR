@@ -21,6 +21,9 @@ Repositorio de materiales, ejercicios, etc. para la asignatura de Técnicas Avan
   - [Script R](02%20Modelización/Tema%203%20Regresion%20Lineal%20Androides.R)
 - [Regresión Lineal Bacterias](02%20Modelización/Tema%203%20Regresion%20Lineal%20Bacterias.md)
   - [Script R](02%20Modelización/Tema%203%20Regresion%20Lineal%20Bacterias.R)
+- [Tyrell Corporation - Análisis de Eliminaciones](02%20Modelización/Tema%203%20Tyrell%20Corporation.md)
+  - [Script R](02%20Modelización/Tema%203%20Tyrell%20Corporation.R)
+  - [Script R Output](02%20Modelización/Tema%203%20Tyrell%20Corporation%20Output.R)
 
 ### Otros recursos
 
