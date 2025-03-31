@@ -62,6 +62,6 @@ summary(linearModel)
 
 # El summary nos proporciona información importante sobre el ajuste:
 # - Coeficientes: pendiente e intercepto de la línea
-# - R-squared: qué tan bien la línea explica los datos
+# - R-squared: cómo de bien la línea explica los datos
 # - p-valores: significancia estadística de los coeficientes
 # - Residuales: diferencias entre valores observados y predichos

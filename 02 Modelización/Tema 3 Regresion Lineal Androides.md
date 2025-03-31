@@ -64,24 +64,7 @@ plot(x, y,
     cex = 1,
     pch = 8
 )
-
-# Para guardar el gráfico como imagen
-png("imagenes/evolucion_androides.png", width = 800, height = 600)
-plot(x, y,
-    main = "Evolución de la población de androides",
-    xlab = "Tiempo de medición [meses]",
-    ylab = "Número de androides [valor absoluto]",
-    cex = 1,
-    pch = 8
-)
-dev.off()
 ```
-
-El gráfico generado debería verse así:
-
-![Evolución de la población de androides](imagenes/evolucion_androides.png)
-
-*Figura 1: Gráfico que muestra el crecimiento logístico de la población de androides a lo largo del tiempo. Se puede observar claramente la forma sigmoidea característica, con un crecimiento rápido inicial seguido de una desaceleración y estabilización.*
 
 ### Análisis de Regresión Lineal
 
