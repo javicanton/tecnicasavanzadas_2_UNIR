@@ -4,7 +4,8 @@
 
 ## 1. Introducción
 
-Este informe presenta el análisis de datos de usuarios de Spotifal, una plataforma (ficticia) de streaming musical. El objetivo es entender los patrones de uso y abandono de los usuarios, utilizando diferentes técnicas de modelización estadística.
+Este informe presenta el análisis de datos de usuarios de Spotifal, una plataforma 
+de streaming musical. El objetivo es entender los patrones de uso y abandono de los usuarios, utilizando diferentes técnicas de modelización estadística.
 
 ## 2. Configuración del Entorno
 
