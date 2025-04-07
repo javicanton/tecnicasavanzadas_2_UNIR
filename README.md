@@ -35,6 +35,7 @@ Repositorio de materiales, ejercicios, etc. para la asignatura de Técnicas Avan
 ## Requisitos
 
 ### Sistema
+
 - R instalado en el sistema
 - Conexión a internet para instalar paquetes
 - Git (opcional, para control de versiones)
@@ -42,6 +43,7 @@ Repositorio de materiales, ejercicios, etc. para la asignatura de Técnicas Avan
 ### Paquetes R
 
 #### Paquetes Básicos (necesarios)
+
 ```R
 install.packages(c(
     "tidyverse",  # Conjunto de paquetes para análisis de datos
@@ -53,6 +55,7 @@ install.packages(c(
 ```
 
 #### Paquetes Recomendados (según necesidades)
+
 ```R
 install.packages(c(
     "skimr",      # Resúmenes estadísticos
@@ -92,7 +95,3 @@ Las contribuciones son bienvenidas. Por favor:
 3. Haz commit de tus cambios
 4. Push a la rama
 5. Crea un Pull Request
-
-## Licencia
-
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
