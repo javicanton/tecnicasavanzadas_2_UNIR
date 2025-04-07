@@ -43,7 +43,7 @@ datos <- data.frame(
 )
 
 # Opción 2: Cargar datos desde CSV (comentada)
-# datos <- read.csv("datos_tyrell.csv", header = TRUE)
+datos <- read.csv("datos_tyrell.csv", sep = ";", header = TRUE)
 
 # Gráfico de dispersión para Los Angeles
 plot(datos$month, datos$Los_Angeles,
@@ -164,3 +164,4 @@ lines(datos$month, predict(modelo_Sydney), col = "red")
 
 # Resumen del modelo de Sydney
 summary(modelo_Sydney)
+

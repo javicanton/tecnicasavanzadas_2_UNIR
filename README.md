@@ -24,6 +24,9 @@ Repositorio de materiales, ejercicios, etc. para la asignatura de Técnicas Avan
 - [Tyrell Corporation - Análisis de Eliminaciones](02%20Modelización/Tema%203%20Tyrell%20Corporation.md)
   - [Script R](02%20Modelización/Tema%203%20Tyrell%20Corporation.R)
   - [Script R Output](02%20Modelización/Tema%203%20Tyrell%20Corporation%20Output.R)
+- [Spotifal - Análisis de Abandono de Usuarios](02%20Modelización/Spotifal_Informe.md)
+  - [Script R](02%20Modelización/Spotifal.r)
+  - Análisis completo de patrones de abandono usando modelos lineales, logísticos y redes neuronales
 
 ### Otros recursos
 
@@ -31,9 +34,34 @@ Repositorio de materiales, ejercicios, etc. para la asignatura de Técnicas Avan
 
 ## Requisitos
 
+### Sistema
 - R instalado en el sistema
 - Conexión a internet para instalar paquetes
 - Git (opcional, para control de versiones)
+
+### Paquetes R
+
+#### Paquetes Básicos (necesarios)
+```R
+install.packages(c(
+    "tidyverse",  # Conjunto de paquetes para análisis de datos
+    "readr",      # Lectura eficiente de datos
+    "ggplot2",    # Visualización de datos
+    "dplyr",      # Manipulación de datos
+    "stats"       # Funciones estadísticas básicas
+))
+```
+
+#### Paquetes Recomendados (según necesidades)
+```R
+install.packages(c(
+    "skimr",      # Resúmenes estadísticos
+    "janitor",    # Limpieza de datos
+    "ggthemes",   # Temas adicionales para ggplot
+    "forcats",    # Manejo de factores
+    "corrplot"    # Visualización de correlaciones
+))
+```
 
 ## Instalación
 
