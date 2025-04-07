@@ -1,5 +1,7 @@
 # Análisis de Datos de Spotifal
 
+![Logo de Spotifal](Logo%20Spotifal.png)
+
 ## 1. Introducción
 
 Este informe presenta el análisis de datos de usuarios de Spotifal, una plataforma de streaming musical. El objetivo es entender los patrones de uso y abandono de los usuarios, utilizando diferentes técnicas de modelización estadística.
