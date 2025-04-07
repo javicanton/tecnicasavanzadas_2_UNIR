@@ -69,11 +69,11 @@ any(is.na(df)) # Verificamos si hay valores ausentes
 head(df)
 
 # Estadísticos básicos de las variables numéricas
-summary(select(df, dias_ultimo_inicio, canciones_por_semana, listas_creadas, edad))
+summary(select(df, dias_ultimo_inicio, canciones_por_semana, listas_creadas, edad, abandona))
 
 # Distribución de las variables categóricas
 df %>%
-    select(tipo_suscripcion, genero_favorito, sexo, abandona) %>%
+    select(tipo_suscripcion, genero_favorito, sexo) %>%
     map(table)
 
 # ========================================
@@ -164,12 +164,6 @@ modelo_lineal_simple <- lm(abandona ~ dias_ultimo_inicio, data = df)
 # Resumen del modelo
 summary(modelo_lineal_simple)
 
-# Interpretación del resultado:
-# - El coeficiente de 'dias_ultimo_inicio' nos indica cuánto aumenta (o disminuye)
-#   la probabilidad de abandono por cada día adicional sin conectarse.
-# - Si el coeficiente es positivo y significativo, significa que cuanto más tiempo
-#   pasa un usuario sin entrar, más probable es que abandone.
-
 # Visualización del ajuste del modelo lineal
 ggplot(df, aes(x = dias_ultimo_inicio, y = abandona)) +
     geom_jitter(height = 0.05, width = 0.3, alpha = 0.3, color = "darkblue") +
@@ -192,11 +186,6 @@ modelo_logistico_simple <- glm(abandona ~ dias_ultimo_inicio, data = df, family 
 
 # Resumen del modelo
 summary(modelo_logistico_simple)
-
-# Interpretación del coeficiente:
-# - Nos dice cómo cambia el log-odds (logaritmo de la probabilidad) de abandono
-#   por cada día adicional sin iniciar sesión.
-# - Si es positivo, la probabilidad de abandonar aumenta con los días.
 
 # Visualización del ajuste del modelo logístico
 ggplot(df, aes(x = dias_ultimo_inicio, y = abandona)) +
@@ -223,10 +212,6 @@ modelo_logistico_multiple <- glm(
 
 # Resumen del modelo
 summary(modelo_logistico_multiple)
-
-# Interpretación:
-# - Este modelo nos permite ver el efecto conjunto de varias variables.
-# - Se puede analizar qué factores son significativos y cómo contribuyen a la probabilidad de abandono.
 
 # Visualización de efectos marginales: probabilidad predicha según días de inactividad y tipo de suscripción
 pred <- ggpredict(
@@ -258,10 +243,6 @@ modelo_interaccion <- glm(
 
 # Resumen del modelo con interacción
 summary(modelo_interaccion)
-
-# Interpretación:
-# - El término de interacción indica si el efecto del tiempo sin iniciar sesión
-#   es distinto según se tenga cuenta gratuita o premium.
 
 # Visualización del efecto de la interacción
 pred_inter <- ggpredict(
@@ -390,6 +371,7 @@ roc_log_multiple <- roc(df_evaluacion$abandonado, df_evaluacion$pred_log_multipl
 roc_interaccion <- roc(df_evaluacion$abandonado, df_evaluacion$pred_interaccion)
 roc_nn <- roc(df_evaluacion$abandonado, df_evaluacion$pred_nn)
 
+# Comparación visual de curvas ROC
 plot(roc_log_simple, col = "blue", lwd = 2, main = "Curvas ROC de los modelos")
 lines(roc_log_multiple, col = "green", lwd = 2)
 lines(roc_interaccion, col = "purple", lwd = 2)

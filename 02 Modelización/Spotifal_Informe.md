@@ -124,6 +124,8 @@ El análisis detallado de las variables numéricas muestra:
 
 ### 5.1 Resumen de Correlaciones Diseñadas
 
+![Matriz de Correlaciones](img/matriz_correlaciones.png)
+
 | Variable             | Influye en abandona | Tipo de relación         |
 |---------------------|--------------------|-----------------------|
 | dias_ultimo_inicio   | Sí                | Positiva, lineal      |
@@ -143,10 +145,14 @@ El análisis detallado de las variables numéricas muestra:
    - A más días sin actividad, mayor probabilidad de abandono
    - Efecto más fuerte y consistente en el dataset
 
+![Relación días vs abandono](img/dias_vs_abandono.png)
+
 2. **Canciones por semana (Negativa)**
    - Relación inversa con el abandono
    - Mayor actividad musical asociada a menor probabilidad de abandono
    - Indicador importante de engagement del usuario
+
+![Relación canciones vs abandono](img/canciones_vs_abandono.png)
 
 3. **Listas creadas (Negativa)**
    - Relación inversa con el abandono
@@ -160,17 +166,14 @@ El análisis detallado de las variables numéricas muestra:
    - No es un predictor fuerte en usuarios más jóvenes
    - Sugiere necesidad de estrategias específicas por edad
 
+![Relación edad vs abandono](img/edad_vs_abandono.png)
+
 5. **Tipo de Suscripción**
    - Factor categórico con influencia clara
    - Usuarios gratuitos muestran mayor tendencia al abandono
    - Variable clave para estrategias de retención
 
-#### Variables sin Influencia Significativa
-
-6. **Género Favorito y Sexo**
-   - No muestran relación significativa con el abandono
-   - Pueden ser útiles para segmentación pero no para predicción
-   - Sugiere que el abandono es independiente de estas características
+![Relación suscripción vs abandono](img/suscripcion_vs_abandono.png)
 
 ### 5.3 Implicaciones para el Modelado
 
@@ -237,6 +240,8 @@ El gráfico de dispersión revela patrones interesantes:
 
 Como primera aproximación, se ajustó un modelo lineal simple para predecir el abandono en función de los días desde el último inicio de sesión.
 
+![Modelo Lineal Simple](img/modelo_lineal.png)
+
 #### Resultados del Modelo
 
 ```r
@@ -267,6 +272,8 @@ dias_ultimo_inicio 0.015708   0.001736   9.047   <2e-16 ***
 ### 7.2 Modelo Logístico Simple
 
 Para abordar las limitaciones del modelo lineal, se ajustó un modelo logístico que es más apropiado para variables de respuesta binaria.
+
+![Modelo Logístico Simple](img/modelo_logistico_simple.png)
 
 #### Resultados del Modelo
 
@@ -304,6 +311,8 @@ dias_ultimo_inicio  0.08542    0.01147   7.447 9.51e-14 ***
 ### 7.3 Modelo Logístico Múltiple
 
 Para mejorar la capacidad predictiva, se ajustó un modelo que incluye múltiples variables predictoras.
+
+![Modelo Logístico Múltiple](img/modelo_logistico_multiple.png)
 
 #### Resultados del Modelo
 
@@ -345,6 +354,8 @@ tipo_suscripcionpremium -2.213695   0.368425  -6.009 1.87e-09 ***
 
 Para explorar si el efecto del tiempo sin actividad varía según el tipo de suscripción, se ajustó un modelo con interacciones.
 
+![Modelo con Interacciones](img/modelo_interaccion.png)
+
 #### Resultados del Modelo
 
 ```r
@@ -381,6 +392,8 @@ dias_ultimo_inicio:tipo_suscripcionpremium  0.025402   0.030947   0.821   0.4118
 ### 7.5 Modelo de Red Neuronal
 
 Para capturar relaciones no lineales más complejas entre las variables, se implementó una red neuronal.
+
+![Modelo de Red Neuronal](img/modelo_red_neuronal.png)
 
 #### Estructura del Modelo
 
@@ -460,7 +473,9 @@ Se evaluaron todos los modelos utilizando dos métricas principales:
 
 ### 8.3 Análisis de Curvas ROC
 
-Las curvas ROC (Receiver Operating Characteristic) son una herramienta fundamental para evaluar el rendimiento de modelos de clasificación binaria. Representan la relación entre la tasa de verdaderos positivos (sensibilidad) y la tasa de falsos positivos (1 - especificidad) para diferentes umbrales de clasificación.
+Las curvas ROC (Receiver Operating Characteristic) son una herramienta fundamental para evaluar el rendimiento de modelos de clasificación binaria.
+
+![Curvas ROC de los Modelos](img/curvas_roc.png)
 
 #### Conceptos Clave
 
