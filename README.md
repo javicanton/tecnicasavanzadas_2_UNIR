@@ -17,16 +17,24 @@ Repositorio de materiales, ejercicios, etc. para la asignatura de Técnicas Avan
 
 ### 02 Modelización
 
-- [Regresión Lineal Androides](02%20Modelización/Tema%203%20Regresion%20Lineal%20Androides.md)
-  - [Script R](02%20Modelización/Tema%203%20Regresion%20Lineal%20Androides.R)
-- [Regresión Lineal Bacterias](02%20Modelización/Tema%203%20Regresion%20Lineal%20Bacterias.md)
-  - [Script R](02%20Modelización/Tema%203%20Regresion%20Lineal%20Bacterias.R)
-- [Tyrell Corporation - Análisis de Eliminaciones](02%20Modelización/Tema%203%20Tyrell%20Corporation.md)
-  - [Script R](02%20Modelización/Tema%203%20Tyrell%20Corporation.R)
-  - [Script R Output](02%20Modelización/Tema%203%20Tyrell%20Corporation%20Output.R)
-- [Spotifal - Análisis de Abandono de Usuarios](02%20Modelización/Spotifal_Informe.md)
-  - [Script R](02%20Modelización/Spotifal.r)
+#### Análisis de Streaming
+
+- [Spotifal - Análisis de Abandono de Usuarios](02%20Modelización/Analisis_Spotifal/Spotifal_Informe.md)
+  - [Script R](02%20Modelización/Analisis_Spotifal/Spotifal.r)
   - Análisis completo de patrones de abandono usando modelos lineales, logísticos y redes neuronales
+
+#### Regresión Lineal
+
+- [Regresión Lineal Androides](02%20Modelización/Regresion_Lineal/Androides/RegresionLineal_Androides.md)
+  - [Script R](02%20Modelización/Regresion_Lineal/Androides/RegresionLineal_Androides.R)
+- [Regresión Lineal Bacterias](02%20Modelización/Regresion_Lineal/Bacterias/RegresionLineal_Bacterias.md)
+  - [Script R](02%20Modelización/Regresion_Lineal/Bacterias/RegresionLineal_Bacterias.R)
+
+#### Análisis Corporativo
+
+- [Tyrell Corporation - Análisis de Eliminaciones](02%20Modelización/Analisis_Tyrell_Corp/TyrellCorporation.md)
+  - [Script R](02%20Modelización/Analisis_Tyrell_Corp/TyrellCorporation.R)
+  - [Script R Output](02%20Modelización/Analisis_Tyrell_Corp/TyrellCorporation_Output.R)
 
 ### Otros recursos
 
