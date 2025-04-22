@@ -103,3 +103,84 @@ Las contribuciones son bienvenidas. Por favor:
 3. Haz commit de tus cambios
 4. Push a la rama
 5. Crea un Pull Request
+
+# Análisis de Dinámicas Poblacionales
+
+## Descripción
+
+Este repositorio contiene análisis estadísticos y modelos matemáticos aplicados al estudio de dinámicas poblacionales en diferentes contextos, con especial énfasis en el crecimiento de replicantes Nexus-4 y bacterias en entornos controlados.
+
+## Estructura del Proyecto
+
+```
+.
+├── 01 Analisis_Exploratorio/
+│   ├── README.md
+│   ├── analisis_exploratorio.Rmd
+│   └── analisis_exploratorio.html
+├── 02 Modelización/
+│   ├── README.md
+│   ├── Regresion_no_lineal.Rmd
+│   ├── Regresion_no_lineal.html
+│   ├── modelo_crecimiento_bacterias.Rmd
+│   └── modelo_crecimiento_bacterias.html
+├── 03 Visualizacion/
+│   ├── README.md
+│   ├── visualizacion_datos.Rmd
+│   └── visualizacion_datos.html
+└── README.md
+```
+
+## Contenido
+
+### 1. Análisis Exploratorio
+- Exploración inicial de datos
+- Estadísticas descriptivas
+- Identificación de patrones y tendencias
+
+### 2. Modelización
+- **Regresión No Lineal**
+  - Análisis del crecimiento de replicantes Nexus-4
+  - Comparación de modelos (lineal, polinomial, logístico, splines)
+  - Evaluación de métricas de ajuste
+  - Interpretación matemática detallada
+- **Modelo de Crecimiento de Bacterias**
+  - Análisis de dinámicas poblacionales
+  - Evaluación de factores ambientales
+
+### 3. Visualización
+- Gráficos interactivos
+- Representaciones de resultados
+- Dashboards de seguimiento
+
+## Requisitos
+
+- R (versión 4.0.0 o superior)
+- RStudio (recomendado)
+- Paquetes de R:
+  ```r
+  install.packages(c("ggplot2", "nls2", "splines", "knitr", "rmarkdown"))
+  ```
+
+## Uso
+
+1. Clonar el repositorio
+2. Instalar las dependencias
+3. Abrir los archivos .Rmd en RStudio
+4. Compilar los documentos para generar los informes HTML
+
+## Resultados
+
+Los análisis generan informes detallados que incluyen:
+- Visualizaciones interactivas
+- Tablas de resultados estadísticos
+- Interpretaciones matemáticas
+- Conclusiones y recomendaciones
+
+## Contribuciones
+
+Este trabajo forma parte de la investigación de Tyrell Corporation en el análisis de dinámicas poblacionales en entornos controlados. Los resultados contribuyen a la comprensión del comportamiento de replicantes Nexus-4 y microorganismos en condiciones experimentales.
+
+## Licencia
+
+Este proyecto es propiedad intelectual de Tyrell Corporation. Todos los derechos reservados.
