@@ -1,186 +1,103 @@
-# Materiales de la asignatura de Técnicas Avanzadas para el Análisis de Datos Cuantitativos II
+# Técnicas Avanzadas para el Análisis de Datos Cuantitativos II
 
-Repositorio de materiales, ejercicios, etc. para la asignatura de Técnicas Avanzadas para el Análisis de Datos Cuantitativos, del Máster en Métodos y Técnicas de Investigación Social Aplicada de UNIR.
+Repositorio de materiales para la asignatura de Técnicas Avanzadas para el Análisis de Datos Cuantitativos, del Máster en Métodos y Técnicas de Investigación Social Aplicada de UNIR.
 
-## Índice de contenidos
+## Contenidos
 
 ### 01 Introducción
 
 - [Introducción a R](01%20Introducción/Introduccion.md)
-  - [Script R](01%20Introducción/Introduccion.R)
 - [Instalación de Swirl en Español](01%20Introducción/Instalacion%20swirl%20español.md)
-  - [Script R](01%20Introducción/Instalacion%20swirl%20español.R)
 - [Análisis de Datos con R](01%20Introducción/Analisis%20ejemplo.md)
-  - [Script R](01%20Introducción/Analisis%20ejemplo.R)
 - [El Datasaurus](01%20Introducción/Datasaurus.md)
-  - [Script R](01%20Introducción/Datasaurus.R)
 
 ### 02 Modelización
 
 #### Análisis de Streaming
 
 - [Spotifal - Análisis de Abandono de Usuarios](02%20Modelización/Analisis_Spotifal/Spotifal_Informe.md)
-  - [Script R](02%20Modelización/Analisis_Spotifal/Spotifal.r)
-  - Análisis completo de patrones de abandono usando modelos lineales, logísticos y redes neuronales
+  - Análisis de patrones de abandono usando modelos lineales, logísticos y redes neuronales
 
 #### Regresión Lineal
 
 - [Regresión Lineal Androides](02%20Modelización/Regresion_Lineal/Androides/RegresionLineal_Androides.md)
-  - [Script R](02%20Modelización/Regresion_Lineal/Androides/RegresionLineal_Androides.R)
 - [Regresión Lineal Bacterias](02%20Modelización/Regresion_Lineal/Bacterias/RegresionLineal_Bacterias.md)
-  - [Script R](02%20Modelización/Regresion_Lineal/Bacterias/RegresionLineal_Bacterias.R)
 
 #### Análisis Corporativo
 
 - [Tyrell Corporation - Análisis de Eliminaciones](02%20Modelización/Analisis_Tyrell_Corp/TyrellCorporation.md)
-  - [Script R](02%20Modelización/Analisis_Tyrell_Corp/TyrellCorporation.R)
-  - [Script R Output](02%20Modelización/Analisis_Tyrell_Corp/TyrellCorporation_Output.R)
 
-### Otros recursos
+### Recursos Adicionales
 
 - [Enlaces Interesantes](enlaces_interesantes.md)
 
 ## Requisitos
 
-### Sistema
+### Software
 
-- R instalado en el sistema
-- Conexión a internet para instalar paquetes
-- Git (opcional, para control de versiones)
+- R (versión 4.0 o superior)
+- RStudio
+- Git (opcional)
 
 ### Paquetes R
 
-#### Paquetes Básicos (necesarios)
+#### Paquetes Básicos
 
 ```R
 install.packages(c(
-    "tidyverse",  # Conjunto de paquetes para análisis de datos
-    "readr",      # Lectura eficiente de datos
-    "ggplot2",    # Visualización de datos
+    "tidyverse",  # Análisis y visualización de datos
+    "readr",      # Lectura de datos
+    "ggplot2",    # Visualización
     "dplyr",      # Manipulación de datos
-    "stats"       # Funciones estadísticas básicas
+    "stats"       # Estadísticas básicas
 ))
 ```
 
-#### Paquetes Recomendados (según necesidades)
+#### Paquetes Recomendados
 
 ```R
 install.packages(c(
     "skimr",      # Resúmenes estadísticos
     "janitor",    # Limpieza de datos
-    "ggthemes",   # Temas adicionales para ggplot
+    "ggthemes",   # Temas para ggplot
     "forcats",    # Manejo de factores
     "corrplot"    # Visualización de correlaciones
 ))
 ```
 
-## Instalación
+## Instalación y Uso
 
-1. Clona este repositorio
-2. Abre RStudio
-3. Navega al directorio del repositorio
-4. Ejecuta los scripts en orden
+1. Clonar el repositorio
+2. Abrir RStudio
+3. Navegar al directorio del repositorio
+4. Instalar los paquetes necesarios
+5. Ejecutar los scripts en orden
 
-## Uso
+Cada sección contiene:
 
-Cada carpeta contiene:
-
-- Un archivo Markdown con la documentación y explicaciones
-- Un archivo R con el código ejecutable
-
-Se recomienda:
-
-1. Leer primero la documentación en Markdown
-2. Revisar el código en el archivo R
-3. Ejecutar el código y experimentar con él
-
-## Contribuir
-
-Las contribuciones son bienvenidas. Por favor:
-
-1. Haz fork del repositorio
-2. Crea una rama para tu feature
-3. Haz commit de tus cambios
-4. Push a la rama
-5. Crea un Pull Request
-
-# Análisis de Dinámicas Poblacionales
-
-## Descripción
-
-Este repositorio contiene análisis estadísticos y modelos matemáticos aplicados al estudio de dinámicas poblacionales en diferentes contextos, con especial énfasis en el crecimiento de replicantes Nexus-4 y bacterias en entornos controlados.
+- Documentación en formato Markdown
+- Scripts R ejecutables
+- Resultados y análisis
 
 ## Estructura del Proyecto
 
-```
-.
-├── 01 Analisis_Exploratorio/
-│   ├── README.md
-│   ├── analisis_exploratorio.Rmd
-│   └── analisis_exploratorio.html
-├── 02 Modelización/
-│   ├── README.md
-│   ├── Regresion_no_lineal.Rmd
-│   ├── Regresion_no_lineal.html
-│   ├── modelo_crecimiento_bacterias.Rmd
-│   └── modelo_crecimiento_bacterias.html
-├── 03 Visualizacion/
-│   ├── README.md
-│   ├── visualizacion_datos.Rmd
-│   └── visualizacion_datos.html
-└── README.md
-```
+El proyecto está organizado en:
 
-## Contenido
-
-### 1. Análisis Exploratorio
-- Exploración inicial de datos
-- Estadísticas descriptivas
-- Identificación de patrones y tendencias
-
-### 2. Modelización
-- **Regresión No Lineal**
-  - Análisis del crecimiento de replicantes Nexus-4
-  - Comparación de modelos (lineal, polinomial, logístico, splines)
-  - Evaluación de métricas de ajuste
-  - Interpretación matemática detallada
-- **Modelo de Crecimiento de Bacterias**
-  - Análisis de dinámicas poblacionales
-  - Evaluación de factores ambientales
-
-### 3. Visualización
-- Gráficos interactivos
-- Representaciones de resultados
-- Dashboards de seguimiento
-
-## Requisitos
-
-- R (versión 4.0.0 o superior)
-- RStudio (recomendado)
-- Paquetes de R:
-  ```r
-  install.packages(c("ggplot2", "nls2", "splines", "knitr", "rmarkdown"))
-  ```
-
-## Uso
-
-1. Clonar el repositorio
-2. Instalar las dependencias
-3. Abrir los archivos .Rmd en RStudio
-4. Compilar los documentos para generar los informes HTML
-
-## Resultados
-
-Los análisis generan informes detallados que incluyen:
-- Visualizaciones interactivas
-- Tablas de resultados estadísticos
-- Interpretaciones matemáticas
-- Conclusiones y recomendaciones
+- `01 Introduccion/`: Conceptos básicos y presentación
+- `02 Modelizacion/`: Análisis detallados
+  - Regresión no lineal
+  - Análisis de streaming
+  - Modelos corporativos
 
 ## Contribuciones
 
-Este trabajo forma parte de la investigación de Tyrell Corporation en el análisis de dinámicas poblacionales en entornos controlados. Los resultados contribuyen a la comprensión del comportamiento de replicantes Nexus-4 y microorganismos en condiciones experimentales.
+Las contribuciones son bienvenidas. Por favor:
+
+1. Hacer fork del repositorio
+2. Crear una rama para tu feature
+3. Hacer commit de los cambios
+4. Crear un Pull Request
 
 ## Licencia
 
-Este proyecto es propiedad intelectual de Tyrell Corporation. Todos los derechos reservados.
+Este proyecto está bajo la licencia MIT.

@@ -35,16 +35,16 @@ Este directorio contiene los ejercicios y análisis de modelización estadístic
 ### 1. Análisis de Streaming (Spotifal)
 
 - **Descripción**: Análisis completo de datos de usuarios de una plataforma de streaming musical.
-- **Contenido**:
-  - Análisis descriptivo de datos
-  - Modelización predictiva del abandono de usuarios
-  - Comparación de diferentes modelos estadísticos
-  - Evaluación de rendimiento y métricas
 - **Técnicas utilizadas**:
   - Regresión logística
   - Redes neuronales
   - Análisis ROC
   - Métricas de evaluación (Accuracy, Kappa)
+- **Resultados**:
+  - Análisis descriptivo de datos
+  - Modelización predictiva del abandono de usuarios
+  - Comparación de diferentes modelos estadísticos
+  - Evaluación de rendimiento y métricas
 
 ### 2. Regresión Lineal
 
@@ -75,18 +75,33 @@ Este directorio contiene los ejercicios y análisis de modelización estadístic
   - Visualización de resultados
   - Interpretación de hallazgos
 
-## Recursos Adicionales
+## Requisitos Técnicos
+
+Para ejecutar los análisis se requieren los siguientes paquetes de R:
+
+```r
+install.packages(c(
+  "ggplot2",    # Visualización de datos
+  "nls2",       # Regresión no lineal
+  "splines",    # Modelos de splines
+  "caret",      # Entrenamiento de modelos
+  "pROC",       # Curvas ROC
+  "neuralnet"   # Redes neuronales
+))
+```
+
+## Uso
+
+1. Abrir el archivo RMarkdown deseado en RStudio
+2. Instalar las dependencias si no están presentes
+3. Compilar el documento (Knit) para generar el informe HTML
+
+## Notas Importantes
 
 - Todos los datasets originales están incluidos en sus respectivos directorios
 - Los archivos .R contienen el código fuente completo
 - Los archivos .md contienen informes detallados de los análisis
 - Las imágenes y gráficos se encuentran en el directorio `img/` correspondiente
-
-## Notas
-
-- Los archivos están organizados por similitud temática
-- Cada directorio contiene su propio conjunto de datos y código
-- Los informes están escritos en formato Markdown para fácil lectura
 - Se recomienda revisar los README.md específicos de cada directorio para más detalles
 
 ## Contenido
@@ -117,29 +132,6 @@ Este directorio contiene análisis y modelos estadísticos aplicados a diferente
 ├── Regresion_no_lineal.Rmd
 └── modelo_crecimiento_bacterias.Rmd
 ```
-
-## Requisitos
-
-Para ejecutar los análisis se requieren los siguientes paquetes de R:
-
-```r
-install.packages(c("ggplot2", "nls2", "splines"))
-```
-
-## Uso
-
-1. Abrir el archivo RMarkdown deseado en RStudio
-2. Instalar las dependencias si no están presentes
-3. Compilar el documento (Knit) para generar el informe HTML
-
-## Resultados
-
-Los análisis generan informes HTML con:
-
-- Visualizaciones interactivas
-- Tablas de resultados
-- Interpretaciones estadísticas
-- Conclusiones y recomendaciones
 
 ## Contribuciones
 

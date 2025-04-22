@@ -1,8 +1,14 @@
 ---
-title: "Análisis de Crecimiento de Replicantes Nexus-4"
-subtitle: "Regresiones no lineales"
+title: "Ejemplo Tyrell Corp 1: Análisis de Crecimiento de Replicantes Nexus-4"
+subtitle: "Regresiones no lineales - Modelo Logístico"
 author: "Javi Cantón-Correa"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: cosmo
+    highlight: tango
+    css: styles.css
 ---
 
 ```{r setup, include=FALSE}
@@ -10,6 +16,10 @@ knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
 library(nls2)
 ```
+
+<div style="text-align: center;">
+  <img src="images/tyrell_logo.jpeg" alt="Tyrell Corporation Logo" style="width: 300px; margin-bottom: 20px;">
+</div>
 
 ## 1. Introducción
 
@@ -78,9 +88,11 @@ ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
 > - Los residuales muestran un patrón sistemático, indicando que el modelo lineal no captura la estructura de los datos
 
 > **Explicación matemática**:
-> El modelo lineal asume que el número de replicantes crece de forma constante en el tiempo, siguiendo la ecuación:
+> El modelo lineal asume un crecimiento constante, siguiendo la ecuación:
 > \[ y = a + b \cdot t \]
-> donde \(y\) es el número de replicantes, \(t\) es el tiempo, \(a\) es el número inicial de replicantes y \(b\) es la tasa de crecimiento constante. Este modelo es demasiado simple para capturar la saturación, ya que predice un crecimiento infinito.
+> 
+> **Explicación intuitiva**:
+> Imagina que cada día llega un número fijo de nuevos replicantes al módulo, como si fuera una línea de producción constante. Este modelo es como una máquina que produce siempre la misma cantidad, sin importar cuántos replicantes haya ya en el módulo. Es demasiado simple para capturar la realidad, donde el crecimiento se ralentiza cuando el espacio se llena.
 
 ------------------------------------------------------------------------
 
@@ -122,9 +134,11 @@ ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
 > - Sin embargo, el modelo sigue sin capturar adecuadamente la fase de saturación
 
 > **Explicación matemática**:
-> El modelo polinomial de grado 2 introduce una curvatura en el crecimiento mediante la ecuación:
+> El modelo polinomial de grado 2 introduce curvatura mediante:
 > \[ y = a + b \cdot t + c \cdot t^2 \]
-> donde \(c\) representa la aceleración o desaceleración del crecimiento. Este modelo puede capturar una fase inicial de crecimiento acelerado seguida de una desaceleración, pero no modela adecuadamente la saturación final.
+> 
+> **Explicación intuitiva**:
+> Este modelo es como una pelota que sube cada vez más despacio hasta alcanzar su punto más alto. Al principio, el número de replicantes crece rápidamente, pero luego el crecimiento se ralentiza. Es como si el módulo tuviera una "resistencia" que aumenta con el tiempo, haciendo más difícil añadir nuevos replicantes.
 
 ------------------------------------------------------------------------
 
@@ -168,7 +182,9 @@ ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
 > **Explicación matemática**:
 > El modelo polinomial de grado 3 añade un término cúbico a la ecuación:
 > \[ y = a + b \cdot t + c \cdot t^2 + d \cdot t^3 \]
-> donde \(d\) permite capturar cambios en la tasa de aceleración. Este modelo puede ajustar mejor la transición entre fases de crecimiento, pero puede producir predicciones poco realistas fuera del rango observado debido a su naturaleza polinomial.
+> 
+> **Explicación intuitiva**:
+> Este modelo es como una montaña rusa que sube, baja y vuelve a subir. Puede capturar cambios más complejos en el crecimiento, como aceleraciones y desaceleraciones, pero puede producir predicciones poco realistas fuera del rango observado, como si la montaña rusa siguiera subiendo indefinidamente.
 
 ------------------------------------------------------------------------
 
@@ -211,9 +227,11 @@ ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
 > - Los errores estándar de los parámetros son pequeños, indicando estimaciones precisas
 
 > **Explicación matemática**:
-> El modelo logístico describe el crecimiento limitado por recursos mediante la ecuación:
+> El modelo logístico describe el crecimiento limitado por recursos mediante:
 > \[ y = \frac{M}{1 + e^{-k(t-t_0)}} \]
-> donde \(M\) es la capacidad máxima del sistema (asintota superior), \(k\) es la tasa de crecimiento y \(t_0\) es el punto de inflexión donde el crecimiento cambia de acelerado a desacelerado. Este modelo es ideal para poblaciones que crecen hasta alcanzar un límite, como es el caso de los replicantes en un entorno controlado.
+> 
+> **Explicación intuitiva**:
+> Este modelo es como una habitación que se llena de gente. Al principio, cuando hay mucho espacio, la gente entra rápidamente. Pero a medida que la habitación se llena, es más difícil encontrar espacio, y la entrada de nuevas personas se ralentiza hasta detenerse cuando no hay más espacio. El modelo logístico captura esta idea de "competencia por recursos" que limita el crecimiento.
 
 ------------------------------------------------------------------------
 
@@ -248,9 +266,11 @@ ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
 > - Requiere interpretación cuidadosa de los resultados
 
 > **Explicación matemática**:
-> Los splines dividen el rango de tiempo en segmentos y ajustan polinomios locales en cada segmento, conectándolos suavemente. Matemáticamente, se puede expresar como:
+> Los splines dividen el rango de tiempo en segmentos y ajustan polinomios locales en cada segmento, conectándolos suavemente. Matemáticamente:
 > \[ y = \sum_{i=1}^{n} \beta_i B_i(t) \]
-> donde \(B_i(t)\) son funciones base (polinomios por tramos) y \(\beta_i\) son los coeficientes a estimar. Este enfoque es muy flexible y puede capturar patrones complejos, pero carece de interpretación biológica directa.
+> 
+> **Explicación intuitiva**:
+> Los splines son como un artista que dibuja una curva suave usando varias reglas flexibles. Cada regla se ajusta a una parte de la curva, y donde se unen las reglas, la transición es suave. Es como si dividiéramos el crecimiento en "etapas" y ajustáramos cada etapa por separado, asegurándonos de que la transición entre etapas sea natural. Este enfoque es muy flexible y puede capturar patrones complejos, pero es más difícil de interpretar en términos biológicos.
 
 ------------------------------------------------------------------------
 
@@ -369,82 +389,3 @@ Este análisis, en línea con nuestros estudios previos en diferentes instalacio
 4. Continuar el monitoreo y ajuste de los parámetros según evolucione la población de replicantes
 
 Estos hallazgos contribuyen a nuestra comprensión de la dinámica de poblaciones de replicantes y mejorarán nuestros protocolos de control y predicción en todas las instalaciones de Tyrell Corporation.
-
-## 11. Verificación de Resultados
-
-Para verificar los resultados exactos de cada modelo, ejecutamos el siguiente código:
-
-```{r verificacion-resultados}
-# 1. Modelo Lineal
-cat("\n=== MODELO LINEAL ===\n")
-print(summary(modelo_lineal))
-cat("\nAIC:", AIC(modelo_lineal))
-cat("\nBIC:", BIC(modelo_lineal))
-
-# 2. Modelo Polinomial (grado 2)
-cat("\n\n=== MODELO POLINOMIAL (GRADO 2) ===\n")
-print(summary(modelo_poly2))
-cat("\nAIC:", AIC(modelo_poly2))
-cat("\nBIC:", BIC(modelo_poly2))
-
-# 3. Modelo Polinomial (grado 3)
-cat("\n\n=== MODELO POLINOMIAL (GRADO 3) ===\n")
-print(summary(modelo_poly3))
-cat("\nAIC:", AIC(modelo_poly3))
-cat("\nBIC:", BIC(modelo_poly3))
-
-# 4. Modelo Logístico
-cat("\n\n=== MODELO LOGÍSTICO ===\n")
-print(summary(modelo_logistico))
-cat("\nAIC:", AIC(modelo_logistico))
-cat("\nBIC:", BIC(modelo_logistico))
-
-# 5. Modelo Splines
-cat("\n\n=== MODELO SPLINES ===\n")
-print(summary(modelo_splines))
-cat("\nAIC:", AIC(modelo_splines))
-cat("\nBIC:", BIC(modelo_splines))
-
-# 6. Resumen de métricas
-cat("\n\n=== RESUMEN DE MÉTRICAS ===\n")
-metricas_resumen <- data.frame(
-  Modelo = c("Lineal", "Polinomial (grado 2)", "Polinomial (grado 3)", "Logístico", "Splines"),
-  R2 = c(
-    summary(modelo_lineal)$r.squared,
-    summary(modelo_poly2)$r.squared,
-    summary(modelo_poly3)$r.squared,
-    NA,
-    summary(modelo_splines)$r.squared
-  ),
-  R2_ajustado = c(
-    summary(modelo_lineal)$adj.r.squared,
-    summary(modelo_poly2)$adj.r.squared,
-    summary(modelo_poly3)$adj.r.squared,
-    NA,
-    summary(modelo_splines)$adj.r.squared
-  ),
-  Error_Residual = c(
-    summary(modelo_lineal)$sigma,
-    summary(modelo_poly2)$sigma,
-    summary(modelo_poly3)$sigma,
-    sqrt(sum(residuals(modelo_logistico)^2)/df.residual(modelo_logistico)),
-    summary(modelo_splines)$sigma
-  ),
-  AIC = c(
-    AIC(modelo_lineal),
-    AIC(modelo_poly2),
-    AIC(modelo_poly3),
-    AIC(modelo_logistico),
-    AIC(modelo_splines)
-  ),
-  BIC = c(
-    BIC(modelo_lineal),
-    BIC(modelo_poly2),
-    BIC(modelo_poly3),
-    BIC(modelo_logistico),
-    BIC(modelo_splines)
-  )
-)
-
-print(metricas_resumen)
-```
