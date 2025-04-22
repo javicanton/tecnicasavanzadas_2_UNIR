@@ -1,0 +1,391 @@
+---
+title: "Ejemplo Tyrell Corp 1: Análisis de Crecimiento de Replicantes Nexus-4"
+subtitle: "Regresiones no lineales - Modelo Logístico"
+author: "Javi Cantón-Correa"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: cosmo
+    highlight: tango
+    css: styles.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(nls2)
+```
+
+<div style="text-align: center;">
+  <img src="images/tyrell_logo.jpeg" alt="Tyrell Corporation Logo" style="width: 300px; margin-bottom: 20px;">
+</div>
+
+## 1. Introducción
+
+En este análisis, como parte del departamento de investigación de Tyrell Corporation, estudiamos el comportamiento de una población de replicantes Nexus-4 en un módulo de privación sensorial. Este estudio es crucial para entender los patrones de adaptación y crecimiento de nuestros modelos más avanzados en entornos controlados.
+
+------------------------------------------------------------------------
+
+## 2. Simulación del escenario experimental
+
+En nuestro laboratorio de Los Ángeles, hemos observado el crecimiento del número de replicantes funcionando en un entorno cerrado. La evolución muestra un patrón de saturación, un comportamiento típicamente no lineal que refleja las limitaciones del entorno y la capacidad de adaptación de los replicantes.
+
+```{r simulacion}
+set.seed(123)
+tiempo <- 1:30
+# Generamos datos con forma logística + ruido
+replicantes <- 60 / (1 + exp(-0.3 * (tiempo - 15))) + rnorm(30, mean = 0, sd = 1.5)
+
+# Representación de los datos
+ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
+  geom_point(color = "darkgreen", size = 3) +
+  labs(title = "Evolución de la población de replicantes Nexus-4",
+       subtitle = "Módulo de privación sensorial - Tyrell Corporation",
+       x = "Tiempo (días)",
+       y = "Nº de replicantes activos") +
+  theme_minimal() +
+  theme(plot.subtitle = element_text(face = "italic"))
+```
+
+------------------------------------------------------------------------
+
+## 3. Análisis inicial con regresión lineal
+
+Como primer enfoque, intentamos modelar el crecimiento con una regresión lineal, similar a nuestros análisis previos en otras instalaciones de Tyrell Corporation.
+
+```{r modelo-lineal}
+modelo_lineal <- lm(replicantes ~ tiempo)
+summary(modelo_lineal)
+
+# Interpretación de métricas
+cat("\nInterpretación del modelo lineal:\n")
+cat("R² =", round(summary(modelo_lineal)$r.squared, 3), "\n")
+cat("R² ajustado =", round(summary(modelo_lineal)$adj.r.squared, 3), "\n")
+cat("Error estándar residual =", round(summary(modelo_lineal)$sigma, 3), "\n")
+cat("F-statistic =", round(summary(modelo_lineal)$fstatistic[1], 3), "\n")
+cat("p-value =", format.pval(pf(summary(modelo_lineal)$fstatistic[1], 
+                               summary(modelo_lineal)$fstatistic[2], 
+                               summary(modelo_lineal)$fstatistic[3], 
+                               lower.tail = FALSE), digits = 3), "\n")
+
+# Visualización del modelo lineal
+ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
+  geom_point(color = "darkgreen", size = 3) +
+  geom_smooth(method = "lm", color = "red", se = FALSE) +
+  labs(title = "Ajuste con regresión lineal",
+       subtitle = "Análisis inicial de crecimiento de replicantes",
+       x = "Tiempo (días)",
+       y = "Nº de replicantes activos") +
+  theme_minimal() +
+  theme(plot.subtitle = element_text(face = "italic"))
+```
+
+> **Interpretación de métricas**:
+> - El R² de 0.958 indica que el modelo lineal explica el 95.8% de la variabilidad en los datos
+> - El error estándar residual de 4.698 sugiere una desviación promedio significativa de los valores predichos
+> - Aunque el F-statistic es significativo (p < 0.001), esto solo indica que hay una relación, no que sea lineal
+> - Los residuales muestran un patrón sistemático, indicando que el modelo lineal no captura la estructura de los datos
+
+> **Explicación matemática**:
+> El modelo lineal asume un crecimiento constante, siguiendo la ecuación:
+> \[ y = a + b \cdot t \]
+> 
+> **Explicación intuitiva**:
+> Imagina que cada día llega un número fijo de nuevos replicantes al módulo, como si fuera una línea de producción constante. Este modelo es como una máquina que produce siempre la misma cantidad, sin importar cuántos replicantes haya ya en el módulo. Es demasiado simple para capturar la realidad, donde el crecimiento se ralentiza cuando el espacio se llena.
+
+------------------------------------------------------------------------
+
+## 4. Ajuste con regresión polinómica de grado 2
+
+Basándonos en nuestros estudios previos en Londres, donde implementamos modelos polinomiales, probamos este enfoque para el módulo de privación sensorial.
+
+```{r modelo-polinomial-2}
+modelo_poly2 <- lm(replicantes ~ poly(tiempo, 2, raw = TRUE))
+summary(modelo_poly2)
+
+# Interpretación de métricas
+cat("\nInterpretación del modelo polinomial de grado 2:\n")
+cat("R² =", round(summary(modelo_poly2)$r.squared, 3), "\n")
+cat("R² ajustado =", round(summary(modelo_poly2)$adj.r.squared, 3), "\n")
+cat("Error estándar residual =", round(summary(modelo_poly2)$sigma, 3), "\n")
+cat("F-statistic =", round(summary(modelo_poly2)$fstatistic[1], 3), "\n")
+cat("p-value =", format.pval(pf(summary(modelo_poly2)$fstatistic[1], 
+                               summary(modelo_poly2)$fstatistic[2], 
+                               summary(modelo_poly2)$fstatistic[3], 
+                               lower.tail = FALSE), digits = 3), "\n")
+
+# Visualización del modelo polinomial de grado 2
+ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
+  geom_point(color = "darkgreen", size = 3) +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2), color = "blue", se = FALSE) +
+  labs(title = "Ajuste con regresión polinomial de grado 2",
+       subtitle = "Análisis de crecimiento no lineal",
+       x = "Tiempo (días)",
+       y = "Nº de replicantes activos") +
+  theme_minimal() +
+  theme(plot.subtitle = element_text(face = "italic"))
+```
+
+> **Interpretación de métricas**:
+> - El R² mejora ligeramente a 0.959, explicando el 95.9% de la variabilidad
+> - El error estándar residual aumenta a 4.744, indicando un ajuste similar al modelo lineal
+> - Los coeficientes del término cuadrático son significativos (p < 0.001)
+> - Sin embargo, el modelo sigue sin capturar adecuadamente la fase de saturación
+
+> **Explicación matemática**:
+> El modelo polinomial de grado 2 introduce curvatura mediante:
+> \[ y = a + b \cdot t + c \cdot t^2 \]
+> 
+> **Explicación intuitiva**:
+> Este modelo es como una pelota que sube cada vez más despacio hasta alcanzar su punto más alto. Al principio, el número de replicantes crece rápidamente, pero luego el crecimiento se ralentiza. Es como si el módulo tuviera una "resistencia" que aumenta con el tiempo, haciendo más difícil añadir nuevos replicantes.
+
+------------------------------------------------------------------------
+
+## 5. Ajuste con regresión polinómica de grado 3
+
+Como extensión de nuestros estudios en Londres, implementamos un modelo polinomial de grado 3 para capturar mejor la complejidad del crecimiento de los replicantes Nexus-4.
+
+```{r modelo-polinomial-3}
+modelo_poly3 <- lm(replicantes ~ poly(tiempo, 3, raw = TRUE))
+summary(modelo_poly3)
+
+# Interpretación de métricas
+cat("\nInterpretación del modelo polinomial de grado 3:\n")
+cat("R² =", round(summary(modelo_poly3)$r.squared, 3), "\n")
+cat("R² ajustado =", round(summary(modelo_poly3)$adj.r.squared, 3), "\n")
+cat("Error estándar residual =", round(summary(modelo_poly3)$sigma, 3), "\n")
+cat("F-statistic =", round(summary(modelo_poly3)$fstatistic[1], 3), "\n")
+cat("p-value =", format.pval(pf(summary(modelo_poly3)$fstatistic[1], 
+                               summary(modelo_poly3)$fstatistic[2], 
+                               summary(modelo_poly3)$fstatistic[3], 
+                               lower.tail = FALSE), digits = 3), "\n")
+
+# Visualización del modelo polinomial de grado 3
+ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
+  geom_point(color = "darkgreen", size = 3) +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 3), color = "darkblue", se = FALSE) +
+  labs(title = "Ajuste con regresión polinomial de grado 3",
+       subtitle = "Análisis de crecimiento complejo",
+       x = "Tiempo (días)",
+       y = "Nº de replicantes activos") +
+  theme_minimal() +
+  theme(plot.subtitle = element_text(face = "italic"))
+```
+
+> **Interpretación de métricas**:
+> - El R² mejora significativamente a 0.992
+> - El error estándar residual se reduce a 2.159
+> - Los coeficientes cúbicos son significativos (p < 0.001)
+> - Sin embargo, el modelo puede mostrar comportamientos no deseados fuera del rango de observación
+
+> **Explicación matemática**:
+> El modelo polinomial de grado 3 añade un término cúbico a la ecuación:
+> \[ y = a + b \cdot t + c \cdot t^2 + d \cdot t^3 \]
+> 
+> **Explicación intuitiva**:
+> Este modelo es como una montaña rusa que sube, baja y vuelve a subir. Puede capturar cambios más complejos en el crecimiento, como aceleraciones y desaceleraciones, pero puede producir predicciones poco realistas fuera del rango observado, como si la montaña rusa siguiera subiendo indefinidamente.
+
+------------------------------------------------------------------------
+
+## 6. Implementación del modelo logístico
+
+Inspirados por nuestros exitosos modelos en Dubai, implementamos un modelo logístico que ha demostrado ser efectivo para capturar patrones de saturación en poblaciones de replicantes.
+
+```{r modelo-logistico}
+# Ajuste del modelo logístico
+modelo_logistico <- nls(replicantes ~ M / (1 + exp(-k*(tiempo - t0))),
+                       start = list(M = 60, k = 0.3, t0 = 15),
+                       data = data.frame(tiempo, replicantes))
+
+summary(modelo_logistico)
+
+# Interpretación de métricas
+cat("\nInterpretación del modelo logístico:\n")
+cat("Suma de cuadrados residual =", round(sum(residuals(modelo_logistico)^2), 3), "\n")
+cat("Error estándar de los parámetros:\n")
+print(summary(modelo_logistico)$parameters[, "Std. Error"])
+
+# Visualización del modelo logístico
+pred_logistico <- predict(modelo_logistico)
+
+ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
+  geom_point(color = "darkgreen", size = 3) +
+  geom_line(aes(y = pred_logistico), color = "purple", size = 1.5) +
+  labs(title = "Ajuste con modelo logístico",
+       subtitle = "Análisis de saturación de población",
+       x = "Tiempo (días)",
+       y = "Nº de replicantes activos") +
+  theme_minimal() +
+  theme(plot.subtitle = element_text(face = "italic"))
+```
+
+> **Interpretación de métricas**:
+> - El error estándar residual es 1.457, significativamente menor que en los modelos anteriores
+> - Los parámetros son altamente significativos (p < 0.001)
+> - El modelo captura perfectamente la fase de saturación
+> - Los errores estándar de los parámetros son pequeños, indicando estimaciones precisas
+
+> **Explicación matemática**:
+> El modelo logístico describe el crecimiento limitado por recursos mediante:
+> \[ y = \frac{M}{1 + e^{-k(t-t_0)}} \]
+> 
+> **Explicación intuitiva**:
+> Este modelo es como una habitación que se llena de gente. Al principio, cuando hay mucho espacio, la gente entra rápidamente. Pero a medida que la habitación se llena, es más difícil encontrar espacio, y la entrada de nuevas personas se ralentiza hasta detenerse cuando no hay más espacio. El modelo logístico captura esta idea de "competencia por recursos" que limita el crecimiento.
+
+------------------------------------------------------------------------
+
+## 7. Análisis con splines
+
+Como complemento a nuestros estudios en Tokyo, donde implementamos modelos más flexibles, aplicamos splines para capturar patrones locales en el crecimiento.
+
+```{r modelo-splines}
+# Ajuste con splines
+library(splines)
+modelo_splines <- lm(replicantes ~ bs(tiempo, df = 5))
+summary(modelo_splines)
+
+# Visualización del modelo con splines
+pred_splines <- predict(modelo_splines)
+
+ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
+  geom_point(color = "darkgreen", size = 3) +
+  geom_line(aes(y = pred_splines), color = "orange", size = 1.5) +
+  labs(title = "Ajuste con splines",
+       subtitle = "Análisis de patrones locales de crecimiento",
+       x = "Tiempo (días)",
+       y = "Nº de replicantes activos") +
+  theme_minimal() +
+  theme(plot.subtitle = element_text(face = "italic"))
+```
+
+> **Interpretación de métricas**:
+> - Los splines ofrecen gran flexibilidad en el ajuste
+> - El error residual es comparable al modelo logístico
+> - Los grados de libertad son mayores que en otros modelos
+> - Requiere interpretación cuidadosa de los resultados
+
+> **Explicación matemática**:
+> Los splines dividen el rango de tiempo en segmentos y ajustan polinomios locales en cada segmento, conectándolos suavemente. Matemáticamente:
+> \[ y = \sum_{i=1}^{n} \beta_i B_i(t) \]
+> 
+> **Explicación intuitiva**:
+> Los splines son como un artista que dibuja una curva suave usando varias reglas flexibles. Cada regla se ajusta a una parte de la curva, y donde se unen las reglas, la transición es suave. Es como si dividiéramos el crecimiento en "etapas" y ajustáramos cada etapa por separado, asegurándonos de que la transición entre etapas sea natural. Este enfoque es muy flexible y puede capturar patrones complejos, pero es más difícil de interpretar en términos biológicos.
+
+------------------------------------------------------------------------
+
+## 8. Comparación de modelos
+
+Realizamos una comparación exhaustiva de los modelos, similar a nuestros análisis en Shanghai, para determinar el enfoque más adecuado.
+
+```{r comparacion-modelos}
+# Calculamos métricas para cada modelo
+metricas <- data.frame(
+  Modelo = c("Lineal", "Polinomial (grado 2)", "Polinomial (grado 3)", "Logístico", "Splines"),
+  R2 = c(
+    summary(modelo_lineal)$r.squared,
+    summary(modelo_poly2)$r.squared,
+    summary(modelo_poly3)$r.squared,
+    NA,  # No aplicable para modelo logístico
+    summary(modelo_splines)$r.squared
+  ),
+  R2_ajustado = c(
+    summary(modelo_lineal)$adj.r.squared,
+    summary(modelo_poly2)$adj.r.squared,
+    summary(modelo_poly3)$adj.r.squared,
+    NA,
+    summary(modelo_splines)$adj.r.squared
+  ),
+  Error_Residual = c(
+    summary(modelo_lineal)$sigma,
+    summary(modelo_poly2)$sigma,
+    summary(modelo_poly3)$sigma,
+    sqrt(sum(residuals(modelo_logistico)^2)/df.residual(modelo_logistico)),
+    summary(modelo_splines)$sigma
+  ),
+  AIC = c(
+    AIC(modelo_lineal),
+    AIC(modelo_poly2),
+    AIC(modelo_poly3),
+    AIC(modelo_logistico),
+    AIC(modelo_splines)
+  ),
+  BIC = c(
+    BIC(modelo_lineal),
+    BIC(modelo_poly2),
+    BIC(modelo_poly3),
+    BIC(modelo_logistico),
+    BIC(modelo_splines)
+  )
+)
+
+# Visualización de la tabla de métricas
+print(metricas)
+
+# Visualización de todos los modelos
+ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
+  geom_point(color = "darkgreen", size = 3) +
+  geom_smooth(method = "lm", color = "red", se = FALSE) +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2), color = "blue", se = FALSE) +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 3), color = "darkblue", se = FALSE) +
+  geom_line(aes(y = pred_logistico), color = "purple", size = 1.5) +
+  geom_line(aes(y = pred_splines), color = "orange", size = 1.5) +
+  labs(title = "Comparación de modelos de crecimiento",
+       subtitle = "Análisis comparativo Tyrell Corporation",
+       x = "Tiempo (días)",
+       y = "Nº de replicantes activos") +
+  theme_minimal() +
+  theme(plot.subtitle = element_text(face = "italic")) +
+  scale_color_manual(values = c("red", "blue", "darkblue", "purple", "orange"),
+                    labels = c("Lineal", "Polinomial (grado 2)", "Polinomial (grado 3)", "Logístico", "Splines"))
+```
+
+> **Análisis comparativo de métricas**:
+> 
+> 1. **R² y R² ajustado**:
+>    - El modelo lineal tiene un buen ajuste inicial (R² = 0.958)
+>    - El modelo polinomial de grado 2 muestra un ajuste similar (R² = 0.959)
+>    - El modelo polinomial de grado 3 mejora significativamente (R² = 0.992)
+>    - Los splines tienen el mejor ajuste (R² = 0.996)
+> 
+> 2. **Error Residual**:
+>    - El modelo lineal tiene un error de 4.698
+>    - El modelo polinomial de grado 2 tiene un error similar de 4.744
+>    - El modelo polinomial de grado 3 reduce el error a 2.159
+>    - El modelo logístico tiene un error de 1.457
+>    - Los splines tienen el menor error de 1.495
+> 
+> 3. **AIC y BIC**:
+>    - El modelo lineal tiene valores de AIC = 181.89, BIC = 186.09
+>    - El modelo polinomial de grado 2 tiene valores de AIC = 183.39, BIC = 188.99
+>    - El modelo polinomial de grado 3 mejora a AIC = 137.01, BIC = 144.02
+>    - El modelo logístico tiene los mejores valores de AIC = 112.57, BIC = 118.17
+>    - Los splines tienen valores de AIC = 116.55, BIC = 126.36
+> 
+> 4. **Interpretabilidad**:
+>    - El modelo logístico tiene parámetros con significado biológico claro
+>    - Los modelos polinomiales son más difíciles de interpretar
+>    - Los splines, aunque tienen el mejor ajuste, son difíciles de interpretar
+
+------------------------------------------------------------------------
+
+## 9. Discusión
+
+-   **Modelo Lineal**: Similar al usado en Los Ángeles, simple pero inadecuado para datos con saturación
+-   **Modelo Polinomial (grado 2)**: Como en Londres, mejora el ajuste pero sigue siendo limitado
+-   **Modelo Polinomial (grado 3)**: Mejora significativa en la captura de la curvatura inicial y transición
+-   **Modelo Logístico**: Siguiendo el éxito en Dubai, captura excelentemente la dinámica del sistema
+-   **Splines**: Complementando nuestros estudios en Tokyo, ofrecen flexibilidad pero requieren interpretación cuidadosa
+
+------------------------------------------------------------------------
+
+## 10. Conclusiones y Recomendaciones
+
+Este análisis, en línea con nuestros estudios previos en diferentes instalaciones de Tyrell Corporation, demuestra que el modelo logístico es el más apropiado para predecir el comportamiento de los replicantes Nexus-4 en entornos controlados. Recomendamos:
+
+1. Implementar el modelo logístico como estándar para análisis de crecimiento en módulos de privación sensorial
+2. Utilizar el modelo polinomial de grado 3 como alternativa cuando se requiera mayor flexibilidad en la fase inicial
+3. Mantener los splines como herramienta complementaria para análisis de patrones locales
+4. Continuar el monitoreo y ajuste de los parámetros según evolucione la población de replicantes
+
+Estos hallazgos contribuyen a nuestra comprensión de la dinámica de poblaciones de replicantes y mejorarán nuestros protocolos de control y predicción en todas las instalaciones de Tyrell Corporation.

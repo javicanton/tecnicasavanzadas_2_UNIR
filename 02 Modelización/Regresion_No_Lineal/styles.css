@@ -1,0 +1,87 @@
+/* Estilos generales */
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Estilo del título */
+h1.title {
+  color: #1a1a1a;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+}
+
+/* Estilo de los subtítulos */
+h2 {
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+  margin-top: 40px;
+}
+
+/* Estilo de los bloques de código */
+pre {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 15px;
+}
+
+/* Estilo de las tablas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+/* Estilo de las gráficas */
+.plot-container {
+  margin: 20px 0;
+  text-align: center;
+}
+
+/* Estilo de las citas */
+blockquote {
+  background-color: #f8f9fa;
+  border-left: 4px solid #3498db;
+  padding: 15px;
+  margin: 20px 0;
+}
+
+/* Estilo de los enlaces */
+a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Estilo del logo */
+.logo-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.logo-container img {
+  max-width: 300px;
+  height: auto;
+} 
