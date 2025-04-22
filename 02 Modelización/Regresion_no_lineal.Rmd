@@ -1,5 +1,6 @@
 ---
 title: "Análisis de Crecimiento de Replicantes Nexus-4"
+subtitle: "Regresiones no lineales"
 author: "Javi Cantón-Correa"
 output: html_document
 ---
@@ -71,8 +72,8 @@ ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
 ```
 
 > **Interpretación de métricas**:
-> - El R² de 0.847 indica que el modelo lineal explica el 84.7% de la variabilidad en los datos
-> - El error estándar residual de 2.345 sugiere una desviación promedio significativa de los valores predichos
+> - El R² de 0.958 indica que el modelo lineal explica el 95.8% de la variabilidad en los datos
+> - El error estándar residual de 4.698 sugiere una desviación promedio significativa de los valores predichos
 > - Aunque el F-statistic es significativo (p < 0.001), esto solo indica que hay una relación, no que sea lineal
 > - Los residuales muestran un patrón sistemático, indicando que el modelo lineal no captura la estructura de los datos
 
@@ -115,8 +116,8 @@ ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
 ```
 
 > **Interpretación de métricas**:
-> - El R² mejora a 0.923, explicando el 92.3% de la variabilidad
-> - El error estándar residual se reduce a 1.567, indicando mejor ajuste
+> - El R² mejora ligeramente a 0.959, explicando el 95.9% de la variabilidad
+> - El error estándar residual aumenta a 4.744, indicando un ajuste similar al modelo lineal
 > - Los coeficientes del término cuadrático son significativos (p < 0.001)
 > - Sin embargo, el modelo sigue sin capturar adecuadamente la fase de saturación
 
@@ -159,8 +160,8 @@ ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
 ```
 
 > **Interpretación de métricas**:
-> - El R² mejora significativamente a 0.956
-> - El error estándar residual se reduce a 1.123
+> - El R² mejora significativamente a 0.992
+> - El error estándar residual se reduce a 2.159
 > - Los coeficientes cúbicos son significativos (p < 0.001)
 > - Sin embargo, el modelo puede mostrar comportamientos no deseados fuera del rango de observación
 
@@ -204,10 +205,10 @@ ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
 ```
 
 > **Interpretación de métricas**:
-> - La suma de cuadrados residual es 28.456, significativamente menor que en los modelos anteriores
+> - El error estándar residual es 1.457, significativamente menor que en los modelos anteriores
 > - Los parámetros son altamente significativos (p < 0.001)
 > - El modelo captura perfectamente la fase de saturación
-> - Los errores estándar de los parámetros son pequeños (M: 0.234, k: 0.012, t0: 0.156), indicando estimaciones precisas
+> - Los errores estándar de los parámetros son pequeños, indicando estimaciones precisas
 
 > **Explicación matemática**:
 > El modelo logístico describe el crecimiento limitado por recursos mediante la ecuación:
@@ -322,24 +323,29 @@ ggplot(data.frame(tiempo, replicantes), aes(x = tiempo, y = replicantes)) +
 > **Análisis comparativo de métricas**:
 > 
 > 1. **R² y R² ajustado**:
->    - El modelo lineal tiene el peor ajuste (R² = 0.847)
->    - Los modelos polinomiales mejoran progresivamente (R² = 0.923 a 0.956)
->    - El modelo logístico, aunque no tiene R² directo, muestra el mejor ajuste visual
+>    - El modelo lineal tiene un buen ajuste inicial (R² = 0.958)
+>    - El modelo polinomial de grado 2 muestra un ajuste similar (R² = 0.959)
+>    - El modelo polinomial de grado 3 mejora significativamente (R² = 0.992)
+>    - Los splines tienen el mejor ajuste (R² = 0.996)
 > 
 > 2. **Error Residual**:
->    - El modelo lineal tiene el mayor error (2.345)
->    - Los modelos polinomiales reducen el error (1.567 a 1.123)
->    - El modelo logístico tiene el menor error (0.987)
+>    - El modelo lineal tiene un error de 4.698
+>    - El modelo polinomial de grado 2 tiene un error similar de 4.744
+>    - El modelo polinomial de grado 3 reduce el error a 2.159
+>    - El modelo logístico tiene un error de 1.457
+>    - Los splines tienen el menor error de 1.495
 > 
 > 3. **AIC y BIC**:
->    - El modelo lineal tiene los peores valores (AIC = 156.78, BIC = 161.23)
->    - Los modelos polinomiales mejoran progresivamente (AIC = 132.45 a 118.67)
->    - El modelo logístico tiene los mejores valores (AIC = 98.34, BIC = 103.89)
+>    - El modelo lineal tiene valores de AIC = 181.89, BIC = 186.09
+>    - El modelo polinomial de grado 2 tiene valores de AIC = 183.39, BIC = 188.99
+>    - El modelo polinomial de grado 3 mejora a AIC = 137.01, BIC = 144.02
+>    - El modelo logístico tiene los mejores valores de AIC = 112.57, BIC = 118.17
+>    - Los splines tienen valores de AIC = 116.55, BIC = 126.36
 > 
 > 4. **Interpretabilidad**:
->    - El modelo logístico tiene parámetros con significado biológico claro (M = 59.8, k = 0.31, t0 = 15.2)
+>    - El modelo logístico tiene parámetros con significado biológico claro
 >    - Los modelos polinomiales son más difíciles de interpretar
->    - Los splines, aunque flexibles, son difíciles de interpretar
+>    - Los splines, aunque tienen el mejor ajuste, son difíciles de interpretar
 
 ------------------------------------------------------------------------
 
@@ -363,3 +369,82 @@ Este análisis, en línea con nuestros estudios previos en diferentes instalacio
 4. Continuar el monitoreo y ajuste de los parámetros según evolucione la población de replicantes
 
 Estos hallazgos contribuyen a nuestra comprensión de la dinámica de poblaciones de replicantes y mejorarán nuestros protocolos de control y predicción en todas las instalaciones de Tyrell Corporation.
+
+## 11. Verificación de Resultados
+
+Para verificar los resultados exactos de cada modelo, ejecutamos el siguiente código:
+
+```{r verificacion-resultados}
+# 1. Modelo Lineal
+cat("\n=== MODELO LINEAL ===\n")
+print(summary(modelo_lineal))
+cat("\nAIC:", AIC(modelo_lineal))
+cat("\nBIC:", BIC(modelo_lineal))
+
+# 2. Modelo Polinomial (grado 2)
+cat("\n\n=== MODELO POLINOMIAL (GRADO 2) ===\n")
+print(summary(modelo_poly2))
+cat("\nAIC:", AIC(modelo_poly2))
+cat("\nBIC:", BIC(modelo_poly2))
+
+# 3. Modelo Polinomial (grado 3)
+cat("\n\n=== MODELO POLINOMIAL (GRADO 3) ===\n")
+print(summary(modelo_poly3))
+cat("\nAIC:", AIC(modelo_poly3))
+cat("\nBIC:", BIC(modelo_poly3))
+
+# 4. Modelo Logístico
+cat("\n\n=== MODELO LOGÍSTICO ===\n")
+print(summary(modelo_logistico))
+cat("\nAIC:", AIC(modelo_logistico))
+cat("\nBIC:", BIC(modelo_logistico))
+
+# 5. Modelo Splines
+cat("\n\n=== MODELO SPLINES ===\n")
+print(summary(modelo_splines))
+cat("\nAIC:", AIC(modelo_splines))
+cat("\nBIC:", BIC(modelo_splines))
+
+# 6. Resumen de métricas
+cat("\n\n=== RESUMEN DE MÉTRICAS ===\n")
+metricas_resumen <- data.frame(
+  Modelo = c("Lineal", "Polinomial (grado 2)", "Polinomial (grado 3)", "Logístico", "Splines"),
+  R2 = c(
+    summary(modelo_lineal)$r.squared,
+    summary(modelo_poly2)$r.squared,
+    summary(modelo_poly3)$r.squared,
+    NA,
+    summary(modelo_splines)$r.squared
+  ),
+  R2_ajustado = c(
+    summary(modelo_lineal)$adj.r.squared,
+    summary(modelo_poly2)$adj.r.squared,
+    summary(modelo_poly3)$adj.r.squared,
+    NA,
+    summary(modelo_splines)$adj.r.squared
+  ),
+  Error_Residual = c(
+    summary(modelo_lineal)$sigma,
+    summary(modelo_poly2)$sigma,
+    summary(modelo_poly3)$sigma,
+    sqrt(sum(residuals(modelo_logistico)^2)/df.residual(modelo_logistico)),
+    summary(modelo_splines)$sigma
+  ),
+  AIC = c(
+    AIC(modelo_lineal),
+    AIC(modelo_poly2),
+    AIC(modelo_poly3),
+    AIC(modelo_logistico),
+    AIC(modelo_splines)
+  ),
+  BIC = c(
+    BIC(modelo_lineal),
+    BIC(modelo_poly2),
+    BIC(modelo_poly3),
+    BIC(modelo_logistico),
+    BIC(modelo_splines)
+  )
+)
+
+print(metricas_resumen)
+```
