@@ -56,4 +56,4 @@ Las contribuciones son bienvenidas. Por favor, seguir las guías de estilo estab
 
 ## Licencia
 
-Este proyecto está bajo la licencia MIT. 
+Este proyecto está bajo la licencia MIT.
