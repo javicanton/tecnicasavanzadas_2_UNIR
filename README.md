@@ -23,6 +23,20 @@ Repositorio de materiales para la asignatura de Técnicas Avanzadas para el Aná
 - [Regresión Lineal Androides](02%20Modelización/Regresion_Lineal/Androides/RegresionLineal_Androides.md)
 - [Regresión Lineal Bacterias](02%20Modelización/Regresion_Lineal/Bacterias/RegresionLineal_Bacterias.md)
 
+#### Regresión No Lineal
+
+- [Tyrell Corporation - Análisis de Crecimiento de Replicantes](02%20Modelización/Regresion_No_Lineal/Tyrell_Corp_1.Rmd)
+  - Modelo logístico para el análisis de crecimiento
+- [Tyrell Corporation - Análisis de Crecimiento de Replicantes (Módulo B)](02%20Modelización/Regresion_No_Lineal/Tyrell_Corp_2.Rmd)
+  - Modelo de Gompertz para el análisis de crecimiento
+
+#### Dependencias Múltiples
+
+- [Análisis SEM del T-800](02%20Modelización/Dependencias%20multiples/T800/informe_T800_SEM.Rmd)
+  - Análisis de Ecuaciones Estructurales aplicado a unidades T-800
+- [Análisis SEM Educativo](02%20Modelización/Dependencias%20multiples/educativo/informe_modelo_educativo_SEM.Rmd)
+  - Análisis de Ecuaciones Estructurales en contexto educativo
+
 #### Análisis Corporativo
 
 - [Tyrell Corporation - Análisis de Eliminaciones](02%20Modelización/Analisis_Tyrell_Corp/TyrellCorporation.md)
@@ -61,7 +75,10 @@ install.packages(c(
     "janitor",    # Limpieza de datos
     "ggthemes",   # Temas para ggplot
     "forcats",    # Manejo de factores
-    "corrplot"    # Visualización de correlaciones
+    "corrplot",   # Visualización de correlaciones
+    "lavaan",     # Análisis de Ecuaciones Estructurales
+    "semPlot",    # Visualización de modelos SEM
+    "psych"       # Análisis psicométricos
 ))
 ```
 
@@ -90,6 +107,7 @@ El proyecto está organizado en:
   - Regresión no lineal
   - Análisis de streaming
   - Modelos corporativos
+  - Dependencias múltiples (SEM)
 - `html_output/`: Documentos HTML generados para visualización en GitHub
   - `Tyrell_Corp_1.html`: Análisis de crecimiento de replicantes (Modelo Logístico)
   - `Tyrell_Corp_2.html`: Análisis de crecimiento de replicantes (Modelo de Gompertz)
