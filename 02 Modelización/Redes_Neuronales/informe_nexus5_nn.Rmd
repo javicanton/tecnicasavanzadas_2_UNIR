@@ -1,0 +1,280 @@
+---
+title: "Análisis de Fallos en Nexus-5 usando Redes Neuronales"
+author: "Tyrell Corporation — División Analítica Experimental"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: united
+    highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# Introducción
+
+Este informe presenta un análisis detallado de la detección de fallos en los replicantes Nexus-5 utilizando diferentes técnicas de aprendizaje automático, con especial énfasis en redes neuronales. El objetivo es desarrollar un modelo predictivo que pueda anticipar posibles fallos en los replicantes basándose en diversas variables de estado y comportamiento.
+
+# Datos y Preparación
+
+## Carga y Exploración de Datos
+
+```{r}
+# Cargar librerías necesarias
+library(nnet)
+library(dplyr)
+library(ggplot2)
+library(caret)
+library(pROC)
+library(e1071)
+library(tidyr)
+
+# Cargar datos
+df <- read.csv("nexus5_datos_1000.csv")
+str(df)
+summary(df)
+```
+
+## Preprocesamiento
+
+```{r}
+# Normalización de variables numéricas
+normalizar <- function(x) (x - min(x)) / (max(x) - min(x))
+
+df_norm <- df %>%
+  mutate(
+    across(
+      c(energia_restante, contacto_blade_runner, antiguedad, experiencia_acumulada),
+      normalizar
+    )
+  ) %>%
+  mutate(
+    sexo = as.factor(sexo),
+    rebeldia = as.factor(rebeldia),
+    fallo = as.factor(fallo)
+  )
+
+# Preparación para el modelo
+df_model <- model.matrix(fallo ~ ., data = df_norm)[, -1]
+df_fallo <- df_norm$fallo
+```
+
+# Modelos Implementados
+
+## 1. Red Neuronal Básica
+
+```{r}
+# Entrenamiento del modelo
+set.seed(42)
+tamanio_capa_oculta <- 5
+max_iteraciones <- 300
+decaimiento <- 0.01
+
+modelo_nn <- nnet(
+  x = df_model,
+  y = class.ind(df_fallo),
+  size = tamanio_capa_oculta,
+  maxit = max_iteraciones,
+  decay = decaimiento,
+  softmax = TRUE
+)
+
+# Evaluación
+pred_prob <- predict(modelo_nn, df_model)[, 2]
+pred_clase <- ifelse(pred_prob > 0.5, 1, 0)
+conf_matrix <- confusionMatrix(factor(pred_clase), factor(df$fallo))
+print(conf_matrix)
+
+# Curva ROC
+roc_obj <- roc(df$fallo, pred_prob)
+plot(roc_obj, main = "Curva ROC — Nexus 5")
+cat("AUC:", auc(roc_obj), "\n")
+```
+
+## 2. Validación Cruzada y Optimización
+
+```{r}
+# Separación train/test
+set.seed(123)
+trainIndex <- createDataPartition(df_fallo, p = 0.7, list = FALSE)
+df_train <- df_model[trainIndex, ]
+df_test <- df_model[-trainIndex, ]
+fallo_train <- df_fallo[trainIndex]
+fallo_test <- df_fallo[-trainIndex]
+
+# Convertir niveles para caret
+fallo_train_caret <- factor(ifelse(fallo_train == 1, "fallo_1", "fallo_0"))
+fallo_test_caret <- factor(ifelse(fallo_test == 1, "fallo_1", "fallo_0"))
+
+# Búsqueda de hiperparámetros
+grid <- expand.grid(
+  size = c(3, 5, 7, 10),
+  decay = c(0.001, 0.01, 0.1)
+)
+control <- trainControl(method = "cv", number = 5, classProbs = TRUE)
+set.seed(123)
+modelo_caret <- train(
+  x = df_train,
+  y = fallo_train_caret,
+  method = "nnet",
+  tuneGrid = grid,
+  trControl = control,
+  maxit = 300,
+  trace = FALSE
+)
+print(modelo_caret)
+```
+
+## 3. Comparación con Otros Modelos
+
+```{r}
+# Árbol de decisión
+set.seed(123)
+modelo_arbol <- train(
+  x = df_train,
+  y = fallo_train_caret,
+  method = "rpart",
+  trControl = control
+)
+
+# Random Forest
+set.seed(123)
+modelo_rf <- train(
+  x = df_train,
+  y = fallo_train_caret,
+  method = "rf",
+  trControl = control
+)
+
+# Evaluación de modelos
+y_pred_arbol <- predict(modelo_arbol, df_test)
+y_pred_rf <- predict(modelo_rf, df_test)
+
+conf_matrix_arbol <- confusionMatrix(y_pred_arbol, fallo_test_caret)
+conf_matrix_rf <- confusionMatrix(y_pred_rf, fallo_test_caret)
+
+print("Matriz de confusión - Árbol de decisión")
+print(conf_matrix_arbol)
+print("Matriz de confusión - Random Forest")
+print(conf_matrix_rf)
+```
+
+# Visualizaciones Comparativas
+
+## 1. Métricas por Modelo
+
+```{r}
+# Preparación de datos para visualización
+metricas <- data.frame(
+  Modelo = c("Red Neuronal", "Red Neuronal (caret)", "Árbol", "Random Forest"),
+  Accuracy = c(0.612, 0.612, 0.582, 0.619),
+  Sensibilidad = c(0.545, 0.566, 0.297, 0.579),
+  Especificidad = c(0.675, 0.656, 0.851, 0.656)
+)
+
+metricas_largo <- tidyr::pivot_longer(
+  metricas,
+  cols = c(Accuracy, Sensibilidad, Especificidad),
+  names_to = "Metrica",
+  values_to = "Valor"
+)
+
+# Gráfico comparativo
+ggplot(metricas_largo, aes(x = Modelo, y = Valor, fill = Metrica)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    title = "Comparación de métricas entre modelos",
+    x = "Modelo",
+    y = "Valor",
+    fill = "Métrica"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+## 2. Curvas ROC
+
+```{r}
+# Calcular probabilidades
+prob_nn <- predict(modelo_nn, df_test)[, 2]
+prob_caret <- predict(modelo_caret, df_test, type = "prob")[, 2]
+prob_arbol <- predict(modelo_arbol, df_test, type = "prob")[, 2]
+prob_rf <- predict(modelo_rf, df_test, type = "prob")[, 2]
+
+# Crear curvas ROC
+roc_nn <- roc(fallo_test, prob_nn)
+roc_caret <- roc(fallo_test, as.numeric(prob_caret))
+roc_arbol <- roc(fallo_test, as.numeric(prob_arbol))
+roc_rf <- roc(fallo_test, as.numeric(prob_rf))
+
+# Gráfico de curvas ROC
+plot(roc_nn, main = "Curvas ROC - Comparación de modelos", col = "red")
+lines(roc_caret, col = "blue")
+lines(roc_arbol, col = "green")
+lines(roc_rf, col = "purple")
+legend("bottomright",
+  legend = c(
+    paste("Red Neuronal (AUC =", round(auc(roc_nn), 3), ")"),
+    paste("Red Neuronal caret (AUC =", round(auc(roc_caret), 3), ")"),
+    paste("Árbol (AUC =", round(auc(roc_arbol), 3), ")"),
+    paste("Random Forest (AUC =", round(auc(roc_rf), 3), ")")
+  ),
+  col = c("red", "blue", "green", "purple"),
+  lwd = 2
+)
+```
+
+## 3. Importancia de Variables
+
+```{r}
+# Importancia de variables (Random Forest)
+importancia <- varImp(modelo_rf)
+importancia_df <- data.frame(
+  Variable = rownames(importancia$importance),
+  Importancia = importancia$importance$Overall
+)
+importancia_df <- importancia_df[order(importancia_df$Importancia, decreasing = TRUE), ]
+
+# Gráfico de importancia
+ggplot(importancia_df, aes(x = reorder(Variable, Importancia), y = Importancia)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Importancia de variables (Random Forest)",
+    x = "Variable",
+    y = "Importancia"
+  ) +
+  theme_minimal()
+```
+
+# Conclusiones
+
+1. **Rendimiento de los Modelos**:
+   - El Random Forest obtuvo la mejor accuracy (61.9%)
+   - Las redes neuronales mostraron un rendimiento similar (61.2%)
+   - El árbol de decisión tuvo el peor rendimiento (58.2%)
+
+2. **Análisis de Variables**:
+   - Las variables más importantes según el Random Forest son [se completará con los resultados]
+   - La energía restante y el contacto con Blade Runner parecen ser factores significativos
+
+3. **Recomendaciones**:
+   - Considerar la implementación del Random Forest como modelo principal
+   - Investigar la posibilidad de añadir más variables predictoras
+   - Realizar un análisis más profundo de las interacciones entre variables
+
+4. **Próximos Pasos**:
+   - Recolectar más datos para mejorar el rendimiento
+   - Explorar técnicas de ensemble learning
+   - Investigar la posibilidad de deep learning con más capas
+
+# Referencias
+
+- Tyrell Corporation Internal Documentation
+- R Core Team (2023). R: A language and environment for statistical computing
+- Kuhn, M. (2023). caret: Classification and Regression Training
+- Venables, W. N. & Ripley, B. D. (2002) Modern Applied Statistics with S

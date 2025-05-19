@@ -124,3 +124,85 @@ Las contribuciones son bienvenidas. Por favor:
 ## Licencia
 
 Este proyecto está bajo la licencia MIT.
+
+# Análisis de Fallos en Nexus-5
+
+Este repositorio contiene el análisis de fallos en los replicantes Nexus-5 de la Tyrell Corporation, utilizando diferentes técnicas de aprendizaje automático.
+
+## Estructura del Proyecto
+
+```
+.
+├── 01_Datos/
+│   ├── nexus5_datos_1000.csv
+│   └── README.md
+├── 02_Modelizacion/
+│   ├── Arboles_Decision/
+│   │   ├── informe_nexus5_arboles.Rmd
+│   │   └── README.md
+│   ├── Random_Forest/
+│   │   ├── informe_nexus5_rf.Rmd
+│   │   └── README.md
+│   └── Redes_Neuronales/
+│       ├── informe_nexus5_nn.Rmd
+│       └── README.md
+└── README.md
+```
+
+## Contenido
+
+### 1. Datos
+- Conjunto de datos de 1000 replicantes Nexus-5
+- Variables incluidas: energía restante, contacto con Blade Runner, antigüedad, experiencia acumulada, sexo, rebeldía y fallo
+
+### 2. Modelización
+
+#### 2.1 Árboles de Decisión
+- Implementación de árboles de decisión para clasificación
+- Análisis de la importancia de variables
+- Visualización de árboles y métricas de rendimiento
+
+#### 2.2 Random Forest
+- Implementación de Random Forest
+- Optimización de hiperparámetros
+- Comparación con árboles de decisión simples
+
+#### 2.3 Redes Neuronales
+- Implementación de redes neuronales básicas
+- Optimización mediante validación cruzada
+- Comparación con otros modelos de clasificación
+
+## Requisitos
+
+- R >= 4.0.0
+- Paquetes R:
+  - rpart
+  - randomForest
+  - nnet
+  - caret
+  - ggplot2
+  - pROC
+  - dplyr
+  - tidyr
+
+## Uso
+
+1. Clonar el repositorio
+2. Instalar las dependencias necesarias
+3. Ejecutar los informes Rmd en el orden deseado
+
+## Resultados
+
+Los resultados detallados de cada análisis se encuentran en los respectivos informes Rmd:
+
+- [Informe Árboles de Decisión](02_Modelizacion/Arboles_Decision/informe_nexus5_arboles.Rmd)
+- [Informe Random Forest](02_Modelizacion/Random_Forest/informe_nexus5_rf.Rmd)
+- [Informe Redes Neuronales](02_Modelizacion/Redes_Neuronales/informe_nexus5_nn.Rmd)
+
+## Contribuciones
+
+Este proyecto es parte de la investigación interna de la Tyrell Corporation. Para contribuir, por favor contactar con la División Analítica Experimental.
+
+## Licencia
+
+Derechos reservados © Tyrell Corporation
