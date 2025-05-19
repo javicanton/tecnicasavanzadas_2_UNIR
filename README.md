@@ -25,21 +25,28 @@ Repositorio de materiales para la asignatura de Técnicas Avanzadas para el Aná
 
 #### Regresión No Lineal
 
-- [Tyrell Corporation - Análisis de Crecimiento de Replicantes](02%20Modelización/Regresion_No_Lineal/Tyrell_Corp_1.Rmd)
+- [Tyrell Corporation - Análisis de Crecimiento de Replicantes](02%20Modelizacion/Regresion_No_Lineal/Tyrell_Corp_1.Rmd)
   - Modelo logístico para el análisis de crecimiento
-- [Tyrell Corporation - Análisis de Crecimiento de Replicantes (Módulo B)](02%20Modelización/Regresion_No_Lineal/Tyrell_Corp_2.Rmd)
+- [Tyrell Corporation - Análisis de Crecimiento de Replicantes (Módulo B)](02%20Modelizacion/Regresion_No_Lineal/Tyrell_Corp_2.Rmd)
   - Modelo de Gompertz para el análisis de crecimiento
 
 #### Dependencias Múltiples
 
-- [Análisis SEM del T-800](02%20Modelización/Dependencias%20multiples/T800/informe_T800_SEM.Rmd)
+- [Análisis SEM del T-800](02%20Modelizacion/Dependencias%20multiples/T800/informe_T800_SEM.Rmd)
   - Análisis de Ecuaciones Estructurales aplicado a unidades T-800
-- [Análisis SEM Educativo](02%20Modelización/Dependencias%20multiples/educativo/informe_modelo_educativo_SEM.Rmd)
+- [Análisis SEM Educativo](02%20Modelizacion/Dependencias%20multiples/educativo/informe_modelo_educativo_SEM.Rmd)
   - Análisis de Ecuaciones Estructurales en contexto educativo
 
 #### Análisis Corporativo
 
-- [Tyrell Corporation - Análisis de Eliminaciones](02%20Modelización/Analisis_Tyrell_Corp/TyrellCorporation.md)
+- [Tyrell Corporation - Análisis de Eliminaciones](02%20Modelizacion/Analisis_Tyrell_Corp/TyrellCorporation.md)
+
+#### Análisis de Fallos en Nexus-5
+
+- [Análisis de Fallos mediante Redes Neuronales](02%20Modelizacion/Redes_Neuronales/informe_nexus5_nn.Rmd)
+  - Implementación de redes neuronales para la predicción de fallos
+  - Optimización mediante validación cruzada
+  - Análisis de rendimiento y métricas de clasificación
 
 ### Recursos Adicionales
 
@@ -152,22 +159,26 @@ Este repositorio contiene el análisis de fallos en los replicantes Nexus-5 de l
 ## Contenido
 
 ### 1. Datos
+
 - Conjunto de datos de 1000 replicantes Nexus-5
 - Variables incluidas: energía restante, contacto con Blade Runner, antigüedad, experiencia acumulada, sexo, rebeldía y fallo
 
 ### 2. Modelización
 
 #### 2.1 Árboles de Decisión
+
 - Implementación de árboles de decisión para clasificación
 - Análisis de la importancia de variables
 - Visualización de árboles y métricas de rendimiento
 
 #### 2.2 Random Forest
+
 - Implementación de Random Forest
 - Optimización de hiperparámetros
 - Comparación con árboles de decisión simples
 
 #### 2.3 Redes Neuronales
+
 - Implementación de redes neuronales básicas
 - Optimización mediante validación cruzada
 - Comparación con otros modelos de clasificación
