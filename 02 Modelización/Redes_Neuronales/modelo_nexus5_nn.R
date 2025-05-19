@@ -55,6 +55,8 @@ df_norm <- df %>%
     rebeldia = as.factor(rebeldia),
     fallo = as.factor(fallo)
   )
+
+summary(df_norm)
 #
 # Interpretación:
 # - Se normalizan las variables numéricas para mejorar el aprendizaje de la red.
@@ -72,7 +74,7 @@ df_fallo <- df_norm$fallo
 # 3. Entrenamiento del modelo
 # -----------------------------------------
 # Puedes modificar los siguientes parámetros para experimentar:
-tamanio_capa_oculta <- 5 # Número de neuronas en la capa oculta
+tamaño_capa_oculta <- 5 # Número de neuronas en la capa oculta
 max_iteraciones <- 300 # Número máximo de iteraciones
 decaimiento <- 0.01 # Parámetro de regularización
 
@@ -80,7 +82,7 @@ set.seed(42)
 modelo_nn <- nnet(
   x = df_model,
   y = class.ind(df_fallo), # clase binaria codificada
-  size = tamanio_capa_oculta,
+  size = tamaño_capa_oculta,
   maxit = max_iteraciones,
   decay = decaimiento,
   softmax = TRUE # clasificación multiclase (aquí binaria)
@@ -240,7 +242,7 @@ modelo_nn_train <- nnet(
 #
 # Output del entrenamiento:
 # - El modelo converge tras 160 iteraciones
-# - El valor de la función de error baja de 500 a 413, indicando aprendizaje efectivo
+# - El valor de la función de error baja de 600 a 413, indicando aprendizaje efectivo
 # - La convergencia es estable, sin oscilaciones significativas
 
 # 7.3 Evaluación en el conjunto de test
@@ -444,3 +446,4 @@ ggplot(importancia_df, aes(x = reorder(Variable, Importancia), y = Importancia))
 # - Las curvas ROC permiten comparar el poder discriminativo de cada modelo
 # - El gráfico de importancia de variables ayuda a entender qué características
 #   son más relevantes para predecir los fallos
+

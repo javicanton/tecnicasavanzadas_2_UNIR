@@ -38,8 +38,8 @@ Para ejecutar correctamente el análisis necesitas tener instalado en R:
 ## Objetivo didáctico
 
 Este ejemplo permite entender:
+
 - Cómo se preparan los datos para redes neuronales.
 - Cómo se entrena y ajusta un modelo básico con `nnet`.
 - Cómo se evalúan los resultados (matriz de confusión, AUC, visualizaciones).
 - Qué papel juegan las variables latentes o encubiertas en un modelo realista.
-
