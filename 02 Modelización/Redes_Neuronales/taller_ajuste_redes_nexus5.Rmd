@@ -2,9 +2,6 @@
 title: "Taller: Ajuste de Parámetros en Redes Neuronales (Caso Nexus-5)"
 author: "Técnicas Cuantitativas Avanzadas II — UNIR"
 output: html_document
-editor_options: 
-  markdown: 
-    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
@@ -12,8 +9,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Verificar e instalar paquetes necesarios
 required_packages <- c("nnet", "dplyr", "ggplot2", "caret", "pROC", "e1071")
-for(pkg in required_packages) {
-  if(!require(pkg, character.only = TRUE)) {
+for (pkg in required_packages) {
+  if (!require(pkg, character.only = TRUE)) {
     install.packages(pkg)
     library(pkg, character.only = TRUE)
   }
@@ -22,10 +19,7 @@ for(pkg in required_packages) {
 
 # Introducción
 
-En este taller aprenderás a ajustar los parámetros de una red neuronal
-para predecir fallos en androides Nexus-5. Vamos a trabajar con un
-modelo simple en R (`nnet`) y explorar cómo los cambios en los
-hiperparámetros afectan al comportamiento del modelo.
+En este taller aprenderás a ajustar los parámetros de una red neuronal para predecir fallos en androides Nexus-5. Vamos a trabajar con un modelo simple en R (`nnet`) y explorar cómo los cambios en los hiperparámetros afectan al comportamiento del modelo.
 
 ------------------------------------------------------------------------
 
@@ -46,13 +40,15 @@ hiperparámetros afectan al comportamiento del modelo.
 nexus <- read.csv("nexus5_datos_1000.csv")
 
 # Verificar que no hay NA antes de la normalización
-if(any(is.na(nexus))) {
+if (any(is.na(nexus))) {
   stop("Hay valores NA en el dataset que deben ser manejados primero")
 }
 
-nexus <- nexus |> 
-  mutate(across(c(energia_restante, contacto_blade_runner, antiguedad, experiencia_acumulada),
-                ~ (.-min(., na.rm = TRUE))/(max(., na.rm = TRUE)-min(., na.rm = TRUE)))) |> 
+nexus <- nexus |>
+  mutate(across(
+    c(energia_restante, contacto_blade_runner, antiguedad, experiencia_acumulada),
+    ~ (. - min(., na.rm = TRUE)) / (max(., na.rm = TRUE) - min(., na.rm = TRUE))
+  )) |>
   mutate(
     sexo = as.factor(sexo),
     rebeldia = as.factor(rebeldia),
@@ -60,7 +56,7 @@ nexus <- nexus |>
   )
 
 # Verificar que la transformación fue exitosa
-if(any(is.na(nexus))) {
+if (any(is.na(nexus))) {
   stop("La normalización produjo valores NA")
 }
 
@@ -75,7 +71,7 @@ y <- class.ind(nexus$fallo)
 ## Parámetros disponibles
 
 | Parámetro | Descripción | Valores recomendados |
-|------------------|-------------------|----------------------------------|
+|------------------|-------------------|-----------------------------------|
 | `size` | Nº de neuronas en la capa oculta | 1–10 para modelos simples |
 | `decay` | Penalización (regularización) para evitar sobreajuste | 0.001–0.1 |
 | `maxit` | Iteraciones máximas para entrenamiento | 100–1000 |
@@ -96,64 +92,55 @@ param_maxit <- 300
 ```{r}
 set.seed(42)
 modelo <- nnet(x, y,
-               size = param_size,
-               decay = param_decay,
-               maxit = param_maxit,
-               softmax = TRUE)
+  size = param_size,
+  decay = param_decay,
+  maxit = param_maxit,
+  softmax = TRUE
+)
 ```
 
 ------------------------------------------------------------------------
 
 # Interpretación de Métricas
 
-Antes de evaluar el modelo, es importante entender qué significan las
-métricas que vamos a utilizar:
+Antes de evaluar el modelo, es importante entender qué significan las métricas que vamos a utilizar:
 
 ## Matriz de Confusión
-
-La matriz de confusión nos muestra: - **Verdaderos Positivos (VP)**:
-Casos correctamente identificados como fallos - **Falsos Positivos
-(FP)**: Casos incorrectamente clasificados como fallos - **Verdaderos
-Negativos (VN)**: Casos correctamente identificados como no fallos -
-**Falsos Negativos (FN)**: Casos incorrectamente clasificados como no
-fallos
+La matriz de confusión nos muestra:
+- **Verdaderos Positivos (VP)**: Casos correctamente identificados como fallos
+- **Falsos Positivos (FP)**: Casos incorrectamente clasificados como fallos
+- **Verdaderos Negativos (VN)**: Casos correctamente identificados como no fallos
+- **Falsos Negativos (FN)**: Casos incorrectamente clasificados como no fallos
 
 ## Métricas Principales
+- **Precisión (Accuracy)**: Proporción total de predicciones correctas
+  - Fórmula: (VP + VN) / (VP + VN + FP + FN)
+  - Interpretación: Valores más altos indican mejor rendimiento general
 
--   **Precisión (Accuracy)**: Proporción total de predicciones correctas
-    -   Fórmula: (VP + VN) / (VP + VN + FP + FN)
-    -   Interpretación: Valores más altos indican mejor rendimiento
-        general
--   **Sensibilidad (Recall)**: Proporción de fallos reales que fueron
-    correctamente identificados
-    -   Fórmula: VP / (VP + FN)
-    -   Interpretación: Importante cuando queremos minimizar falsos
-        negativos
--   **Especificidad**: Proporción de no fallos correctamente
-    identificados
-    -   Fórmula: VN / (VN + FP)
-    -   Interpretación: Importante cuando queremos minimizar falsos
-        positivos
+- **Sensibilidad (Recall)**: Proporción de fallos reales que fueron correctamente identificados
+  - Fórmula: VP / (VP + FN)
+  - Interpretación: Importante cuando queremos minimizar falsos negativos
+
+- **Especificidad**: Proporción de no fallos correctamente identificados
+  - Fórmula: VN / (VN + FP)
+  - Interpretación: Importante cuando queremos minimizar falsos positivos
 
 ## Curva ROC y AUC
-
--   **Curva ROC**: Muestra la relación entre la tasa de verdaderos
-    positivos (sensibilidad) y la tasa de falsos positivos
-    (1-especificidad)
--   **AUC (Area Under Curve)**:
-    -   Rango: 0 a 1
-    -   Interpretación:
-        -   0.5: Modelo aleatorio
-        -   0.7-0.8: Bueno
-        -   0.8-0.9: Muy bueno
-        -   Por encima de 0.9: Excelente
+- **Curva ROC**: Muestra la relación entre la tasa de verdaderos positivos (sensibilidad) y la tasa de falsos positivos (1-especificidad)
+- **AUC (Area Under Curve)**: 
+  - Rango: 0 a 1
+  - Interpretación:
+    - 0.5: Modelo aleatorio
+    - 0.7-0.8: Bueno
+    - 0.8-0.9: Muy bueno
+    - Por encima de 0.9: Excelente
 
 ## Sobreajuste
-
-El sobreajuste se manifiesta cuando: - Alta precisión en datos de
-entrenamiento - Baja precisión en datos nuevos - Curva ROC muy optimista
-en entrenamiento - Grandes diferencias entre métricas de entrenamiento y
-validación
+El sobreajuste se manifiesta cuando:
+- Alta precisión en datos de entrenamiento
+- Baja precisión en datos nuevos
+- Curva ROC muy optimista en entrenamiento
+- Grandes diferencias entre métricas de entrenamiento y validación
 
 ------------------------------------------------------------------------
 
@@ -185,9 +172,11 @@ nexus$prob_fallo <- pred
 ggplot(nexus, aes(x = energia_restante, y = prob_fallo, color = fallo)) +
   geom_point(alpha = 0.5) +
   geom_smooth(method = "loess", se = FALSE) +
-  labs(title = "Probabilidad estimada de fallo vs Energía restante",
-       x = "Energía restante (normalizada)",
-       y = "Probabilidad de fallo") +
+  labs(
+    title = "Probabilidad estimada de fallo vs Energía restante",
+    x = "Energía restante (normalizada)",
+    y = "Probabilidad de fallo"
+  ) +
   theme_minimal()
 ```
 
@@ -207,26 +196,26 @@ Completa esta tabla a mano o en un archivo aparte:
 
 # Análisis Comparativo de Modelos
 
-Vamos a crear una función para evaluar diferentes combinaciones de
-hiperparámetros de manera sistemática:
+Vamos a crear una función para evaluar diferentes combinaciones de hiperparámetros de manera sistemática:
 
 ```{r}
 evaluar_modelo <- function(size, decay, maxit) {
   set.seed(42)
   modelo <- nnet(x, y,
-                 size = size,
-                 decay = decay,
-                 maxit = maxit,
-                 softmax = TRUE)
-  
+    size = size,
+    decay = decay,
+    maxit = maxit,
+    softmax = TRUE
+  )
+
   pred <- predict(modelo, x)[, 2]
   pred_clase <- ifelse(pred > 0.5, 1, 0)
   real <- as.numeric(nexus$fallo) - 1
-  
+
   # Calcular métricas
   cm <- confusionMatrix(factor(pred_clase), factor(real))
   roc_obj <- roc(real, pred)
-  
+
   # Devolver resultados como vector
   c(
     size = size,
@@ -248,28 +237,32 @@ combinaciones <- expand.grid(
 
 # Evaluar todas las combinaciones
 resultados <- t(sapply(1:nrow(combinaciones), function(i) {
-  with(combinaciones[i,], evaluar_modelo(size, decay, maxit))
+  with(combinaciones[i, ], evaluar_modelo(size, decay, maxit))
 }))
 
 # Convertir a data frame
 resultados_df <- as.data.frame(resultados)
 
 # Ordenar por AUC (de mayor a menor)
-resultados_df <- resultados_df[order(resultados_df$auc, decreasing = TRUE),]
+resultados_df <- resultados_df[order(resultados_df$auc, decreasing = TRUE), ]
 
 # Mostrar resultados
-knitr::kable(resultados_df, digits = 3, 
-             caption = "Comparativa de Modelos")
+knitr::kable(resultados_df,
+  digits = 3,
+  caption = "Comparativa de Modelos"
+)
 
 # Visualizar resultados
 ggplot(resultados_df, aes(x = size, y = auc, color = factor(decay))) +
   geom_point(size = 3) +
   geom_line(aes(group = decay)) +
   facet_wrap(~maxit) +
-  labs(title = "AUC por combinación de hiperparámetros",
-       x = "Tamaño de capa oculta",
-       y = "AUC",
-       color = "Decay") +
+  labs(
+    title = "AUC por combinación de hiperparámetros",
+    x = "Tamaño de capa oculta",
+    y = "AUC",
+    color = "Decay"
+  ) +
   theme_minimal()
 
 # Análisis de sobreajuste
@@ -277,10 +270,12 @@ ggplot(resultados_df, aes(x = size, y = accuracy, color = factor(decay))) +
   geom_point(size = 3) +
   geom_line(aes(group = decay)) +
   facet_wrap(~maxit) +
-  labs(title = "Precisión por combinación de hiperparámetros",
-       x = "Tamaño de capa oculta",
-       y = "Precisión",
-       color = "Decay") +
+  labs(
+    title = "Precisión por combinación de hiperparámetros",
+    x = "Tamaño de capa oculta",
+    y = "Precisión",
+    color = "Decay"
+  ) +
   theme_minimal()
 ```
 
@@ -288,28 +283,22 @@ ggplot(resultados_df, aes(x = size, y = accuracy, color = factor(decay))) +
 
 # Preguntas de reflexión
 
-Basándote en los resultados del análisis comparativo, responde a las
-siguientes preguntas:
+Basándote en los resultados del análisis comparativo, responde a las siguientes preguntas:
 
-1.  ¿Qué combinación ha dado mejor equilibrio entre simplicidad y
-    rendimiento?
-
--   Considera el tamaño de la capa oculta (`size`) y el valor de `decay`
--   Evalúa el trade-off entre complejidad y rendimiento
+1.  ¿Qué combinación ha dado mejor equilibrio entre simplicidad y rendimiento?
+   - Considera el tamaño de la capa oculta (`size`) y el valor de `decay`
+   - Evalúa el trade-off entre complejidad y rendimiento
 
 2.  ¿Cómo se manifiesta el sobreajuste en este modelo?
-
--   Analiza la relación entre `size` y la precisión
--   Observa cómo afecta el `decay` a la estabilidad del modelo
+   - Analiza la relación entre `size` y la precisión
+   - Observa cómo afecta el `decay` a la estabilidad del modelo
 
 3.  ¿Qué aprendiste sobre el parámetro `decay`?
-
--   Evalúa su impacto en la regularización
--   Considera su interacción con `size`
+   - Evalúa su impacto en la regularización
+   - Considera su interacción con `size`
 
 4.  ¿Cómo afecta el tamaño de la capa oculta al modelo?
-
--   Analiza la relación entre complejidad y rendimiento
--   Identifica el punto de rendimientos decrecientes
+   - Analiza la relación entre complejidad y rendimiento
+   - Identifica el punto de rendimientos decrecientes
 
 ------------------------------------------------------------------------
