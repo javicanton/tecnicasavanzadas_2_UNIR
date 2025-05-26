@@ -1,45 +1,49 @@
+# Taller de Ajuste de Redes Neuronales - Caso Nexus-5
 
-# Predicción de Fallos en Androides Nexus-5
+Este taller se centra en el ajuste de parámetros de redes neuronales para predecir fallos en androides Nexus-5.
 
-Este directorio contiene un ejemplo completo de modelización con redes neuronales en R, aplicado a un caso simulado basado en los androides Nexus-5 de la Tyrell Corporation (universo Blade Runner). El objetivo es enseñar el funcionamiento básico de estos modelos a estudiantes de técnicas cuantitativas avanzadas.
+## Estructura de Archivos
 
-## Archivos incluidos
+- `taller_ajuste_redes_nexus5.Rmd`: Documento principal del taller con instrucciones y explicaciones
+- `taller_ajuste_redes_nexus5.R`: Código base para el entrenamiento del modelo inicial
+- `taller_ajuste_redes_nexus5_evalmodelos.R`: Código para la evaluación comparativa de modelos
+- `nexus5_datos_1000.csv`: Dataset con información de androides Nexus-5
+- `modelo_nexus5_nn.R`: Implementación completa del modelo (referencia)
+- `informe_nexus5_nn.Rmd`: Informe detallado del caso de estudio
 
-- `nexus5_datos_1000_decimal.csv`: dataset simulado con 1000 observaciones.
-- `modelo_nexus5_nn.R`: script comentado para ejecutar paso a paso el modelo en R.
-- `informe_nexus5_nn.Rmd`: versión en R Markdown para generar un informe HTML interactivo.
+## Flujo de Trabajo
+
+1. **Preparación Inicial**:
+   - Ejecutar `taller_ajuste_redes_nexus5.R` para:
+     - Cargar y preparar los datos
+     - Entrenar el modelo inicial
+     - Evaluar el rendimiento base
+
+2. **Ajuste de Parámetros**:
+   - Modificar los parámetros en `taller_ajuste_redes_nexus5.R`:
+     - `size`: Número de neuronas en la capa oculta
+     - `decay`: Penalización para evitar sobreajuste
+     - `maxit`: Número máximo de iteraciones
+
+3. **Evaluación Comparativa**:
+   - Ejecutar `taller_ajuste_redes_nexus5_evalmodelos.R` para:
+     - Probar diferentes combinaciones de parámetros
+     - Comparar rendimiento entre modelos
+     - Visualizar resultados
 
 ## Requisitos
 
-Para ejecutar correctamente el análisis necesitas tener instalado en R:
+- R >= 4.0.0
+- Paquetes necesarios:
+  - nnet
+  - dplyr
+  - ggplot2
+  - caret
+  - pROC
+  - e1071
 
-- `nnet`
-- `dplyr`
-- `ggplot2`
-- `caret`
-- `pROC`
-- `e1071`
-- `knitr` (si deseas compilar el .Rmd)
+## Notas
 
-## Instrucciones de uso
-
-### Opción 1: Ejecutar paso a paso en R
-
-1. Abre el archivo `modelo_nexus5_nn.R` en RStudio.
-2. Ejecuta los bloques uno a uno para ver el preprocesamiento, modelado y evaluación.
-3. Modifica los parámetros como `size`, `maxit`, `decay` para experimentar con diferentes arquitecturas.
-
-### Opción 2: Generar un informe automático
-
-1. Abre el archivo `informe_nexus5_nn.Rmd` en RStudio.
-2. Asegúrate de tener todos los paquetes instalados.
-3. Haz clic en “Knit” para compilar un informe HTML con gráficos, métricas y explicaciones.
-
-## Objetivo didáctico
-
-Este ejemplo permite entender:
-
-- Cómo se preparan los datos para redes neuronales.
-- Cómo se entrena y ajusta un modelo básico con `nnet`.
-- Cómo se evalúan los resultados (matriz de confusión, AUC, visualizaciones).
-- Qué papel juegan las variables latentes o encubiertas en un modelo realista.
+- El archivo `modelo_nexus5_nn.R` sirve como referencia para una implementación completa
+- `informe_nexus5_nn.Rmd` contiene un análisis detallado del caso de estudio
+- Los resultados pueden variar debido a la aleatoriedad en el entrenamiento
