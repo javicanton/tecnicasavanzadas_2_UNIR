@@ -6,21 +6,21 @@
 evaluar_modelo <- function(size, decay, maxit) {
   set.seed(42)
   modelo <- nnet(x, y,
-                 size = size,
-                 decay = decay,
-                 maxit = maxit,
-                 softmax = TRUE,
-                 trace = FALSE
+    size = size,
+    decay = decay,
+    maxit = maxit,
+    softmax = TRUE,
+    trace = FALSE
   )
-  
+
   pred <- predict(modelo, x)[, 2]
   pred_clase <- ifelse(pred > 0.5, 1, 0)
   real <- as.numeric(nexus$fallo) - 1
-  
+
   # Calcular métricas
   cm <- confusionMatrix(factor(pred_clase), factor(real))
   roc_obj <- roc(real, pred)
-  
+
   # Devolver resultados como vector
   c(
     size = size,
@@ -35,9 +35,9 @@ evaluar_modelo <- function(size, decay, maxit) {
 
 # Definir combinaciones a probar
 combinaciones <- expand.grid(
-  size = c(2, 5, 10),
+  size = c(2, 5, 10, 20),
   decay = c(0.001, 0.01, 0.1),
-  maxit = c(100, 300, 500)
+  maxit = c(100, 300, 500, 1000)
 )
 
 # Evaluar todas las combinaciones
@@ -53,8 +53,8 @@ resultados_df <- resultados_df[order(resultados_df$auc, decreasing = TRUE), ]
 
 # Mostrar resultados
 print(knitr::kable(resultados_df,
-                   digits = 3,
-                   caption = "Comparativa de Modelos"
+  digits = 3,
+  caption = "Comparativa de Modelos"
 ))
 
 # Visualizar resultados
@@ -92,32 +92,32 @@ print(p2)
 entrenar_evaluar_modelo <- function(size, decay, maxit) {
   set.seed(42)
   modelo <- nnet(x, y,
-                 size = size,
-                 decay = decay,
-                 maxit = maxit,
-                 softmax = TRUE,
-                 trace = FALSE
+    size = size,
+    decay = decay,
+    maxit = maxit,
+    softmax = TRUE,
+    trace = FALSE
   )
-  
+
   pred <- predict(modelo, x)[, 2]
   pred_clase <- ifelse(pred > 0.5, 1, 0)
   real <- as.numeric(nexus$fallo) - 1
-  
+
   # Matriz de confusión
   cm <- confusionMatrix(factor(pred_clase), factor(real))
   print("Matriz de Confusión:")
   print(cm$table)
-  
+
   # Métricas
   print("\nMétricas:")
   print(cm$overall)
   print(cm$byClass)
-  
+
   # Curva ROC
   roc_obj <- roc(real, pred)
   print("\nAUC:")
   print(auc(roc_obj))
-  
+
   # Gráfico de probabilidades
   nexus$prob_fallo <- pred
   p3 <- ggplot(nexus, aes(x = energia_restante, y = prob_fallo, color = fallo)) +
@@ -129,9 +129,9 @@ entrenar_evaluar_modelo <- function(size, decay, maxit) {
       y = "Probabilidad de fallo"
     ) +
     theme_minimal()
-  
+
   print(p3)
-  
+
   return(modelo)
 }
 
