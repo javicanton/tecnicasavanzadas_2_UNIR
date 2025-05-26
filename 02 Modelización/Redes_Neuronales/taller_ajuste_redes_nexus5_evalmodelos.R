@@ -2,6 +2,59 @@
 # Técnicas Cuantitativas Avanzadas II — UNIR
 # Evaluación de modelos
 
+# Establecer el directorio de trabajo actual
+if (interactive()) {
+  tryCatch({
+    setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+  }, error = function(e) {
+    setwd("02 Modelización/Redes_Neuronales")
+  })
+} else {
+  setwd("02 Modelización/Redes_Neuronales")
+}
+
+# Cargar paquetes necesarios
+required_packages <- c("nnet", "dplyr", "ggplot2", "caret", "pROC", "e1071")
+for (pkg in required_packages) {
+  if (!require(pkg, character.only = TRUE)) {
+    install.packages(pkg, repos = "https://cloud.r-project.org")
+    library(pkg, character.only = TRUE)
+  }
+}
+
+# Cargar y preparar datos
+if (!file.exists("nexus5_datos_1000.csv")) {
+  stop("El archivo nexus5_datos_1000.csv no existe en el directorio actual")
+}
+
+nexus <- read.csv("nexus5_datos_1000.csv", stringsAsFactors = FALSE)
+
+# Verificar que no hay NA antes de la normalización
+if (any(is.na(nexus))) {
+  stop("Hay valores NA en el dataset que deben ser manejados primero")
+}
+
+# Normalización de variables numéricas
+nexus <- nexus |>
+  mutate(across(
+    c(energia_restante, contacto_blade_runner, antiguedad, experiencia_acumulada),
+    ~ (. - min(., na.rm = TRUE)) / (max(., na.rm = TRUE) - min(., na.rm = TRUE))
+  )) |>
+  mutate(
+    sexo = as.factor(sexo),
+    rebeldia = as.factor(rebeldia),
+    fallo = as.factor(fallo)
+  )
+
+# Verificar que la transformación fue exitosa
+if (any(is.na(nexus))) {
+  stop("La normalización produjo valores NA")
+}
+
+# Preparar matrices para el modelo
+x <- model.matrix(fallo ~ ., data = nexus)[, -1]
+y <- class.ind(nexus$fallo)
+
 # Función para evaluar modelos
 evaluar_modelo <- function(size, decay, maxit) {
   set.seed(42)
@@ -9,7 +62,6 @@ evaluar_modelo <- function(size, decay, maxit) {
     size = size,
     decay = decay,
     maxit = maxit,
-    softmax = TRUE,
     trace = FALSE
   )
 
@@ -95,7 +147,6 @@ entrenar_evaluar_modelo <- function(size, decay, maxit) {
     size = size,
     decay = decay,
     maxit = maxit,
-    softmax = TRUE,
     trace = FALSE
   )
 
