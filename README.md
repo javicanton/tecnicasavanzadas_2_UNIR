@@ -38,10 +38,10 @@ Repositorio de materiales para la asignatura de Técnicas Avanzadas para el Aná
 
 #### Dependencias Múltiples (SEM)
 
-- [Análisis SEM del T-800](02%20Modelización/Dependencias_multiples/T800/informe_T800_SEM.Rmd)
+- [Análisis SEM del T-800](02%20Modelización/Dependencias_multiples/T800/html_output/informe_T800_SEM.html)
   - Análisis de Ecuaciones Estructurales aplicado a unidades T-800
   - Evaluación de eficiencia operativa y constructos latentes
-- [Análisis SEM Educativo](02%20Modelización/Dependencias_multiples/educativo/informe_modelo_educativo_SEM.Rmd)
+- [Análisis SEM Educativo](02%20Modelización/Dependencias_multiples/educativo/html_output/informe_modelo_educativo_SEM.html)
   - Análisis de Ecuaciones Estructurales en contexto educativo
   - Estudio de relaciones entre apoyo docente, motivación y rendimiento
 
@@ -52,11 +52,11 @@ Repositorio de materiales para la asignatura de Técnicas Avanzadas para el Aná
 
 #### Redes Neuronales
 
-- [Análisis de Fallos en Nexus-5 mediante Redes Neuronales](02%20Modelización/Redes_Neuronales/informe_nexus5_nn.Rmd)
+- [Análisis de Fallos en Nexus-5 mediante Redes Neuronales](02%20Modelización/Redes_Neuronales/html_output/informe_nexus5_nn.html)
   - Implementación de redes neuronales para la predicción de fallos
   - Optimización mediante validación cruzada
   - Análisis de rendimiento y métricas de clasificación
-- [Taller de Ajuste de Redes Neuronales](02%20Modelización/Redes_Neuronales/taller_ajuste_redes_nexus5.Rmd)
+- [Taller de Ajuste de Redes Neuronales](02%20Modelización/Redes_Neuronales/html_output/taller_ajuste_redes_nexus5.html)
   - Taller práctico de optimización de hiperparámetros
   - Evaluación comparativa de diferentes configuraciones
   - Casos prácticos de ajuste de modelos

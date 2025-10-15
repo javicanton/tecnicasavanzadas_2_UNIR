@@ -25,13 +25,13 @@ Este directorio contiene los talleres y ejemplos prácticos de modelización est
 
 ### 🔗 Dependencias Múltiples (SEM)
 
-- [**Análisis SEM del T-800**](Dependencias_multiples/T800/informe_T800_SEM.Rmd) - Análisis de Ecuaciones Estructurales aplicado a unidades T-800
-- [**Análisis SEM Educativo**](Dependencias_multiples/educativo/informe_modelo_educativo_SEM.Rmd) - Estudio de relaciones entre apoyo docente, motivación y rendimiento
+- [**Análisis SEM del T-800**](Dependencias_multiples/T800/html_output/informe_T800_SEM.html) - Análisis de Ecuaciones Estructurales aplicado a unidades T-800
+- [**Análisis SEM Educativo**](Dependencias_multiples/educativo/html_output/informe_modelo_educativo_SEM.html) - Estudio de relaciones entre apoyo docente, motivación y rendimiento
 
 ### 🧠 Redes Neuronales
 
-- [**Análisis de Fallos en Nexus-5**](Redes_Neuronales/informe_nexus5_nn.Rmd) - Implementación de redes neuronales para predicción de fallos
-- [**Taller de Ajuste de Redes Neuronales**](Redes_Neuronales/taller_ajuste_redes_nexus5.Rmd) - Taller práctico de optimización de hiperparámetros
+- [**Análisis de Fallos en Nexus-5**](Redes_Neuronales/html_output/informe_nexus5_nn.html) - Implementación de redes neuronales para predicción de fallos
+- [**Taller de Ajuste de Redes Neuronales**](Redes_Neuronales/html_output/taller_ajuste_redes_nexus5.html) - Taller práctico de optimización de hiperparámetros
 
 ## Técnicas Implementadas
 
