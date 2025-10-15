@@ -5,43 +5,52 @@ Este directorio contiene los talleres y ejemplos prácticos de modelización est
 ## Estructura del Módulo
 
 ### 📈 Regresión Lineal
+
 - [**Androides**](Regresion_Lineal/Androides/RegresionLineal_Androides.md) - Modelo de regresión lineal aplicado al análisis de comportamiento de androides
 - [**Bacterias**](Regresion_Lineal/Bacterias/RegresionLineal_Bacterias.md) - Análisis de crecimiento bacteriano mediante regresión lineal
 
 ### 📊 Regresión No Lineal
+
 - [**Tyrell Corp - Crecimiento Nexus-4 (Módulo A)**](Regresion_No_Lineal/Tyrell_Corp_1.Rmd) - Modelo logístico para análisis de crecimiento
 - [**Tyrell Corp - Crecimiento Nexus-4 (Módulo B)**](Regresion_No_Lineal/Tyrell_Corp_2.Rmd) - Modelo de Gompertz para análisis de crecimiento
 - [**Visualizaciones HTML**](Regresion_No_Lineal/html_output/) - Resultados interactivos en formato web
 
 ### 🎵 Análisis de Streaming
+
 - [**Spotifal - Análisis de Abandono**](Analisis_Spotifal/Spotifal_Informe.md) - Análisis de patrones de abandono usando modelos lineales, logísticos y redes neuronales
 
 ### 🏢 Análisis Corporativo
+
 - [**Tyrell Corporation - Análisis de Eliminaciones**](Analisis_Tyrell_Corp/TyrellCorporation.md) - Análisis estadístico de patrones de eliminación
 
 ### 🔗 Dependencias Múltiples (SEM)
+
 - [**Análisis SEM del T-800**](Dependencias_multiples/T800/informe_T800_SEM.Rmd) - Análisis de Ecuaciones Estructurales aplicado a unidades T-800
 - [**Análisis SEM Educativo**](Dependencias_multiples/educativo/informe_modelo_educativo_SEM.Rmd) - Estudio de relaciones entre apoyo docente, motivación y rendimiento
 
 ### 🧠 Redes Neuronales
+
 - [**Análisis de Fallos en Nexus-5**](Redes_Neuronales/informe_nexus5_nn.Rmd) - Implementación de redes neuronales para predicción de fallos
 - [**Taller de Ajuste de Redes Neuronales**](Redes_Neuronales/taller_ajuste_redes_nexus5.Rmd) - Taller práctico de optimización de hiperparámetros
 
 ## Técnicas Implementadas
 
 ### Modelización Estadística
+
 - **Regresión Lineal Simple y Múltiple**
 - **Regresión No Lineal** (Logística, Gompertz)
 - **Análisis de Ecuaciones Estructurales (SEM)**
 - **Modelos de Clasificación**
 
 ### Machine Learning
+
 - **Redes Neuronales Artificiales**
 - **Optimización de Hiperparámetros**
 - **Validación Cruzada**
 - **Métricas de Evaluación**
 
 ### Visualización y Análisis
+
 - **Gráficos de Diagnóstico**
 - **Matrices de Correlación**
 - **Curvas ROC**
@@ -50,11 +59,13 @@ Este directorio contiene los talleres y ejemplos prácticos de modelización est
 ## Requisitos Técnicos
 
 ### Software Base
+
 - R >= 4.0.0
 - RStudio (recomendado)
 - Git (opcional)
 
 ### Paquetes R Principales
+
 ```r
 install.packages(c(
     "tidyverse",    # Manipulación y visualización de datos
@@ -82,6 +93,7 @@ install.packages(c(
 ## Estructura de Archivos
 
 Cada subdirectorio contiene:
+
 - **Documentación**: Archivos `.md` con explicaciones detalladas
 - **Código R**: Scripts ejecutables (`.R`)
 - **Informes**: Documentos RMarkdown (`.Rmd`)
