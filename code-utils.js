@@ -94,6 +94,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Función para añadir sección de descarga de código
     function addDownloadSection() {
+        // Verificar si ya existe una sección de descarga
+        const existingDownloadSection = document.querySelector('.download-section');
+        if (existingDownloadSection) {
+            return; // No añadir si ya existe
+        }
+        
         // Buscar enlaces a archivos .R en la página
         const rLinks = [];
         const links = document.querySelectorAll('a[href$=".R"]');
@@ -134,7 +140,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const codeBlocks = document.querySelectorAll('pre code');
         
         codeBlocks.forEach(codeBlock => {
-            let html = codeBlock.innerHTML;
+            // Solo procesar si no contiene HTML ya renderizado
+            if (codeBlock.innerHTML.includes('<span') || codeBlock.innerHTML.includes('<a')) {
+                return; // Saltar si ya está procesado
+            }
+            
+            let text = codeBlock.textContent || codeBlock.innerText;
+            let html = text;
             
             // Palabras clave de R
             const keywords = [
