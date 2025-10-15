@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Spotifal - Análisis de Abandono</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Spotifal - Análisis de Abandono</h1>
+</header>
+<h1 id="análisis-de-datos-de-spotifal">Análisis de Datos de
+Spotifal</h1>
+<figure>
+<img src="Logo%20Spotifal.png" alt="Logo de Spotifal" />
+<figcaption aria-hidden="true">Logo de Spotifal</figcaption>
+</figure>
+<h2 id="introducción">1. Introducción</h2>
+<p>Este informe presenta el análisis de datos de usuarios de Spotifal,
+una plataforma (ficticia) de streaming musical. El objetivo es entender
+los patrones de uso y abandono de los usuarios, utilizando diferentes
+técnicas de modelización estadística.</p>
+<h2 id="configuración-del-entorno">2. Configuración del Entorno</h2>
+<p>El análisis se realizó utilizando R con los siguientes paquetes:</p>
+<ul>
+<li>tidyverse: Para manipulación y visualización de datos</li>
+<li>skimr: Para resúmenes estadísticos</li>
+<li>janitor: Para limpieza de datos</li>
+<li>ggplot2: Para visualizaciones</li>
+<li>ggeffects: Para análisis de efectos marginales</li>
+<li>nnet: Para modelos de redes neuronales</li>
+<li>yardstick: Para métricas de evaluación</li>
+<li>pROC: Para análisis ROC</li>
+</ul>
+<h2 id="carga-y-limpieza-de-datos">3. Carga y Limpieza de Datos</h2>
+<p>El dataset se cargó desde el archivo
+<code>Dataset_Spotifal.csv</code>.</p>
+<h3 id="estructura-del-dataset">3.1 Estructura del Dataset</h3>
+<p>El dataset contiene 500 observaciones y 8 variables:</p>
+<ul>
+<li>3 variables categóricas (character)</li>
+<li>5 variables numéricas</li>
+</ul>
+<p>No se encontraron valores ausentes en ninguna variable.</p>
+<h3 id="variables-categóricas">3.2 Variables Categóricas</h3>
+<ul>
+<li><strong>tipo_suscripcion</strong>: 2 categorías únicas</li>
+<li><strong>genero_favorito</strong>: 5 categorías únicas</li>
+<li><strong>sexo</strong>: 3 categorías únicas</li>
+</ul>
+<h3 id="variables-numéricas">3.3 Variables Numéricas</h3>
+<ul>
+<li><strong>dias_ultimo_inicio</strong>:
+<ul>
+<li>Media: 9.53 días</li>
+<li>Mediana: 7 días</li>
+<li>Rango: 0-49 días</li>
+<li>Distribución sesgada a la derecha</li>
+</ul></li>
+<li><strong>canciones_por_semana</strong>:
+<ul>
+<li>Media: 29.8 canciones</li>
+<li>Mediana: 30 canciones</li>
+<li>Rango: 14-47 canciones</li>
+<li>Distribución aproximadamente normal</li>
+</ul></li>
+<li><strong>listas_creadas</strong>:
+<ul>
+<li>Media: 4.98 listas</li>
+<li>Mediana: 5 listas</li>
+<li>Rango: 0-12 listas</li>
+<li>Distribución ligeramente sesgada a la derecha</li>
+</ul></li>
+<li><strong>edad</strong>:
+<ul>
+<li>Media: 41.7 años</li>
+<li>Mediana: 41 años</li>
+<li>Rango: 16-69 años</li>
+<li>Distribución relativamente uniforme</li>
+</ul></li>
+<li><strong>abandona</strong> (variable objetivo):
+<ul>
+<li>Media: 0.21 (21% de abandono)</li>
+<li>Distribución altamente sesgada (mayoría no abandona)</li>
+</ul></li>
+</ul>
+<h2 id="análisis-descriptivo">4. Análisis Descriptivo</h2>
+<h3 id="distribución-de-variables-numéricas">4.1 Distribución de
+Variables Numéricas</h3>
+<p>El análisis detallado de las variables numéricas muestra:</p>
+<ul>
+<li><strong>dias_ultimo_inicio</strong>:
+<ul>
+<li>25% de usuarios iniciaron sesión hace 2 días o menos</li>
+<li>75% de usuarios iniciaron sesión hace 14 días o menos</li>
+<li>Valor máximo: 49 días sin iniciar sesión</li>
+</ul></li>
+<li><strong>canciones_por_semana</strong>:
+<ul>
+<li>25% de usuarios escuchan 25 canciones o menos por semana</li>
+<li>75% de usuarios escuchan 33 canciones o menos por semana</li>
+<li>Rango estrecho: 14-47 canciones, indicando patrones de uso
+consistentes</li>
+</ul></li>
+<li><strong>listas_creadas</strong>:
+<ul>
+<li>25% de usuarios han creado 3 listas o menos</li>
+<li>75% de usuarios han creado 6 listas o menos</li>
+<li>Valor máximo: 12 listas creadas</li>
+</ul></li>
+<li><strong>edad</strong>:
+<ul>
+<li>25% de usuarios tienen 29 años o menos</li>
+<li>75% de usuarios tienen 56 años o menos</li>
+<li>Distribución relativamente uniforme entre 16 y 69 años</li>
+</ul></li>
+</ul>
+<h3 id="distribución-de-variables-categóricas">4.2 Distribución de
+Variables Categóricas</h3>
+<h4 id="tipo-de-suscripción">Tipo de Suscripción</h4>
+<ul>
+<li><strong>Gratuita</strong>: 315 usuarios (63%)</li>
+<li><strong>Premium</strong>: 185 usuarios (37%)</li>
+</ul>
+<h4 id="género-favorito">Género Favorito</h4>
+<ul>
+<li><strong>Rock</strong>: 126 usuarios (25.2%)</li>
+<li><strong>Clásica</strong>: 107 usuarios (21.4%)</li>
+<li><strong>Pop</strong>: 93 usuarios (18.6%)</li>
+<li><strong>Electrónica</strong>: 90 usuarios (18%)</li>
+<li><strong>Reguetón</strong>: 84 usuarios (16.8%)</li>
+</ul>
+<h4 id="sexo">Sexo</h4>
+<ul>
+<li><strong>Mujer</strong>: 241 usuarios (48.2%)</li>
+<li><strong>Hombre</strong>: 230 usuarios (46%)</li>
+<li><strong>Prefiero no decirlo</strong>: 29 usuarios (5.8%)</li>
+</ul>
+<h4 id="abandono">Abandono</h4>
+<ul>
+<li><strong>No abandona</strong>: 395 usuarios (79%)</li>
+<li><strong>Abandona</strong>: 105 usuarios (21%)</li>
+</ul>
+<h2 id="análisis-de-correlaciones">5. Análisis de Correlaciones</h2>
+<h3 id="resumen-de-correlaciones-diseñadas">5.1 Resumen de Correlaciones
+Diseñadas</h3>
+<figure>
+<img src="img/matriz_correlaciones.png" alt="Matriz de Correlaciones" />
+<figcaption aria-hidden="true">Matriz de Correlaciones</figcaption>
+</figure>
+<table>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 31%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Influye en abandona</th>
+<th>Tipo de relación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dias_ultimo_inicio</td>
+<td>Sí</td>
+<td>Positiva, lineal</td>
+</tr>
+<tr class="even">
+<td>canciones_por_semana</td>
+<td>Sí</td>
+<td>Negativa, lineal</td>
+</tr>
+<tr class="odd">
+<td>listas_creadas</td>
+<td>Sí</td>
+<td>Negativa, lineal</td>
+</tr>
+<tr class="even">
+<td>edad</td>
+<td>Parcial (si &gt; 50)</td>
+<td>Ligeramente positiva</td>
+</tr>
+<tr class="odd">
+<td>tipo_suscripcion</td>
+<td>Sí</td>
+<td>Categórica: gratuita peor</td>
+</tr>
+<tr class="even">
+<td>genero_favorito</td>
+<td>No</td>
+<td>Sin efecto inicial</td>
+</tr>
+<tr class="odd">
+<td>sexo</td>
+<td>No</td>
+<td>Sin efecto inicial</td>
+</tr>
+</tbody>
+</table>
+<h3 id="análisis-de-relaciones">5.2 Análisis de Relaciones</h3>
+<h4 id="variables-con-influencia-significativa">Variables con Influencia
+Significativa</h4>
+<ol type="1">
+<li><strong>Días desde último inicio (Positiva)</strong>
+<ul>
+<li>Relación directa con el abandono</li>
+<li>A más días sin actividad, mayor probabilidad de abandono</li>
+<li>Efecto más fuerte y consistente en el dataset</li>
+</ul></li>
+</ol>
+<figure>
+<img src="img/dias_vs_abandono.png" alt="Relación días vs abandono" />
+<figcaption aria-hidden="true">Relación días vs abandono</figcaption>
+</figure>
+<ol start="2" type="1">
+<li><strong>Canciones por semana (Negativa)</strong>
+<ul>
+<li>Relación inversa con el abandono</li>
+<li>Mayor actividad musical asociada a menor probabilidad de
+abandono</li>
+<li>Indicador importante de engagement del usuario</li>
+</ul></li>
+</ol>
+<figure>
+<img src="img/canciones_vs_abandono.png"
+alt="Relación canciones vs abandono" />
+<figcaption aria-hidden="true">Relación canciones vs
+abandono</figcaption>
+</figure>
+<ol start="3" type="1">
+<li><strong>Listas creadas (Negativa)</strong>
+<ul>
+<li>Relación inversa con el abandono</li>
+<li>Más listas creadas indican menor probabilidad de abandono</li>
+<li>Refleja inversión del usuario en la plataforma</li>
+</ul></li>
+</ol>
+<h4 id="variables-con-influencia-parcial">Variables con Influencia
+Parcial</h4>
+<ol start="4" type="1">
+<li><strong>Edad</strong>
+<ul>
+<li>Efecto positivo débil, principalmente en mayores de 50 años</li>
+<li>No es un predictor fuerte en usuarios más jóvenes</li>
+<li>Sugiere necesidad de estrategias específicas por edad</li>
+</ul></li>
+</ol>
+<figure>
+<img src="img/edad_vs_abandono.png" alt="Relación edad vs abandono" />
+<figcaption aria-hidden="true">Relación edad vs abandono</figcaption>
+</figure>
+<ol start="5" type="1">
+<li><strong>Tipo de Suscripción</strong>
+<ul>
+<li>Factor categórico con influencia clara</li>
+<li>Usuarios gratuitos muestran mayor tendencia al abandono</li>
+<li>Variable clave para estrategias de retención</li>
+</ul></li>
+</ol>
+<figure>
+<img src="img/suscripcion_vs_abandono.png"
+alt="Relación suscripción vs abandono" />
+<figcaption aria-hidden="true">Relación suscripción vs
+abandono</figcaption>
+</figure>
+<h3 id="implicaciones-para-el-modelado">5.3 Implicaciones para el
+Modelado</h3>
+<ol type="1">
+<li><strong>Priorización de Variables</strong>:
+<ul>
+<li>Enfoque principal en días sin actividad y tipo de suscripción</li>
+<li>Considerar patrones de uso (canciones y listas) como predictores
+secundarios</li>
+<li>Edad como variable de control en modelos múltiples</li>
+</ul></li>
+<li><strong>Consideraciones de Diseño</strong>:
+<ul>
+<li>Explorar interacciones entre variables significativas</li>
+<li>Evaluar transformaciones para relaciones no lineales</li>
+<li>Posible exclusión de variables no significativas en modelos
+parsimoniosos</li>
+</ul></li>
+</ol>
+<h2 id="visualizaciones-exploratorias">6. Visualizaciones
+Exploratorias</h2>
+<h3 id="patrones-de-uso">6.1 Patrones de Uso</h3>
+<h4 id="días-desde-el-último-inicio-de-sesión">Días desde el Último
+Inicio de Sesión</h4>
+<p>El histograma muestra una distribución fuertemente sesgada a la
+derecha:</p>
+<ul>
+<li>La mayoría de los usuarios (&gt;100) han iniciado sesión en los
+últimos 2 días</li>
+<li>Hay una disminución exponencial en la frecuencia conforme aumentan
+los días</li>
+<li>Se observan algunos valores atípicos de usuarios que no han iniciado
+sesión en más de 40 días</li>
+</ul>
+<h4 id="canciones-por-semana-según-tipo-de-suscripción">Canciones por
+Semana según Tipo de Suscripción</h4>
+<p>El boxplot revela patrones de uso similares entre usuarios gratuitos
+y premium:</p>
+<ul>
+<li>La mediana es prácticamente idéntica (~30 canciones/semana) para
+ambos tipos</li>
+<li>La dispersión es ligeramente mayor en usuarios gratuitos</li>
+<li>Se observan valores atípicos en ambos grupos, especialmente en el
+rango superior</li>
+<li>No hay diferencias significativas en el consumo de música entre
+tipos de suscripción</li>
+</ul>
+<h3 id="patrones-de-abandono">6.2 Patrones de Abandono</h3>
+<h4 id="proporción-de-abandono-por-tipo-de-suscripción">Proporción de
+Abandono por Tipo de Suscripción</h4>
+<p>El gráfico de barras apiladas muestra diferencias claras:</p>
+<ul>
+<li>Los usuarios gratuitos tienen una tasa de abandono
+significativamente mayor (~30%)</li>
+<li>Los usuarios premium muestran una tasa de abandono mucho menor
+(~10%)</li>
+<li>La suscripción premium parece ser un factor protector contra el
+abandono</li>
+</ul>
+<h4 id="relación-entre-uso-y-abandono">Relación entre Uso y
+Abandono</h4>
+<p>El gráfico de dispersión revela patrones interesantes:</p>
+<ul>
+<li>Existe una clara relación entre días sin iniciar sesión y
+abandono</li>
+<li>Los usuarios que abandonan (puntos turquesa) tienden a tener más
+días sin iniciar sesión</li>
+<li>No se observa una relación clara entre el número de canciones por
+semana y el abandono</li>
+<li>La mayoría de los abandonos ocurren después de los 10 días sin
+actividad</li>
+</ul>
+<h3 id="conclusiones-preliminares">6.3 Conclusiones Preliminares</h3>
+<ol type="1">
+<li>El tiempo sin iniciar sesión es un fuerte predictor del
+abandono</li>
+<li>La suscripción premium reduce significativamente la probabilidad de
+abandono</li>
+<li>El nivel de uso (canciones por semana) no parece ser un factor
+determinante</li>
+<li>Existe una ventana de oportunidad crítica en los primeros 10 días de
+inactividad</li>
+</ol>
+<h2 id="modelización">7. Modelización</h2>
+<h3 id="modelo-lineal-simple">7.1 Modelo Lineal Simple</h3>
+<p>Como primera aproximación, se ajustó un modelo lineal simple para
+predecir el abandono en función de los días desde el último inicio de
+sesión.</p>
+<figure>
+<img src="img/modelo_lineal.png" alt="Modelo Lineal Simple" />
+<figcaption aria-hidden="true">Modelo Lineal Simple</figcaption>
+</figure>
+<h4 id="resultados-del-modelo">Resultados del Modelo</h4>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Call<span class="sc">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> abandona <span class="sc">~</span> dias_ultimo_inicio, <span class="at">data =</span> df)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Coefficients<span class="sc">:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                   Estimate Std. Error t value <span class="fu">Pr</span>(<span class="sc">&gt;</span><span class="er">|</span>t<span class="sc">|</span>)    </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>(Intercept)        <span class="fl">0.060303</span>   <span class="fl">0.023663</span>   <span class="fl">2.548</span>   <span class="fl">0.0111</span> <span class="sc">*</span>  </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>dias_ultimo_inicio <span class="fl">0.015708</span>   <span class="fl">0.001736</span>   <span class="fl">9.047</span>   <span class="sc">&lt;</span><span class="fl">2e-16</span> <span class="sc">**</span><span class="er">*</span></span></code></pre></div>
+<h4 id="interpretación">Interpretación</h4>
+<ol type="1">
+<li><strong>Relación Significativa</strong>:
+<ul>
+<li>El coeficiente para <code>dias_ultimo_inicio</code> es altamente
+significativo (p &lt; 2e-16)</li>
+<li>Por cada día adicional sin iniciar sesión, la probabilidad de
+abandono aumenta en 0.016 (1.6%)</li>
+</ul></li>
+<li><strong>Ajuste del Modelo</strong>:
+<ul>
+<li>R² ajustado = 0.1394 (13.94% de la varianza explicada)</li>
+<li>El ajuste modesto sugiere que existen otros factores importantes no
+considerados</li>
+</ul></li>
+<li><strong>Limitaciones</strong>:
+<ul>
+<li>El modelo lineal no es el más apropiado para una variable de
+respuesta binaria</li>
+<li>No tiene en cuenta la naturaleza no lineal de la relación</li>
+<li>Puede predecir probabilidades fuera del rango [0,1]</li>
+</ul></li>
+</ol>
+<h3 id="modelo-logístico-simple">7.2 Modelo Logístico Simple</h3>
+<p>Para abordar las limitaciones del modelo lineal, se ajustó un modelo
+logístico que es más apropiado para variables de respuesta binaria.</p>
+<figure>
+<img src="img/modelo_logistico_simple.png"
+alt="Modelo Logístico Simple" />
+<figcaption aria-hidden="true">Modelo Logístico Simple</figcaption>
+</figure>
+<h4 id="resultados-del-modelo-1">Resultados del Modelo</h4>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Call<span class="sc">:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(<span class="at">formula =</span> abandona <span class="sc">~</span> dias_ultimo_inicio, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>, <span class="at">data =</span> df)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>Coefficients<span class="sc">:</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                   Estimate Std. Error z value <span class="fu">Pr</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)    </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>(Intercept)        <span class="sc">-</span><span class="fl">2.30166</span>    <span class="fl">0.18772</span> <span class="sc">-</span><span class="fl">12.261</span>  <span class="sc">&lt;</span> <span class="fl">2e-16</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>dias_ultimo_inicio  <span class="fl">0.08542</span>    <span class="fl">0.01147</span>   <span class="fl">7.447</span> <span class="fl">9.51e-14</span> <span class="sc">**</span><span class="er">*</span></span></code></pre></div>
+<h4 id="interpretación-1">Interpretación</h4>
+<ol type="1">
+<li><strong>Efecto del Tiempo sin Actividad</strong>:
+<ul>
+<li>El coeficiente positivo (0.08542) indica que la probabilidad de
+abandono aumenta con los días de inactividad</li>
+<li>Por cada día adicional sin iniciar sesión, el log-odds de abandono
+aumenta en 0.085</li>
+<li>En términos de odds ratio: exp(0.08542) = 1.089, lo que significa
+que las probabilidades de abandono aumentan un 8.9% por cada día sin
+actividad</li>
+</ul></li>
+<li><strong>Significancia Estadística</strong>:
+<ul>
+<li>La relación es altamente significativa (p &lt; 9.51e-14)</li>
+<li>El intercepto negativo (-2.30166) refleja la baja probabilidad base
+de abandono</li>
+</ul></li>
+<li><strong>Ajuste del Modelo</strong>:
+<ul>
+<li>Reducción en la devianza: de 513.96 a 450.81</li>
+<li>AIC: 454.81</li>
+<li>El modelo muestra un ajuste significativamente mejor que el modelo
+nulo</li>
+</ul></li>
+<li><strong>Implicaciones Prácticas</strong>:
+<ul>
+<li>El modelo confirma cuantitativamente que el tiempo sin actividad es
+un predictor robusto del abandono</li>
+<li>Permite estimar la probabilidad de abandono basada únicamente en los
+días de inactividad</li>
+<li>Puede usarse para identificar usuarios en riesgo de abandono</li>
+</ul></li>
+</ol>
+<h3 id="modelo-logístico-múltiple">7.3 Modelo Logístico Múltiple</h3>
+<p>Para mejorar la capacidad predictiva, se ajustó un modelo que incluye
+múltiples variables predictoras.</p>
+<figure>
+<img src="img/modelo_logistico_multiple.png"
+alt="Modelo Logístico Múltiple" />
+<figcaption aria-hidden="true">Modelo Logístico Múltiple</figcaption>
+</figure>
+<h4 id="resultados-del-modelo-2">Resultados del Modelo</h4>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Call<span class="sc">:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(<span class="at">formula =</span> abandona <span class="sc">~</span> dias_ultimo_inicio <span class="sc">+</span> canciones_por_semana <span class="sc">+</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    listas_creadas <span class="sc">+</span> edad <span class="sc">+</span> tipo_suscripcion, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>, <span class="at">data =</span> df)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>Coefficients<span class="sc">:</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                         Estimate Std. Error z value <span class="fu">Pr</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)    </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>(Intercept)             <span class="sc">-</span><span class="fl">0.262640</span>   <span class="fl">0.828717</span>  <span class="sc">-</span><span class="fl">0.317</span>   <span class="fl">0.7513</span>    </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>dias_ultimo_inicio       <span class="fl">0.101747</span>   <span class="fl">0.013075</span>   <span class="fl">7.782</span> <span class="fl">7.15e-15</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>canciones_por_semana    <span class="sc">-</span><span class="fl">0.054695</span>   <span class="fl">0.022478</span>  <span class="sc">-</span><span class="fl">2.433</span>   <span class="fl">0.0150</span> <span class="sc">*</span>  </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>listas_creadas          <span class="sc">-</span><span class="fl">0.105692</span>   <span class="fl">0.057026</span>  <span class="sc">-</span><span class="fl">1.853</span>   <span class="fl">0.0638</span> .  </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>edad                     <span class="fl">0.010643</span>   <span class="fl">0.008451</span>   <span class="fl">1.259</span>   <span class="fl">0.2079</span>    </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>tipo_suscripcionpremium <span class="sc">-</span><span class="fl">2.213695</span>   <span class="fl">0.368425</span>  <span class="sc">-</span><span class="fl">6.009</span> <span class="fl">1.87e-09</span> <span class="sc">**</span><span class="er">*</span></span></code></pre></div>
+<h4 id="interpretación-2">Interpretación</h4>
+<ol type="1">
+<li><strong>Variables Significativas</strong>:
+<ul>
+<li><code>dias_ultimo_inicio</code>: Efecto positivo muy significativo
+(p &lt; 7.15e-15)</li>
+<li><code>tipo_suscripcionpremium</code>: Fuerte efecto protector (p
+&lt; 1.87e-09)</li>
+<li><code>canciones_por_semana</code>: Efecto protector moderado (p =
+0.0150)</li>
+<li><code>listas_creadas</code>: Efecto protector marginalmente
+significativo (p = 0.0638)</li>
+</ul></li>
+<li><strong>Magnitud de los Efectos</strong>:
+<ul>
+<li>Por cada día sin actividad, el log-odds de abandono aumenta en
+0.102</li>
+<li>Tener suscripción premium reduce el log-odds de abandono en
+2.214</li>
+<li>Cada canción adicional por semana reduce el log-odds de abandono en
+0.055</li>
+<li>Cada lista creada reduce el log-odds de abandono en 0.106</li>
+</ul></li>
+<li><strong>Ajuste del Modelo</strong>:
+<ul>
+<li>Reducción significativa en la devianza: de 513.96 a 389.39</li>
+<li>AIC: 401.39 (mejor que el modelo simple)</li>
+<li>Mayor capacidad predictiva que los modelos anteriores</li>
+</ul></li>
+</ol>
+<h3 id="modelo-con-interacciones">7.4 Modelo con Interacciones</h3>
+<p>Para explorar si el efecto del tiempo sin actividad varía según el
+tipo de suscripción, se ajustó un modelo con interacciones.</p>
+<figure>
+<img src="img/modelo_interaccion.png" alt="Modelo con Interacciones" />
+<figcaption aria-hidden="true">Modelo con Interacciones</figcaption>
+</figure>
+<h4 id="resultados-del-modelo-3">Resultados del Modelo</h4>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Call<span class="sc">:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(<span class="at">formula =</span> abandona <span class="sc">~</span> dias_ultimo_inicio <span class="sc">*</span> tipo_suscripcion <span class="sc">+</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    canciones_por_semana <span class="sc">+</span> listas_creadas <span class="sc">+</span> edad, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>, <span class="at">data =</span> df)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>Coefficients<span class="sc">:</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                                            Estimate Std. Error z value <span class="fu">Pr</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)    </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>(Intercept)                                <span class="sc">-</span><span class="fl">0.179957</span>   <span class="fl">0.833343</span>  <span class="sc">-</span><span class="fl">0.216</span>   <span class="fl">0.8290</span>    </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>dias_ultimo_inicio                          <span class="fl">0.095638</span>   <span class="fl">0.014742</span>   <span class="fl">6.487</span> <span class="fl">8.74e-11</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>tipo_suscripcionpremium                    <span class="sc">-</span><span class="fl">2.654939</span>   <span class="fl">0.678039</span>  <span class="sc">-</span><span class="fl">3.916</span> <span class="fl">9.02e-05</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>canciones_por_semana                       <span class="sc">-</span><span class="fl">0.055277</span>   <span class="fl">0.022441</span>  <span class="sc">-</span><span class="fl">2.463</span>   <span class="fl">0.0138</span> <span class="sc">*</span>  </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>listas_creadas                             <span class="sc">-</span><span class="fl">0.103321</span>   <span class="fl">0.056941</span>  <span class="sc">-</span><span class="fl">1.815</span>   <span class="fl">0.0696</span> .  </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>edad                                        <span class="fl">0.010410</span>   <span class="fl">0.008445</span>   <span class="fl">1.233</span>   <span class="fl">0.2177</span>    </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>dias_ultimo_inicio<span class="sc">:</span>tipo_suscripcionpremium  <span class="fl">0.025402</span>   <span class="fl">0.030947</span>   <span class="fl">0.821</span>   <span class="fl">0.4118</span>    </span></code></pre></div>
+<h4 id="interpretación-3">Interpretación</h4>
+<ol type="1">
+<li><strong>Interacción No Significativa</strong>:
+<ul>
+<li>La interacción entre días sin actividad y tipo de suscripción no es
+significativa (p = 0.4118)</li>
+<li>Esto sugiere que el efecto del tiempo sin actividad es similar para
+usuarios gratuitos y premium</li>
+</ul></li>
+<li><strong>Efectos Principales</strong>:
+<ul>
+<li>Los efectos principales mantienen su significancia y dirección</li>
+<li>El efecto protector de la suscripción premium es incluso más fuerte
+en este modelo</li>
+<li>Los efectos de uso (canciones y listas) mantienen su significancia
+marginal</li>
+</ul></li>
+<li><strong>Comparación de Modelos</strong>:
+<ul>
+<li>AIC ligeramente mayor (402.69) que el modelo sin interacción</li>
+<li>La inclusión de la interacción no mejora sustancialmente el
+ajuste</li>
+</ul></li>
+</ol>
+<h3 id="modelo-de-red-neuronal">7.5 Modelo de Red Neuronal</h3>
+<p>Para capturar relaciones no lineales más complejas entre las
+variables, se implementó una red neuronal.</p>
+<figure>
+<img src="img/modelo_red_neuronal.png" alt="Modelo de Red Neuronal" />
+<figcaption aria-hidden="true">Modelo de Red Neuronal</figcaption>
+</figure>
+<h4 id="estructura-del-modelo">Estructura del Modelo</h4>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>a <span class="dv">7-5-1</span> network with <span class="dv">46</span> weights</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>inputs<span class="sc">:</span> dias_ultimo_inicio canciones_por_semana listas_creadas edad tipo_suscripcion genero_favorito sexo </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span>(s)<span class="sc">:</span> abandona </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>options were <span class="sc">-</span> decay<span class="ot">=</span><span class="fl">0.01</span></span></code></pre></div>
+<h4 id="características-del-modelo">Características del Modelo</h4>
+<ul>
+<li><strong>Arquitectura</strong>:
+<ul>
+<li>7 variables de entrada</li>
+<li>5 neuronas en la capa oculta</li>
+<li>1 neurona de salida (predicción de abandono)</li>
+<li>Total de 46 pesos (parámetros entrenables)</li>
+</ul></li>
+<li><strong>Parámetros de Entrenamiento</strong>:
+<ul>
+<li>Regularización (decay = 0.01) para prevenir sobreajuste</li>
+<li>Variables de entrada normalizadas</li>
+<li>Función de activación logística para la clasificación binaria</li>
+</ul></li>
+</ul>
+<h4 id="resultados-y-predicciones">Resultados y Predicciones</h4>
+<p>El gráfico de predicciones de la red neuronal muestra:</p>
+<ul>
+<li>Clara separación entre las predicciones para usuarios gratuitos (1)
+y premium (2)</li>
+<li>Mayor probabilidad de abandono para usuarios gratuitos</li>
+<li>Tendencia no lineal en la relación entre días sin actividad y
+probabilidad de abandono</li>
+<li>Capacidad del modelo para capturar patrones complejos en los
+datos</li>
+</ul>
+<h2 id="evaluación-comparativa-del-rendimiento">8. Evaluación
+Comparativa del Rendimiento</h2>
+<h3 id="métricas-de-rendimiento">8.1 Métricas de Rendimiento</h3>
+<p>Se evaluaron todos los modelos utilizando dos métricas
+principales:</p>
+<ul>
+<li><p><strong>Accuracy</strong>: Proporción de predicciones correctas.
+Esta métrica indica el porcentaje total de casos que el modelo clasifica
+correctamente, tanto abandonos como no abandonos. Un accuracy de 0.85
+significa que el 85% de las predicciones son correctas.</p></li>
+<li><p><strong>Kappa</strong>: Concordancia ajustada por azar. Esta
+métrica corrige el accuracy teniendo en cuenta la probabilidad de
+acierto por puro azar. Un Kappa de 0 indica que el modelo no es mejor
+que el azar, mientras que un Kappa de 1 indica concordancia perfecta.
+Valores por encima de 0.4 se consideran moderadamente buenos.</p></li>
+</ul>
+<h4 id="tabla-comparativa">Tabla Comparativa</h4>
+<table>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th>Accuracy</th>
+<th>Kappa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Lineal simple</td>
+<td>0.804</td>
+<td>0.225</td>
+</tr>
+<tr class="even">
+<td>Logístico simple</td>
+<td>0.800</td>
+<td>0.216</td>
+</tr>
+<tr class="odd">
+<td>Logístico múltiple</td>
+<td>0.834</td>
+<td>0.396</td>
+</tr>
+<tr class="even">
+<td>Logístico con interacción</td>
+<td>0.838</td>
+<td>0.411</td>
+</tr>
+<tr class="odd">
+<td>Red neuronal</td>
+<td>0.856</td>
+<td>0.482</td>
+</tr>
+</tbody>
+</table>
+<h3 id="análisis-comparativo">8.2 Análisis Comparativo</h3>
+<ol type="1">
+<li><strong>Evolución del Rendimiento</strong>:
+<ul>
+<li>Mejora progresiva desde modelos simples hasta más complejos</li>
+<li>La red neuronal alcanza el mejor rendimiento en ambas métricas</li>
+<li>Los modelos logísticos superan al modelo lineal simple</li>
+</ul></li>
+<li><strong>Comparación de Accuracy</strong>:
+<ul>
+<li>Modelo lineal simple: 80.4%</li>
+<li>Modelo logístico simple: 80.0%</li>
+<li>Modelo logístico múltiple: 83.4%</li>
+<li>Modelo con interacciones: 83.8%</li>
+<li>Red neuronal: 85.6%</li>
+</ul></li>
+<li><strong>Comparación de Kappa</strong>:
+<ul>
+<li>Mejora sustancial en el estadístico Kappa:</li>
+<li>Modelos simples: ~0.22</li>
+<li>Modelos logísticos múltiples: ~0.40</li>
+<li>Red neuronal: 0.482</li>
+</ul></li>
+<li><strong>Balance Complejidad-Rendimiento</strong>:
+<ul>
+<li>La red neuronal ofrece la mejor precisión pero es más compleja</li>
+<li>Los modelos logísticos múltiples ofrecen un buen balance entre
+interpretabilidad y rendimiento</li>
+<li>La ganancia en rendimiento es modesta al aumentar la
+complejidad</li>
+</ul></li>
+</ol>
+<h3 id="análisis-de-curvas-roc">8.3 Análisis de Curvas ROC</h3>
+<p>Las curvas ROC (Receiver Operating Characteristic) son una
+herramienta fundamental para evaluar el rendimiento de modelos de
+clasificación binaria.</p>
+<figure>
+<img src="img/curvas_roc.png" alt="Curvas ROC de los Modelos" />
+<figcaption aria-hidden="true">Curvas ROC de los Modelos</figcaption>
+</figure>
+<h4 id="conceptos-clave">Conceptos Clave</h4>
+<ul>
+<li><strong>Sensibilidad</strong>: Proporción de abandonos correctamente
+identificados</li>
+<li><strong>Especificidad</strong>: Proporción de no abandonos
+correctamente identificados</li>
+<li><strong>Área Bajo la Curva (AUC)</strong>: Medida global del
+rendimiento del modelo
+<ul>
+<li>AUC = 1.0: Clasificación perfecta</li>
+<li>AUC = 0.5: Clasificación aleatoria (línea diagonal)</li>
+</ul></li>
+</ul>
+<h4 id="interpretación-de-las-curvas">Interpretación de las Curvas</h4>
+<ol type="1">
+<li><strong>Comparación General</strong>:
+<ul>
+<li>La red neuronal (línea naranja) muestra el mejor rendimiento global,
+con una curva más alejada de la diagonal</li>
+<li>Los modelos logísticos múltiple y con interacción (líneas verde y
+morada) tienen rendimiento similar entre sí</li>
+<li>El modelo logístico simple (línea azul) muestra un rendimiento
+inferior pero aceptable</li>
+<li>El modelo lineal simple (línea gris punteada) tiene el peor
+rendimiento, aunque supera la clasificación aleatoria</li>
+</ul></li>
+<li><strong>Análisis por Regiones</strong>:
+<ul>
+<li><strong>Alta Especificidad (&gt; 0.8)</strong>:
+<ul>
+<li>La red neuronal destaca en identificar correctamente los casos de no
+abandono</li>
+<li>Útil cuando queremos minimizar falsos positivos (evitar alarmas
+innecesarias)</li>
+</ul></li>
+<li><strong>Alta Sensibilidad (&gt; 0.8)</strong>:
+<ul>
+<li>Todos los modelos logran buena detección de abandonos reales</li>
+<li>La red neuronal mantiene mejor especificidad en esta región</li>
+</ul></li>
+</ul></li>
+<li><strong>Implicaciones para el Negocio</strong>:
+<ul>
+<li><strong>Punto de Operación Óptimo</strong>:
+<ul>
+<li>Para alertas tempranas: priorizar alta sensibilidad (&gt;0.8)</li>
+<li>Para intervenciones costosas: priorizar alta especificidad
+(&gt;0.8)</li>
+</ul></li>
+<li><strong>Selección del Modelo</strong>:
+<ul>
+<li>Red neuronal: mejor opción para decisiones críticas que requieren
+máxima precisión</li>
+<li>Modelos logísticos: buena alternativa cuando se requiere
+interpretabilidad</li>
+<li>Modelo simple: útil para monitoreo básico y screening inicial</li>
+</ul></li>
+</ul></li>
+<li><strong>Balance Sensibilidad-Especificidad</strong>:
+<ul>
+<li>La red neuronal logra el mejor equilibrio global:
+<ul>
+<li>Mantiene alta sensibilidad sin sacrificar especificidad</li>
+<li>Especialmente efectiva en la región de alta especificidad
+(&gt;0.8)</li>
+</ul></li>
+<li>Los modelos logísticos múltiples:
+<ul>
+<li>Ofrecen un buen compromiso entre rendimiento e
+interpretabilidad</li>
+<li>Mantienen rendimiento consistente en diferentes umbrales</li>
+</ul></li>
+<li>El modelo lineal simple:
+<ul>
+<li>Muestra limitaciones en ambos extremos de la curva</li>
+<li>Puede ser útil como baseline o referencia</li>
+</ul></li>
+</ul></li>
+<li><strong>Consideraciones Prácticas</strong>:
+<ul>
+<li>La elección del umbral dependerá del costo relativo de los errores:
+<ul>
+<li>Falsos positivos: recursos invertidos en retener usuarios no en
+riesgo</li>
+<li>Falsos negativos: pérdida de usuarios que podrían haberse
+retenido</li>
+</ul></li>
+<li>Se recomienda:
+<ul>
+<li>Usar la red neuronal para sistemas automatizados de scoring</li>
+<li>Mantener los modelos logísticos para explicar decisiones a
+stakeholders</li>
+<li>Ajustar umbrales según recursos disponibles para intervenciones</li>
+</ul></li>
+</ul></li>
+</ol>
+<h2 id="conclusiones-y-recomendaciones">9. Conclusiones y
+Recomendaciones</h2>
+<h3 id="hallazgos-principales">9.1 Hallazgos Principales</h3>
+<ol type="1">
+<li>Los días sin actividad son el predictor más importante del
+abandono</li>
+<li>La suscripción premium reduce significativamente la probabilidad de
+abandono</li>
+<li>El nivel de uso (canciones y listas) tiene un efecto protector
+moderado</li>
+<li>No hay interacción significativa entre tipo de suscripción y tiempo
+sin actividad</li>
+</ol>
+<h3 id="recomendaciones-prácticas">9.2 Recomendaciones Prácticas</h3>
+<ol type="1">
+<li><strong>Prevención Temprana</strong>:
+<ul>
+<li>Implementar sistema de alertas para usuarios inactivos &gt; 7
+días</li>
+<li>Priorizar intervenciones en usuarios gratuitos inactivos</li>
+</ul></li>
+<li><strong>Estrategia de Retención</strong>:
+<ul>
+<li>Promover activamente la conversión a suscripción premium</li>
+<li>Incentivar la creación de listas de reproducción</li>
+<li>Desarrollar campañas personalizadas según patrones de uso</li>
+</ul></li>
+<li><strong>Monitoreo y Seguimiento</strong>:
+<ul>
+<li>Utilizar el modelo de red neuronal para predicciones en tiempo
+real</li>
+<li>Mantener un sistema de puntuación de riesgo de abandono</li>
+<li>Evaluar periódicamente la efectividad de las intervenciones</li>
+</ul></li>
+</ol>
+<h3 id="limitaciones-y-trabajo-futuro">9.3 Limitaciones y Trabajo
+Futuro</h3>
+<ol type="1">
+<li><strong>Limitaciones</strong>:
+<ul>
+<li>Dataset relativamente pequeño (500 usuarios)</li>
+<li>No se consideran factores estacionales</li>
+<li>Posible sesgo de selección en la muestra</li>
+</ul></li>
+<li><strong>Mejoras Propuestas</strong>:
+<ul>
+<li>Incorporar más variables predictoras (ej. dispositivos usados,
+horarios)</li>
+<li>Desarrollar modelos específicos por segmento de usuario</li>
+<li>Implementar técnicas de validación cruzada más robustas</li>
+</ul></li>
+</ol>
+</body>
+</html>

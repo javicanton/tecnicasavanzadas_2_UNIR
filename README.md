@@ -6,25 +6,25 @@ Repositorio de materiales para la asignatura de Técnicas Avanzadas para el Aná
 
 ### 01 Introducción
 
-- [Introducción a R](01%20Introducción/Introduccion.md)
-- [Instalación de Swirl en Español](01%20Introducción/Instalacion%20swirl%20español.md)
-- [Análisis de Datos con R](01%20Introducción/Analisis%20ejemplo.md)
-- [El Datasaurus](01%20Introducción/Datasaurus.md)
+- [Introducción a R](01%20Introducción/html_output/Introduccion.html)
+- [Instalación de Swirl en Español](01%20Introducción/html_output/Instalacion_swirl_espanol.html)
+- [Análisis de Datos con R](01%20Introducción/html_output/Analisis_ejemplo.html)
+- [El Datasaurus](01%20Introducción/html_output/Datasaurus.html)
 
 ### 02 Modelización
 
 #### Análisis de Streaming
 
-- [Spotifal - Análisis de Abandono de Usuarios](02%20Modelización/Analisis_Spotifal/Spotifal_Informe.md)
+- [Spotifal - Análisis de Abandono de Usuarios](02%20Modelización/Analisis_Spotifal/html_output/Spotifal_Informe.html)
   - Análisis de patrones de abandono usando modelos lineales, logísticos y redes neuronales
   - Comparación de diferentes técnicas de modelización
   - Visualización de resultados y métricas de rendimiento
 
 #### Regresión Lineal
 
-- [Regresión Lineal Androides](02%20Modelización/Regresion_Lineal/Androides/RegresionLineal_Androides.md)
+- [Regresión Lineal Androides](02%20Modelización/Regresion_Lineal/Androides/html_output/RegresionLineal_Androides.html)
   - Modelo de regresión lineal aplicado a análisis de androides
-- [Regresión Lineal Bacterias](02%20Modelización/Regresion_Lineal/Bacterias/RegresionLineal_Bacterias.md)
+- [Regresión Lineal Bacterias](02%20Modelización/Regresion_Lineal/Bacterias/html_output/RegresionLineal_Bacterias.html)
   - Análisis de crecimiento bacteriano mediante regresión lineal
 
 #### Regresión No Lineal
@@ -47,7 +47,7 @@ Repositorio de materiales para la asignatura de Técnicas Avanzadas para el Aná
 
 #### Análisis Corporativo
 
-- [Tyrell Corporation - Análisis de Eliminaciones](02%20Modelización/Analisis_Tyrell_Corp/TyrellCorporation.md)
+- [Tyrell Corporation - Análisis de Eliminaciones](02%20Modelización/Analisis_Tyrell_Corp/html_output/TyrellCorporation.html)
   - Análisis estadístico de patrones de eliminación en Tyrell Corporation
 
 #### Redes Neuronales
@@ -63,7 +63,7 @@ Repositorio de materiales para la asignatura de Técnicas Avanzadas para el Aná
 
 ### Recursos Adicionales
 
-- [Enlaces Interesantes](enlaces_interesantes.md)
+- [Enlaces Interesantes](html_output/enlaces_interesantes.html)
 
 ## Requisitos
 

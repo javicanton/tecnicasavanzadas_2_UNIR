@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>El Datasaurus</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">El Datasaurus</h1>
+</header>
+<h1 id="explorando-el-cuarteto-de-anscombe-y-el-datasaurus">Explorando
+el Cuarteto de Anscombe y el Datasaurus</h1>
+<h2 id="el-cuarteto-de-anscombe">El Cuarteto de Anscombe</h2>
+<p>El Cuarteto de Anscombe es un conjunto de cuatro conjuntos de datos
+que nos ayudará a entender mejor cómo analizar datos. Fue creado por
+Francis Anscombe en 1973.</p>
+<h3 id="datos-originales">Datos Originales</h3>
+<table>
+<thead>
+<tr class="header">
+<th>X1</th>
+<th>Y1</th>
+<th>X2</th>
+<th>Y2</th>
+<th>X3</th>
+<th>Y3</th>
+<th>X4</th>
+<th>Y4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>10.0</td>
+<td>8.04</td>
+<td>10.0</td>
+<td>9.14</td>
+<td>10.0</td>
+<td>7.46</td>
+<td>8.0</td>
+<td>6.58</td>
+</tr>
+<tr class="even">
+<td>8.0</td>
+<td>6.95</td>
+<td>8.0</td>
+<td>8.14</td>
+<td>8.0</td>
+<td>6.77</td>
+<td>8.0</td>
+<td>5.76</td>
+</tr>
+<tr class="odd">
+<td>13.0</td>
+<td>7.58</td>
+<td>13.0</td>
+<td>8.74</td>
+<td>13.0</td>
+<td>12.74</td>
+<td>8.0</td>
+<td>7.71</td>
+</tr>
+<tr class="even">
+<td>9.0</td>
+<td>8.81</td>
+<td>9.0</td>
+<td>8.77</td>
+<td>9.0</td>
+<td>7.11</td>
+<td>8.0</td>
+<td>8.84</td>
+</tr>
+<tr class="odd">
+<td>11.0</td>
+<td>8.33</td>
+<td>11.0</td>
+<td>9.26</td>
+<td>11.0</td>
+<td>7.81</td>
+<td>8.0</td>
+<td>8.47</td>
+</tr>
+<tr class="even">
+<td>14.0</td>
+<td>9.96</td>
+<td>14.0</td>
+<td>8.10</td>
+<td>14.0</td>
+<td>8.84</td>
+<td>8.0</td>
+<td>7.04</td>
+</tr>
+<tr class="odd">
+<td>6.0</td>
+<td>7.24</td>
+<td>6.0</td>
+<td>6.13</td>
+<td>6.0</td>
+<td>6.08</td>
+<td>8.0</td>
+<td>5.25</td>
+</tr>
+<tr class="even">
+<td>4.0</td>
+<td>4.26</td>
+<td>4.0</td>
+<td>3.10</td>
+<td>4.0</td>
+<td>5.39</td>
+<td>19.0</td>
+<td>12.50</td>
+</tr>
+<tr class="odd">
+<td>12.0</td>
+<td>10.84</td>
+<td>12.0</td>
+<td>9.13</td>
+<td>12.0</td>
+<td>8.15</td>
+<td>8.0</td>
+<td>5.56</td>
+</tr>
+<tr class="even">
+<td>7.0</td>
+<td>4.82</td>
+<td>7.0</td>
+<td>7.26</td>
+<td>7.0</td>
+<td>6.42</td>
+<td>8.0</td>
+<td>7.91</td>
+</tr>
+<tr class="odd">
+<td>5.0</td>
+<td>5.68</td>
+<td>5.0</td>
+<td>4.74</td>
+<td>5.0</td>
+<td>5.73</td>
+<td>8.0</td>
+<td>6.89</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cálculo-de-estadísticas">Cálculo de Estadísticas</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función auxiliar para calcular estadísticas</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>calcular_estadisticas <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">media_x =</span> <span class="fu">mean</span>(x),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">media_y =</span> <span class="fu">mean</span>(y),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd_x =</span> <span class="fu">sd</span>(x),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd_y =</span> <span class="fu">sd</span>(y),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">correlacion =</span> <span class="fu">cor</span>(x, y)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular estadísticas para cada conjunto</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>estadisticas <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">conjunto1 =</span> <span class="fu">calcular_estadisticas</span>(anscombe<span class="sc">$</span>x1, anscombe<span class="sc">$</span>y1),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">conjunto2 =</span> <span class="fu">calcular_estadisticas</span>(anscombe<span class="sc">$</span>x2, anscombe<span class="sc">$</span>y2),</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">conjunto3 =</span> <span class="fu">calcular_estadisticas</span>(anscombe<span class="sc">$</span>x3, anscombe<span class="sc">$</span>y3),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">conjunto4 =</span> <span class="fu">calcular_estadisticas</span>(anscombe<span class="sc">$</span>x4, anscombe<span class="sc">$</span>y4)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<h3 id="estadísticas-descriptivas">Estadísticas Descriptivas</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Estadística</th>
+<th>Conjunto 1</th>
+<th>Conjunto 2</th>
+<th>Conjunto 3</th>
+<th>Conjunto 4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>media_x</td>
+<td>9.0000</td>
+<td>9.0000</td>
+<td>9.0000</td>
+<td>9.0000</td>
+</tr>
+<tr class="even">
+<td>media_y</td>
+<td>7.5009</td>
+<td>7.5009</td>
+<td>7.5000</td>
+<td>7.5009</td>
+</tr>
+<tr class="odd">
+<td>sd_x</td>
+<td>3.3166</td>
+<td>3.3166</td>
+<td>3.3166</td>
+<td>3.3166</td>
+</tr>
+<tr class="even">
+<td>sd_y</td>
+<td>2.0316</td>
+<td>2.0316</td>
+<td>2.0316</td>
+<td>2.0316</td>
+</tr>
+<tr class="odd">
+<td>correlacion</td>
+<td>0.8164</td>
+<td>0.8164</td>
+<td>0.8163</td>
+<td>0.8165</td>
+</tr>
+</tbody>
+</table>
+<p>Observaciones sobre las estadísticas:</p>
+<ol type="1">
+<li>Todos los conjuntos tienen una media de X de 9.0000</li>
+<li>Todos los conjuntos tienen una media de Y cercana a 7.5009</li>
+<li>Las desviaciones estándar de X son aproximadamente 3.3166</li>
+<li>Las desviaciones estándar de Y son aproximadamente 2.0316</li>
+<li>Las correlaciones son todas cercanas a 0.8164</li>
+</ol>
+<h3 id="visualización">Visualización</h3>
+<figure>
+<img src="anscombe_plot.png" alt="Cuarteto de Anscombe" />
+<figcaption aria-hidden="true">Cuarteto de Anscombe</figcaption>
+</figure>
+<h2 id="el-datasaurus">El Datasaurus</h2>
+<p>El Datasaurus es una colección de conjuntos de datos creada por
+Justin Matejka y George Fitzmaurice en 2017. Nos ayudará a profundizar
+en nuestro análisis de datos.</p>
+<h3 id="datos-originales-primeros-5-registros-de-cada-conjunto">Datos
+Originales (Primeros 5 registros de cada conjunto)</h3>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 4%" />
+<col style="width: 6%" />
+<col style="width: 14%" />
+<col style="width: 4%" />
+<col style="width: 6%" />
+<col style="width: 14%" />
+<col style="width: 4%" />
+<col style="width: 6%" />
+<col style="width: 14%" />
+<col style="width: 4%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>X</th>
+<th>Y</th>
+<th>Dataset</th>
+<th>X</th>
+<th>Y</th>
+<th>Dataset</th>
+<th>X</th>
+<th>Y</th>
+<th>Dataset</th>
+<th>X</th>
+<th>Y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>away</td>
+<td>55.3846</td>
+<td>97.1795</td>
+<td>bullseye</td>
+<td>55.3846</td>
+<td>97.1795</td>
+<td>circle</td>
+<td>55.3846</td>
+<td>97.1795</td>
+<td>dino</td>
+<td>55.3846</td>
+<td>97.1795</td>
+</tr>
+<tr class="even">
+<td>away</td>
+<td>51.5385</td>
+<td>96.0256</td>
+<td>bullseye</td>
+<td>51.5385</td>
+<td>96.0256</td>
+<td>circle</td>
+<td>51.5385</td>
+<td>96.0256</td>
+<td>dino</td>
+<td>51.5385</td>
+<td>96.0256</td>
+</tr>
+<tr class="odd">
+<td>away</td>
+<td>46.1538</td>
+<td>94.4872</td>
+<td>bullseye</td>
+<td>46.1538</td>
+<td>94.4872</td>
+<td>circle</td>
+<td>46.1538</td>
+<td>94.4872</td>
+<td>dino</td>
+<td>46.1538</td>
+<td>94.4872</td>
+</tr>
+<tr class="even">
+<td>away</td>
+<td>42.8205</td>
+<td>91.4103</td>
+<td>bullseye</td>
+<td>42.8205</td>
+<td>91.4103</td>
+<td>circle</td>
+<td>42.8205</td>
+<td>91.4103</td>
+<td>dino</td>
+<td>42.8205</td>
+<td>91.4103</td>
+</tr>
+<tr class="odd">
+<td>away</td>
+<td>40.7692</td>
+<td>88.0769</td>
+<td>bullseye</td>
+<td>40.7692</td>
+<td>88.0769</td>
+<td>circle</td>
+<td>40.7692</td>
+<td>88.0769</td>
+<td>dino</td>
+<td>40.7692</td>
+<td>88.0769</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cálculo-de-estadísticas-del-datasaurus">Cálculo de Estadísticas
+del Datasaurus</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular estadísticas para cada conjunto del Datasaurus</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>estadisticas_datasaurus <span class="ot">&lt;-</span> datasaurus_dozen <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(dataset) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">media_x =</span> <span class="fu">mean</span>(x),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">media_y =</span> <span class="fu">mean</span>(y),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd_x =</span> <span class="fu">sd</span>(x),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd_y =</span> <span class="fu">sd</span>(y),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">correlacion =</span> <span class="fu">cor</span>(x, y)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir a data.frame y redondear los valores</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>estadisticas_datasaurus <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(estadisticas_datasaurus)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>estadisticas_datasaurus[, <span class="sc">-</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">round</span>(estadisticas_datasaurus[, <span class="sc">-</span><span class="dv">1</span>], <span class="dv">4</span>)</span></code></pre></div>
+<h3 id="estadísticas-descriptivas-del-datasaurus">Estadísticas
+Descriptivas del Datasaurus</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>Media X</th>
+<th>Media Y</th>
+<th>SD X</th>
+<th>SD Y</th>
+<th>Correlación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>away</td>
+<td>54.2661</td>
+<td>47.8347</td>
+<td>16.7698</td>
+<td>26.9397</td>
+<td>-0.0641</td>
+</tr>
+<tr class="even">
+<td>bullseye</td>
+<td>54.2687</td>
+<td>47.8308</td>
+<td>16.7692</td>
+<td>26.9357</td>
+<td>-0.0686</td>
+</tr>
+<tr class="odd">
+<td>circle</td>
+<td>54.2673</td>
+<td>47.8377</td>
+<td>16.7600</td>
+<td>26.9300</td>
+<td>-0.0683</td>
+</tr>
+<tr class="even">
+<td>dino</td>
+<td>54.2633</td>
+<td>47.8322</td>
+<td>16.7651</td>
+<td>26.9354</td>
+<td>-0.0645</td>
+</tr>
+<tr class="odd">
+<td>dots</td>
+<td>54.2603</td>
+<td>47.8398</td>
+<td>16.7677</td>
+<td>26.9302</td>
+<td>-0.0603</td>
+</tr>
+<tr class="even">
+<td>h_lines</td>
+<td>54.2614</td>
+<td>47.8303</td>
+<td>16.7658</td>
+<td>26.9399</td>
+<td>-0.0617</td>
+</tr>
+<tr class="odd">
+<td>high_lines</td>
+<td>54.2688</td>
+<td>47.8355</td>
+<td>16.7667</td>
+<td>26.9400</td>
+<td>-0.0685</td>
+</tr>
+<tr class="even">
+<td>slant_down</td>
+<td>54.2679</td>
+<td>47.8358</td>
+<td>16.7668</td>
+<td>26.9361</td>
+<td>-0.0690</td>
+</tr>
+<tr class="odd">
+<td>slant_up</td>
+<td>54.2659</td>
+<td>47.8311</td>
+<td>16.7688</td>
+<td>26.9386</td>
+<td>-0.0686</td>
+</tr>
+<tr class="even">
+<td>star</td>
+<td>54.2673</td>
+<td>47.8395</td>
+<td>16.7685</td>
+<td>26.9303</td>
+<td>-0.0630</td>
+</tr>
+<tr class="odd">
+<td>v_lines</td>
+<td>54.2699</td>
+<td>47.8365</td>
+<td>16.7698</td>
+<td>26.9378</td>
+<td>-0.0694</td>
+</tr>
+<tr class="even">
+<td>wide_lines</td>
+<td>54.2669</td>
+<td>47.8316</td>
+<td>16.7697</td>
+<td>26.9379</td>
+<td>-0.0666</td>
+</tr>
+<tr class="odd">
+<td>x_shape</td>
+<td>54.2607</td>
+<td>47.8397</td>
+<td>16.7699</td>
+<td>26.9300</td>
+<td>-0.0656</td>
+</tr>
+</tbody>
+</table>
+<p>Observaciones sobre las estadísticas:</p>
+<ol type="1">
+<li>Todos los conjuntos tienen una media de X cercana a 54.26</li>
+<li>Todos los conjuntos tienen una media de Y cercana a 47.83</li>
+<li>Las desviaciones estándar de X son aproximadamente 16.76</li>
+<li>Las desviaciones estándar de Y son aproximadamente 26.93</li>
+<li>Las correlaciones son todas cercanas a -0.06</li>
+</ol>
+<h3 id="visualización-del-datasaurus">Visualización del Datasaurus</h3>
+<figure>
+<img src="datasaurus_plot.png" alt="El Datasaurus" />
+<figcaption aria-hidden="true">El Datasaurus</figcaption>
+</figure>
+<h2 id="reflexiones-sobre-el-análisis-de-datos">Reflexiones sobre el
+Análisis de Datos</h2>
+<p>Después de analizar estos conjuntos de datos, podemos extraer algunas
+conclusiones importantes sobre el análisis de datos:</p>
+<ol type="1">
+<li><p><strong>Las estadísticas descriptivas por sí solas pueden ser
+engañosas</strong>: Como hemos visto en ambos ejemplos, conjuntos de
+datos con estadísticas muy similares pueden tener patrones visuales
+completamente diferentes.</p></li>
+<li><p><strong>La visualización de datos es crucial</strong>: Siempre
+debemos visualizar nuestros datos antes de realizar análisis
+estadísticos. Las gráficas nos pueden revelar patrones, tendencias y
+anomalías que no son evidentes en las estadísticas.</p></li>
+<li><p><strong>No confiar ciegamente en los números</strong>: Las
+estadísticas son herramientas poderosas, pero deben complementarse con
+visualizaciones para obtener una comprensión completa de los
+datos.</p></li>
+</ol>
+<h2 id="referencias">Referencias</h2>
+<ul>
+<li>Anscombe, F. J. (1973). “Graphs in Statistical Analysis”. The
+American Statistician, 27(1), 17-21.</li>
+<li>Matejka, J., &amp; Fitzmaurice, G. (2017). “Same Stats, Different
+Graphs: Generating Datasets with Varied Appearance and Identical
+Statistics through Simulated Annealing”. CHI 2017 Conference
+Proceedings.</li>
+</ul>
+</body>
+</html>
