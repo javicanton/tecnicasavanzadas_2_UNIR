@@ -6,53 +6,221 @@
     <title>Análisis de Datos Avanzados - UNIR</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
             line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         h1 {
             color: #2c3e50;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            text-align: center;
+            margin-bottom: 30px;
         }
-        .analysis-list {
-            list-style: none;
-            padding: 0;
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid #3498db;
         }
-        .analysis-list li {
-            margin: 15px 0;
-            padding: 15px;
+        .section {
+            margin-bottom: 40px;
+        }
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .analysis-card {
+            padding: 20px;
             background: #f7f9fc;
-            border-radius: 5px;
+            border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        a {
+        .analysis-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .analysis-card h3 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        .analysis-card p {
+            margin: 0 0 15px 0;
+            color: #555;
+            font-size: 0.9em;
+        }
+        .analysis-card a {
             color: #3498db;
             text-decoration: none;
+            font-weight: 500;
         }
-        a:hover {
+        .analysis-card a:hover {
+            color: #2980b9;
             text-decoration: underline;
+        }
+        .badge {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            margin-left: 8px;
+        }
+        .badge.html { background: #e74c3c; }
+        .badge.rmd { background: #27ae60; }
+        .badge.md { background: #f39c12; }
+        .intro {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #555;
+            font-size: 1.1em;
         }
     </style>
 </head>
 <body>
-    <h1>Análisis de Datos Avanzados - UNIR</h1>
-    <p>Bienvenido al repositorio de análisis de datos avanzados. Aquí encontrarás diversos ejemplos y casos de estudio.</p>
-    
-    <h2>Regresión No Lineal</h2>
-    <ul class="analysis-list">
-        <li>
-            <a href="02 Modelización/Regresion_No_Lineal/html_output/Tyrell_Corp_1.html">
-                Ejemplo Tyrell Corp 1: Análisis de Crecimiento de Replicantes Nexus-4 (Módulo A)
-            </a>
-        </li>
-        <li>
-            <a href="02 Modelización/Regresion_No_Lineal/html_output/Tyrell_Corp_2.html">
-                Ejemplo Tyrell Corp 2: Análisis de Crecimiento de Replicantes Nexus-4 (Módulo B)
-            </a>
-        </li>
-    </ul>
+    <div class="container">
+        <h1>📊 Análisis de Datos Avanzados - UNIR</h1>
+        <div class="intro">
+            Bienvenido al repositorio de análisis de datos avanzados. Aquí encontrarás diversos ejemplos y casos de estudio de técnicas cuantitativas avanzadas.
+        </div>
+        
+        <div class="section">
+            <h2>🔬 Introducción a R</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Introducción a R</h3>
+                    <p>Conceptos básicos y fundamentos del lenguaje R para análisis de datos.</p>
+                    <a href="01 Introducción/Introduccion.md">Ver contenido <span class="badge md">MD</span></a>
+                </div>
+                <div class="analysis-card">
+                    <h3>Instalación de Swirl</h3>
+                    <p>Guía para instalar y configurar Swirl en español para aprendizaje interactivo.</p>
+                    <a href="01 Introducción/Instalacion swirl español.md">Ver contenido <span class="badge md">MD</span></a>
+                </div>
+                <div class="analysis-card">
+                    <h3>Análisis de Datos con R</h3>
+                    <p>Ejemplo práctico de análisis de datos utilizando R y visualización.</p>
+                    <a href="01 Introducción/Analisis ejemplo.md">Ver contenido <span class="badge md">MD</span></a>
+                </div>
+                <div class="analysis-card">
+                    <h3>El Datasaurus</h3>
+                    <p>Demostración de la importancia de visualizar datos más allá de estadísticas básicas.</p>
+                    <a href="01 Introducción/Datasaurus.md">Ver contenido <span class="badge md">MD</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📈 Regresión Lineal</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Regresión Lineal - Androides</h3>
+                    <p>Modelo de regresión lineal aplicado al análisis de comportamiento de androides.</p>
+                    <a href="02 Modelización/Regresion_Lineal/Androides/RegresionLineal_Androides.md">Ver análisis <span class="badge md">MD</span></a>
+                </div>
+                <div class="analysis-card">
+                    <h3>Regresión Lineal - Bacterias</h3>
+                    <p>Análisis de crecimiento bacteriano mediante modelos de regresión lineal.</p>
+                    <a href="02 Modelización/Regresion_Lineal/Bacterias/RegresionLineal_Bacterias.md">Ver análisis <span class="badge md">MD</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📊 Regresión No Lineal</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Tyrell Corp - Crecimiento Nexus-4 (Módulo A)</h3>
+                    <p>Modelo logístico para el análisis de crecimiento de replicantes Nexus-4.</p>
+                    <a href="02 Modelización/Regresion_No_Lineal/html_output/Tyrell_Corp_1.html">Ver análisis <span class="badge html">HTML</span></a>
+                </div>
+                <div class="analysis-card">
+                    <h3>Tyrell Corp - Crecimiento Nexus-4 (Módulo B)</h3>
+                    <p>Modelo de Gompertz para el análisis de crecimiento de replicantes Nexus-4.</p>
+                    <a href="02 Modelización/Regresion_No_Lineal/html_output/Tyrell_Corp_2.html">Ver análisis <span class="badge html">HTML</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎵 Análisis de Streaming</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Spotifal - Análisis de Abandono</h3>
+                    <p>Análisis de patrones de abandono usando modelos lineales, logísticos y redes neuronales.</p>
+                    <a href="02 Modelización/Analisis_Spotifal/Spotifal_Informe.md">Ver análisis <span class="badge md">MD</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🏢 Análisis Corporativo</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Tyrell Corporation - Análisis de Eliminaciones</h3>
+                    <p>Análisis estadístico de patrones de eliminación en Tyrell Corporation.</p>
+                    <a href="02 Modelización/Analisis_Tyrell_Corp/TyrellCorporation.md">Ver análisis <span class="badge md">MD</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔗 Dependencias Múltiples (SEM)</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Análisis SEM del T-800</h3>
+                    <p>Análisis de Ecuaciones Estructurales aplicado a unidades T-800 para evaluar eficiencia operativa.</p>
+                    <a href="02 Modelización/Dependencias_multiples/T800/informe_T800_SEM.Rmd">Ver análisis <span class="badge rmd">RMD</span></a>
+                </div>
+                <div class="analysis-card">
+                    <h3>Análisis SEM Educativo</h3>
+                    <p>Estudio de relaciones entre apoyo docente, motivación y rendimiento académico.</p>
+                    <a href="02 Modelización/Dependencias_multiples/educativo/informe_modelo_educativo_SEM.Rmd">Ver análisis <span class="badge rmd">RMD</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🧠 Redes Neuronales</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Análisis de Fallos en Nexus-5</h3>
+                    <p>Implementación de redes neuronales para la predicción de fallos en replicantes Nexus-5.</p>
+                    <a href="02 Modelización/Redes_Neuronales/informe_nexus5_nn.Rmd">Ver análisis <span class="badge rmd">RMD</span></a>
+                </div>
+                <div class="analysis-card">
+                    <h3>Taller de Ajuste de Redes Neuronales</h3>
+                    <p>Taller práctico de optimización de hiperparámetros y evaluación comparativa de modelos.</p>
+                    <a href="02 Modelización/Redes_Neuronales/taller_ajuste_redes_nexus5.Rmd">Ver taller <span class="badge rmd">RMD</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📚 Recursos Adicionales</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>Enlaces Interesantes</h3>
+                    <p>Colección de recursos útiles y enlaces de interés para análisis de datos.</p>
+                    <a href="enlaces_interesantes.md">Ver enlaces <span class="badge md">MD</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html> 
