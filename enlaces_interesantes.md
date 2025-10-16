@@ -15,6 +15,6 @@ Esta página contiene una colección de enlaces útiles relacionados con el aná
   - Material didáctico interactivo
   - Recursos para el aprendizaje autónomo
 
-## Más enlaces próximamente...
+## Más enlaces próximamente
 
-*Esta sección se irá actualizando con más recursos interesantes.* 
+*Esta sección se irá actualizando con más recursos interesantes.*
